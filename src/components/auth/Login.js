@@ -23,7 +23,7 @@ export const Login = (props) => {
     existingUserCheck().then((exists) => {
       if (exists) {
         localStorage.setItem("zorber_user", exists.id);
-        history.push("/upcomingRaces");
+        history.push("/upcoming");
       } else {
         existDialog.current.showModal();
       }
