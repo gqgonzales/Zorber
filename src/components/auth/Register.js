@@ -6,6 +6,7 @@ export const Register = (props) => {
   const firstName = useRef();
   const lastName = useRef();
   const email = useRef();
+  const winPercentage = useRef();
   //   const verifyPassword = useRef();
   const conflictDialog = useRef();
   const history = useHistory();
@@ -31,6 +32,7 @@ export const Register = (props) => {
           body: JSON.stringify({
             email: email.current.value,
             name: `${firstName.current.value} ${lastName.current.value}`,
+            winPercentage: 0,
           }),
         })
           .then((res) => res.json())
