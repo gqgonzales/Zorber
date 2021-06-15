@@ -1,6 +1,7 @@
 import React from "react";
 import { Route } from "react-router-dom";
 import { RaceList } from "./races/RaceList";
+import { NewRaceForm } from "./races/NewRaceForm";
 import { RaceProvider } from "./races/RaceProvider";
 
 export const ApplicationViews = () => {
@@ -10,6 +11,10 @@ export const ApplicationViews = () => {
         {/* HOME / UPCOMING */}
         <Route exact path="/upcoming">
           <RaceList />
+        </Route>
+
+        <Route exact path="/create">
+          <NewRaceForm />
         </Route>
       </RaceProvider>
     </>
