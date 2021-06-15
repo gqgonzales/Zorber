@@ -1,15 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
-// import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import "./index.css";
 import { Zorber } from "./components/Zorber";
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
   <React.StrictMode>
-    {/* <Router> */}
-    <Zorber />
-    {/* </Router>{" "} */}
+    <Router>
+      <Zorber />
+    </Router>
   </React.StrictMode>,
   document.getElementById("root")
 );
