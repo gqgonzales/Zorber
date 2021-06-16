@@ -17,6 +17,8 @@ export const NewEventForm = () => {
 
   const { users, getUsers } = useContext(UserContext);
 
+  const [user, serUsers] = useState([]);
+
   //for edit, hold on to state of event in this view
   // The input fields need to be CONTROLLED and thus need to be definied form the outset.
   const [event, setEvent] = useState({
@@ -97,6 +99,14 @@ export const NewEventForm = () => {
         }
       });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  //   onSelect(selectedList, selectedItem) {
+  //     ...
+  // }
+
+  // onRemove(selectedList, removedItem) {
+  //     ...
+  // }
 
   //since state controlls this component, we no longer need
   //useRef(null) or ref
@@ -179,6 +189,18 @@ export const NewEventForm = () => {
       <fieldset>
         <div className="form-group">
           <label htmlFor="userId">Participants: </label>
+          <Multiselect
+            options={users} // Options to display in the dropdown
+            selectedValues={users.selectedValue} // Preselected value to persist in dropdown
+            onSelect={users.onSelect} // Function will trigger on select event
+            onRemove={users.onRemove} // Function will trigger on remove event
+            displayValue="name" // Property name to display in the dropdown options
+          />
+        </div>
+      </fieldset>
+      {/* <fieldset>
+        <div className="form-group">
+          <label htmlFor="userId">Participants: </label>
           <select
             value={users.id}
             name="userId"
@@ -194,7 +216,7 @@ export const NewEventForm = () => {
             ))}
           </select>
         </div>
-      </fieldset>
+      </fieldset> */}
       {/* COMMENTS */}
       <fieldset>
         <div className="form-group">
