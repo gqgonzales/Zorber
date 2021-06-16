@@ -4,11 +4,11 @@ import "./Event.css";
 // import { useHistory, Link } from "react-router-dom";
 import { EventContext } from "./EventProvider";
 
-export const EventList = () => {
+export const UpcomingEventList = () => {
   // This state changes when `getEvents()` is invoked below
   const { events, getEvents } = useContext(EventContext);
   // const history = useHistory();
-
+  let filteredEvents = [];
   //useEffect - reach out to the world for something
   useEffect(() => {
     getEvents();
@@ -21,7 +21,14 @@ export const EventList = () => {
         <h2 className="subsection__header">Upcoming Events</h2>
       </div>
       <div className="Events">
-        {events.map((event) => {
+        {events.forEach((event) => {
+          if (Date.parse(event.date) > Date.now()) {
+            filteredEvents.push(event);
+          }
+          return { filteredEvents };
+        })}
+
+        {filteredEvents.map((event) => {
           return (
             <div
               className="event"
@@ -49,3 +56,28 @@ export const EventList = () => {
     </>
   );
 };
+
+/* {events.map((event) => {
+          return (
+            <div
+              className="event"
+              id={`event--${event.id}`}
+              key={`event--${event.id}`}
+            >
+              <div className="event__title option__name">
+                <h3>{event.title}</h3>
+              </div>
+              <div className="event__info">
+                <h4 className="event__location">
+                  {event.location}
+                </h4>
+                <div className="event__date event__startTime">
+                  {event.date} at {event.startTime}
+                </div>
+                <div className="event__comments">
+                  {event.comments}
+                </div>
+              </div>
+            </div>
+          );
+        })} */
