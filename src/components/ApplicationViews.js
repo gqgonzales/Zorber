@@ -1,22 +1,22 @@
 import React from "react";
 import { Route } from "react-router-dom";
-import { RaceList } from "./races/RaceList";
-import { NewRaceForm } from "./races/NewRaceForm";
-import { RaceProvider } from "./races/RaceProvider";
+import { EventList } from "./events/EventList";
+import { NewEventForm } from "./events/NewEventForm";
+import { EventProvider } from "./events/EventProvider";
 
 export const ApplicationViews = () => {
   return (
     <>
-      <RaceProvider>
+      <EventProvider>
         {/* HOME / UPCOMING */}
         <Route exact path="/upcoming">
-          <RaceList />
+          <EventList />
         </Route>
 
         <Route exact path="/create">
-          <NewRaceForm />
+          <NewEventForm />
         </Route>
-      </RaceProvider>
+      </EventProvider>
     </>
   );
 };

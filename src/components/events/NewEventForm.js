@@ -1,16 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
 
-import "./Race.css";
+import "./Event.css";
 import { useHistory, useParams } from "react-router-dom";
-import { RaceContext } from "./RaceProvider";
+import { EventContext } from "./EventProvider";
+import { UserContext } from "../users/UserProvider";
 
-export const NewRaceForm = () => {
-  const { addRace, getRaceById, updateRace, getRaces, races } =
-    useContext(RaceContext);
+export const NewEventForm = () => {
+  const { addEvent, getEventById, updateEvent, getEvents, events } =
+    useContext(EventContext);
+  const { getUsers, users } = useContext(UserContext);
 
-  //for edit, hold on to state of race in this view
+  //for edit, hold on to state of event in this view
   // The input fields need to be CONTROLLED and thus need to be definied form the outset.
-  const [race, setRace] = useState({
+  const [event, setEvent] = useState({
     title: "",
     location: "",
     date: "",
@@ -21,7 +23,7 @@ export const NewRaceForm = () => {
   //wait for data before button is active
   const [isLoading, setIsLoading] = useState(true);
 
-  const { raceId } = useParams();
+  const { eventId } = useParams();
   const history = useHistory();
 
   //when field changes, update state. This causes a re-render and updates the view.
@@ -29,51 +31,55 @@ export const NewRaceForm = () => {
   const handleControlledInputChange = (event) => {
     //When changing a state object or array,
     //always create a copy make changes, and then set state.
-    const newRace = { ...race };
-    //race is an object with properties.
+    const newevent = { ...event };
+    //event is an object with properties.
     //set the property to the new value
-    newRace[event.target.name] = event.target.value;
+    newevent[event.target.name] = event.target.value;
     //update state
-    setRace(newRace);
+    setEvent(newevent);
   };
 
-  const handleSaveRace = () => {
-    if (parseInt(race.raceId) === 0) {
+  const handleSaveevent = () => {
+    if (parseInt(event.eventId) === 0) {
       window.alert(
         "Please enter all required fields to continue."
       );
     } else {
       //disable the button - no extra clicks
       setIsLoading(true);
-      if (raceId) {
+      if (eventId) {
         //PUT - update
-        updateRace({
-          raceId: parseInt(race.raceId),
-          name: race.name,
-          location: race.location,
-          squareFootage: parseInt(race.squareFootage),
-          handicapAccessible: race.handicapAccessible,
-        }).then(() => history.push(`/races`));
+        updateEvent({
+          eventId: parseInt(event.eventId),
+          title: event.title,
+          location: event.location,
+          date: event.date,
+          startTime: event.startTime,
+          userId: event.userId,
+          comments: event.comments,
+        }).then(() => history.push(`/events`));
       } else {
-        const newRaceObject = {
-          name: race.name,
-          location: race.location,
-          squareFootage: parseInt(race.squareFootage),
-          handicapAccessible: race.handicapAccessible,
+        const neweventObject = {
+          title: event.title,
+          location: event.location,
+          date: event.date,
+          startTime: event.startTime,
+          userId: event.userId,
+          comments: event.comments,
         };
-        addRace(newRaceObject).then(() =>
-          history.push("/races")
+        addEvent(neweventObject).then(() =>
+          history.push("/upcoming")
         );
       }
     }
   };
 
-  // Get customers and races. If raceId is in the URL, getRaceById
+  // Get customers and events. If eventId is in the URL, getEventById
   useEffect(() => {
-    getRaces().then(() => {
-      if (raceId) {
-        getRaceById(raceId).then((race) => {
-          setRace(race);
+    getEvents().then(() => {
+      if (eventId) {
+        getEventById(eventId).then((event) => {
+          setEvent(event);
           setIsLoading(false);
         });
       } else {
@@ -86,20 +92,20 @@ export const NewRaceForm = () => {
   //useRef(null) or ref
 
   return (
-    <form className="raceForm">
+    <form className="eventForm">
       <div className="subsection__header__container">
-        <h2 className="raceForm__title subsection__header">
-          Create a New Race!{" "}
+        <h2 className="eventForm__title subsection__header">
+          Create a New event!{" "}
         </h2>
       </div>
       <fieldset>
         <div className="form-group">
-          <label htmlFor="raceName">Title: </label>
+          <label htmlFor="eventName">Title: </label>
           <input
             type="text"
-            id="raceTitle"
+            id="eventTitle"
             name="name"
-            value={race.title}
+            value={event.title}
             required
             autoFocus
             className="form-control"
@@ -111,12 +117,12 @@ export const NewRaceForm = () => {
       {/* location */}
       <fieldset>
         <div className="form-group">
-          <label htmlFor="raceLocation">Location: </label>
+          <label htmlFor="eventLocation">Location: </label>
           <input
             type="text"
-            id="raceLocation"
+            id="eventLocation"
             name="location"
-            value={race.location}
+            value={event.location}
             required
             autoFocus
             className="form-control"
@@ -127,12 +133,12 @@ export const NewRaceForm = () => {
       </fieldset>
       <fieldset>
         <div className="form-group">
-          <label htmlFor="raceDate">Date: </label>
+          <label htmlFor="eventDate">Date: </label>
           <input
             type="date"
-            id="raceDate"
+            id="eventDate"
             name="date"
-            value={race.date}
+            value={event.date}
             required
             autoFocus
             className="form-control"
@@ -144,12 +150,12 @@ export const NewRaceForm = () => {
       {/* Start Time */}
       <fieldset>
         <div className="form-group">
-          <label htmlFor="raceDate">Time: </label>
+          <label htmlFor="eventDate">Time: </label>
           <input
             type="time"
-            id="raceDate"
+            id="eventDate"
             name="startTime"
-            value={race.startTime}
+            value={event.startTime}
             required
             autoFocus
             className="form-control"
@@ -158,16 +164,36 @@ export const NewRaceForm = () => {
           />
         </div>
       </fieldset>
+      {/* USERS? */}
+      <fieldset>
+        <div className="form-group">
+          <label htmlFor="userId">Participants: </label>
+          <select
+            value={users.id}
+            name="userId"
+            id="eventUsers"
+            className="form-control"
+            onChange={handleControlledInputChange}
+          >
+            <option value="0">Add users</option>
+            {users.map((u) => (
+              <option key={u.id} value={u.id}>
+                {u.name}
+              </option>
+            ))}
+          </select>
+        </div>
+      </fieldset>
       {/* ONE MORE */}
       <button
         className="btn btn-primary"
         disabled={isLoading}
         onClick={(event) => {
           event.preventDefault(); // Prevent browser from submitting the form and refreshing the page
-          handleSaveRace();
+          handleSaveevent();
         }}
       >
-        {raceId ? <>Save those changes!</> : <>Build it!</>}
+        {eventId ? <>Save those changes!</> : <>Build it!</>}
       </button>
       <button
         class="cancel__button"
