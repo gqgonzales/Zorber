@@ -38,6 +38,9 @@ export const EventList = () => {
                 <div className="event__date event__startTime">
                   {event.date} at {event.startTime}
                 </div>
+                <div className="event__comments">
+                  {event.comments}
+                </div>
               </div>
             </div>
           );

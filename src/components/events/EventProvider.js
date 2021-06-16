@@ -23,38 +23,29 @@ export const EventProvider = (props) => {
     }).then(getEvents);
   };
 
-  const releaseEvent = (eventId) => {
-    return fetch(
-      `https://gqg-kandykorner-api.herokuapp.com/events/${eventId}`,
-      {
-        method: "DELETE",
-      }
-    ).then(getEvents);
+  const deleteEvent = (eventId) => {
+    return fetch(`http://localhost:8088/events/${eventId}`, {
+      method: "DELETE",
+    }).then(getEvents);
   };
 
   const updateEvent = (event) => {
-    return fetch(
-      `https://gqg-kandykorner-api.herokuapp.com/events/${event.id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(event),
-      }
-    ).then(getEvents);
+    return fetch(`http://localhost:8088/events/${event.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(event),
+    }).then(getEvents);
   };
 
   const getEventById = (eventId) => {
-    return fetch(
-      `https://gqg-kandykorner-api.herokuapp.com/events/${eventId}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    ).then((res) => res.json());
+    return fetch(`http://localhost:8088/events/${eventId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => res.json());
   };
 
   return (
@@ -63,6 +54,9 @@ export const EventProvider = (props) => {
         events,
         getEvents,
         addEvent,
+        deleteEvent,
+        updateEvent,
+        getEventById,
       }}
     >
       {props.children}

@@ -4,11 +4,18 @@ import "./Event.css";
 import { useHistory, useParams } from "react-router-dom";
 import { EventContext } from "./EventProvider";
 import { UserContext } from "../users/UserProvider";
+import { Multiselect } from "multiselect-react-dropdown";
 
 export const NewEventForm = () => {
-  const { addEvent, getEventById, updateEvent, getEvents, events } =
-    useContext(EventContext);
-  const { getUsers, users } = useContext(UserContext);
+  const {
+    addEvent,
+    getEventById,
+    updateEvent,
+    getEvents,
+    events,
+  } = useContext(EventContext);
+
+  const { users, getUsers } = useContext(UserContext);
 
   //for edit, hold on to state of event in this view
   // The input fields need to be CONTROLLED and thus need to be definied form the outset.
@@ -20,6 +27,7 @@ export const NewEventForm = () => {
     userId: 0,
     comments: "",
   });
+
   //wait for data before button is active
   const [isLoading, setIsLoading] = useState(true);
 
@@ -39,7 +47,7 @@ export const NewEventForm = () => {
     setEvent(newevent);
   };
 
-  const handleSaveevent = () => {
+  const handleSaveEvent = () => {
     if (parseInt(event.eventId) === 0) {
       window.alert(
         "Please enter all required fields to continue."
@@ -74,18 +82,20 @@ export const NewEventForm = () => {
     }
   };
 
-  // Get customers and events. If eventId is in the URL, getEventById
+  // Get users and events. If eventId is in the URL, getEventById
   useEffect(() => {
-    getEvents().then(() => {
-      if (eventId) {
-        getEventById(eventId).then((event) => {
-          setEvent(event);
+    getEvents()
+      .then(getUsers())
+      .then(() => {
+        if (eventId) {
+          getEventById(eventId).then((event) => {
+            setEvent(event);
+            setIsLoading(false);
+          });
+        } else {
           setIsLoading(false);
-        });
-      } else {
-        setIsLoading(false);
-      }
-    });
+        }
+      });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   //since state controlls this component, we no longer need
@@ -131,6 +141,7 @@ export const NewEventForm = () => {
           />
         </div>
       </fieldset>
+      {/* DATE */}
       <fieldset>
         <div className="form-group">
           <label htmlFor="eventDate">Date: </label>
@@ -184,13 +195,29 @@ export const NewEventForm = () => {
           </select>
         </div>
       </fieldset>
+      {/* COMMENTS */}
+      <fieldset>
+        <div className="form-group">
+          <label htmlFor="eventComments">Comments: </label>
+          <input
+            type="text"
+            id="eventComments"
+            name="comments"
+            value={event.comments}
+            required
+            className="form-control"
+            placeholder="Add comments or a description!"
+            onChange={handleControlledInputChange}
+          />
+        </div>
+      </fieldset>
       {/* ONE MORE */}
       <button
         className="btn btn-primary"
         disabled={isLoading}
         onClick={(event) => {
           event.preventDefault(); // Prevent browser from submitting the form and refreshing the page
-          handleSaveevent();
+          handleSaveEvent();
         }}
       >
         {eventId ? <>Save those changes!</> : <>Build it!</>}
