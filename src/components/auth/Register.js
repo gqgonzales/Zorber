@@ -105,7 +105,17 @@ export const Register = (props) => {
           />
         </fieldset>
         <fieldset>
-          <button type="submit"> Sign in </button>
+          <button type="submit"> Sign up </button>
+          <button
+            className="navbar__link"
+            to="/login"
+            onClick={() =>
+              localStorage.removeItem("zorber_user")
+            }
+          >
+            {" "}
+            Cancel
+          </button>
         </fieldset>
       </form>
     </main>

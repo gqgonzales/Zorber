@@ -247,7 +247,7 @@ export const EditEventForm = () => {
         }}
       >
         {eventId ? (
-          <>Save Event Changes</>
+          <>Save Changes</>
         ) : (
           <>Something wrong with this ternary</>
         )}

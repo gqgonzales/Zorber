@@ -119,3 +119,13 @@ export const PastEventList = () => {
             </div>
           );
         })} */
+
+// TIME CONVERTED BELOW
+// https://stackoverflow.com/questions/13898423/javascript-convert-24-hour-time-of-day-string-to-12-hour-time-with-am-pm-and-no
+
+// var timeString = "15:00";
+// var H = +timeString.substr(0, 2);
+// var h = H % 12 || 12;
+// var ampm = H < 12 ? "AM" : "PM";
+// timeString = h + timeString.substr(2, 3) + " " + ampm;
+// document.write(timeString);

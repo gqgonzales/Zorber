@@ -5,6 +5,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { EventContext } from "./EventProvider";
 import { UserContext } from "../users/UserProvider";
 import { Multiselect } from "multiselect-react-dropdown";
+import { userEventContext } from "../userEvents/UserEventsProvider";
 
 export const NewEventForm = () => {
   const {
@@ -16,6 +17,7 @@ export const NewEventForm = () => {
   } = useContext(EventContext);
 
   const { users, getUsers } = useContext(UserContext);
+  const { addUserEvents } = useContext(userEventContext);
 
   const [user, serUsers] = useState([]);
 
@@ -107,7 +109,7 @@ export const NewEventForm = () => {
     <form className="eventForm">
       <div className="subsection__header__container">
         <h2 className="eventForm__title subsection__header">
-          Create a New event!{" "}
+          Create a new event{" "}
         </h2>
       </div>
       <fieldset>
