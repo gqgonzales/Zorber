@@ -6,7 +6,7 @@ import { EventContext } from "./EventProvider";
 import { UserContext } from "../users/UserProvider";
 import { Multiselect } from "multiselect-react-dropdown";
 
-export const NewEventForm = () => {
+export const EditEventForm = () => {
   const {
     addEvent,
     getEventById,
@@ -246,7 +246,7 @@ export const NewEventForm = () => {
       </button>
       <button
         className="cancel__button"
-        onClick={() => history.push("/upcoming")}
+        onClick={() => history.push("/past")}
       >
         Cancel!
       </button>

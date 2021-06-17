@@ -4,7 +4,8 @@ import "./Event.css";
 // import { useHistory, Link } from "react-router-dom";
 import { EventContext } from "./EventProvider";
 import { UserContext } from "../users/UserProvider";
-import { UserEventsProvider } from "../userEvents/UserEventsProvider";
+import { Link } from "react-router-dom";
+// import { UserEventsProvider } from "../userEvents/UserEventsProvider";
 
 export const PastEventList = () => {
   // This state changes when `getEvents()` is invoked below
@@ -73,7 +74,9 @@ export const PastEventList = () => {
                   <div>!!! Time goes here !!!</div>
                 </div>
                 <div>
-                  {/* <button onClick={event}>Edit Event</button> */}
+                  <button>
+                    <Link to="/edit">Edit Event</Link>
+                  </button>
                 </div>
               </div>
             </div>
