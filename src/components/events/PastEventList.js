@@ -4,13 +4,18 @@ import "./Event.css";
 // import { useHistory, Link } from "react-router-dom";
 import { EventContext } from "./EventProvider";
 import { UserContext } from "../users/UserProvider";
+import { UserEventsProvider } from "../userEvents/UserEventsProvider";
 
 export const PastEventList = () => {
   // This state changes when `getEvents()` is invoked below
   const { events, getEvents } = useContext(EventContext);
   const { users, getUsers } = useContext(UserContext);
+  // const { userEvents, getUserEvents } = useContext(
+  //   UserEventsProvider
+  // );
   // const history = useHistory();
   let filteredEvents = [];
+  let eventParticipants = [];
   //useEffect - reach out to the world for something
   useEffect(() => {
     getEvents().then(getUsers);
@@ -52,10 +57,23 @@ export const PastEventList = () => {
                 </div>
                 <div className="event__participants">
                   <div>
-                    {users.map((user) => {
-                      return <div>{user.name}</div>;
+                    {events.forEach((event) => {
+                      if (
+                        event.id === event.userEvents.eventId
+                      ) {
+                        eventParticipants.push(
+                          event.userEvents.userId
+                        );
+                      }
+                      return { eventParticipants };
                     })}
                   </div>
+                </div>
+                <div className="event__participants__time">
+                  <div>!!! Time goes here !!!</div>
+                </div>
+                <div>
+                  {/* <button onClick={event}>Edit Event</button> */}
                 </div>
               </div>
             </div>
