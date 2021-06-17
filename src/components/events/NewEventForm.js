@@ -41,12 +41,12 @@ export const NewEventForm = () => {
   const handleControlledInputChange = (event) => {
     //When changing a state object or array,
     //always create a copy make changes, and then set state.
-    const newevent = { ...event };
+    const newEvent = { ...event };
     //event is an object with properties.
     //set the property to the new value
-    newevent[event.target.name] = event.target.value;
+    newEvent[event.target.name] = event.target.value;
     //update state
-    setEvent(newevent);
+    setEvent(newEvent);
   };
 
   const handleSaveEvent = () => {
@@ -67,9 +67,9 @@ export const NewEventForm = () => {
           startTime: event.startTime,
           userId: event.userId,
           comments: event.comments,
-        }).then(() => history.push(`/events`));
+        }).then(() => history.push(`/upcomingå`));
       } else {
-        const neweventObject = {
+        const newEventObject = {
           title: event.title,
           location: event.location,
           date: event.date,
@@ -77,7 +77,7 @@ export const NewEventForm = () => {
           userId: event.userId,
           comments: event.comments,
         };
-        addEvent(neweventObject).then(() =>
+        addEvent(newEventObject).then(() =>
           history.push("/upcoming")
         );
       }

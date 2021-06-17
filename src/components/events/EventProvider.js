@@ -15,22 +15,6 @@ export const EventProvider = (props) => {
       .then((data) => setEvents(data));
   };
 
-  // const getPastEvents = () => {
-  //   return fetch(
-  //     "http://localhost:8088/events?_embed=userEvents"
-  //   )
-  //     .then((res) => res.json())
-  //     .then((data) => setEvents(data));
-  // };
-
-  // const getUpcomingEvents = () => {
-  //   return fetch(
-  //     "http://localhost:8088/events?_embed=userEvents"
-  //   )
-  //     .then((res) => res.json())
-  //     .then((data) => setEvents(data));
-  // };
-
   const addEvent = (eventObject) => {
     return fetch(
       "http://localhost:8088/events?_embed=userEvents",

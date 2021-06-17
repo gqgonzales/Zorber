@@ -27,7 +27,7 @@ export const ApplicationViews = () => {
               <PastEventList />
             </Route>
 
-            <Route exact path="/edit">
+            <Route exact path="/past/edit/:eventId(\d+)">
               <EditEventForm />
             </Route>
 

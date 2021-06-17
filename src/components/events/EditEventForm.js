@@ -41,12 +41,12 @@ export const EditEventForm = () => {
   const handleControlledInputChange = (event) => {
     //When changing a state object or array,
     //always create a copy make changes, and then set state.
-    const newevent = { ...event };
+    const newEvent = { ...event };
     //event is an object with properties.
     //set the property to the new value
-    newevent[event.target.name] = event.target.value;
+    newEvent[event.target.name] = event.target.value;
     //update state
-    setEvent(newevent);
+    setEvent(newEvent);
   };
 
   const handleSaveEvent = () => {
@@ -67,9 +67,9 @@ export const EditEventForm = () => {
           startTime: event.startTime,
           userId: event.userId,
           comments: event.comments,
-        }).then(() => history.push(`/events`));
+        }).then(() => history.push(`/past`));
       } else {
-        const neweventObject = {
+        const newEventObject = {
           title: event.title,
           location: event.location,
           date: event.date,
@@ -77,7 +77,7 @@ export const EditEventForm = () => {
           userId: event.userId,
           comments: event.comments,
         };
-        addEvent(neweventObject).then(() =>
+        addEvent(newEventObject).then(() =>
           history.push("/upcoming")
         );
       }
@@ -115,7 +115,7 @@ export const EditEventForm = () => {
     <form className="eventForm">
       <div className="subsection__header__container">
         <h2 className="eventForm__title subsection__header">
-          Create a New event!{" "}
+          Edit this Event{" "}
         </h2>
       </div>
       <fieldset>
@@ -242,7 +242,11 @@ export const EditEventForm = () => {
           handleSaveEvent();
         }}
       >
-        {eventId ? <>Save those changes!</> : <>Build it!</>}
+        {eventId ? (
+          <>Save Event Changes</>
+        ) : (
+          <>Something wrong with this ternary</>
+        )}
       </button>
       <button
         className="cancel__button"
@@ -250,6 +254,7 @@ export const EditEventForm = () => {
       >
         Cancel!
       </button>
+      {/* ------------------------------------ */}
     </form>
   );
 };

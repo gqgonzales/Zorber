@@ -1,10 +1,9 @@
 import React, { useContext, useEffect } from "react";
 // To start, you need to import the context object you created in the provider component so that the useContext() hook can access the objects it exposes.
 import "./Event.css";
-// import { useHistory, Link } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { EventContext } from "./EventProvider";
 import { UserContext } from "../users/UserProvider";
-import { Link } from "react-router-dom";
 // import { UserEventsProvider } from "../userEvents/UserEventsProvider";
 
 export const PastEventList = () => {
@@ -14,7 +13,7 @@ export const PastEventList = () => {
   // const { userEvents, getUserEvents } = useContext(
   //   UserEventsProvider
   // );
-  // const history = useHistory();
+  const history = useHistory();
   let filteredEvents = [];
   let eventParticipants = [];
   //useEffect - reach out to the world for something
@@ -73,11 +72,18 @@ export const PastEventList = () => {
                 <div className="event__participants__time">
                   <div>!!! Time goes here !!!</div>
                 </div>
-                <div>
-                  <button>
-                    <Link to="/edit">Edit Event</Link>
+                {/* PANIC ATTACKS */}
+                <div className="button_group">
+                  <button
+                    className="btn"
+                    onClick={() => {
+                      history.push(`/past/edit/${event.id}`);
+                    }}
+                  >
+                    Edit Event
                   </button>
                 </div>
+                {/* OLD BUTTON GOES HERE */}
               </div>
             </div>
           );
