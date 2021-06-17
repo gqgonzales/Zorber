@@ -1,10 +1,11 @@
 import React from "react";
 import { Route } from "react-router-dom";
-import { EventList } from "./events/EventList";
+import { UpcomingEventList } from "./events/UpcomingEventList";
 import { NewEventForm } from "./events/NewEventForm";
 import { EventProvider } from "./events/EventProvider";
 import { UserProvider } from "./users/UserProvider";
 import { UserEventsProvider } from "./userEvents/UserEventsProvider";
+import { PastEventList } from "./events/PastEventList";
 
 export const ApplicationViews = () => {
   return (
@@ -14,11 +15,15 @@ export const ApplicationViews = () => {
           <UserEventsProvider>
             {/* HOME / UPCOMING */}
             <Route exact path="/upcoming">
-              <EventList />
+              <UpcomingEventList />
             </Route>
 
             <Route exact path="/create">
               <NewEventForm />
+            </Route>
+
+            <Route exact path="/past">
+              <PastEventList />
             </Route>
 
             {/* <Route exact path ="/users">
