@@ -72,7 +72,7 @@ export const PastEventList = () => {
                   </div>
                 </div>
                 <div className="event__participants__time">
-                  <div>!!! Time goes here !!!</div>
+                  <div>!!! Finish times go here !!!</div>
                 </div>
                 {/* PANIC ATTACKS */}
                 <div className="button_group">

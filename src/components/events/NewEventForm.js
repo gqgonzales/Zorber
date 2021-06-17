@@ -21,12 +21,12 @@ export const NewEventForm = () => {
 
   //for edit, hold on to state of event in this view
   // The input fields need to be CONTROLLED and thus need to be definied form the outset.
-  const [event, setEvent] = useState({
+  const [eventObj, setEvent] = useState({
     title: "",
     location: "",
     date: "",
     startTime: "",
-    userId: 0,
+    userId: parseInt(localStorage.getItem("zorber_user")),
     comments: "",
   });
 
@@ -41,7 +41,7 @@ export const NewEventForm = () => {
   const handleControlledInputChange = (event) => {
     //When changing a state object or array,
     //always create a copy make changes, and then set state.
-    const newEvent = { ...event };
+    const newEvent = { ...eventObj };
     //event is an object with properties.
     //set the property to the new value
     newEvent[event.target.name] = event.target.value;
@@ -50,38 +50,30 @@ export const NewEventForm = () => {
   };
 
   const handleSaveEvent = () => {
-    if (parseInt(event.eventId) === 0) {
-      window.alert(
-        "Please enter all required fields to continue."
-      );
-    } else {
-      //disable the button - no extra clicks
-      setIsLoading(true);
-      if (eventId) {
-        //PUT - update
-        updateEvent({
-          eventId: parseInt(event.eventId),
-          title: event.title,
-          location: event.location,
-          date: event.date,
-          startTime: event.startTime,
-          userId: event.userId,
-          comments: event.comments,
-        }).then(() => history.push(`/upcomingå`));
-      } else {
-        const newEventObject = {
-          title: event.title,
-          location: event.location,
-          date: event.date,
-          startTime: event.startTime,
-          userId: event.userId,
-          comments: event.comments,
-        };
-        addEvent(newEventObject).then(() =>
-          history.push("/upcoming")
-        );
-      }
-    }
+    //disable the button - no extra clicks
+    setIsLoading(true);
+    // if (eventId) {
+    //   //PUT - update
+    //   updateEvent({
+    //     eventId: parseInt(event.eventId),
+    //     title: event.title,
+    //     location: event.location,
+    //     date: event.date,
+    //     startTime: event.startTime,
+    //     userId: event.userId,
+    //     comments: event.comments,
+    //   }).then(() => history.push(`/upcomingå`));
+    // } else
+
+    // const newEventObject = {
+    //   title: event.title,
+    //   location: event.location,
+    //   date: event.date,
+    //   startTime: event.startTime,
+    //   userId: event.userId,
+    //   comments: event.comments,
+    // };
+    addEvent(eventObj).then(() => history.push("/upcoming"));
   };
 
   // Get users and events. If eventId is in the URL, getEventById
@@ -90,8 +82,8 @@ export const NewEventForm = () => {
       .then(getUsers())
       .then(() => {
         if (eventId) {
-          getEventById(eventId).then((event) => {
-            setEvent(event);
+          getEventById(eventId).then((eventRes) => {
+            setEvent(eventRes);
             setIsLoading(false);
           });
         } else {
@@ -124,8 +116,8 @@ export const NewEventForm = () => {
           <input
             type="text"
             id="eventTitle"
-            name="name"
-            value={event.title}
+            name="title"
+            value={eventObj.title}
             required
             autoFocus
             className="form-control"
@@ -142,7 +134,7 @@ export const NewEventForm = () => {
             type="text"
             id="eventLocation"
             name="location"
-            value={event.location}
+            value={eventObj.location}
             required
             autoFocus
             className="form-control"
@@ -159,7 +151,7 @@ export const NewEventForm = () => {
             type="date"
             id="eventDate"
             name="date"
-            value={event.date}
+            value={eventObj.date}
             required
             autoFocus
             className="form-control"
@@ -171,12 +163,12 @@ export const NewEventForm = () => {
       {/* Start Time */}
       <fieldset>
         <div className="form-group">
-          <label htmlFor="eventDate">Time: </label>
+          <label htmlFor="startTime">Time: </label>
           <input
             type="time"
-            id="eventDate"
+            id="startTime"
             name="startTime"
-            value={event.startTime}
+            value={eventObj.startTime}
             required
             autoFocus
             className="form-control"
@@ -220,12 +212,12 @@ export const NewEventForm = () => {
       {/* COMMENTS */}
       <fieldset>
         <div className="form-group">
-          <label htmlFor="eventComments">Comments: </label>
+          <label htmlFor="comments">Comments: </label>
           <input
             type="text"
-            id="eventComments"
+            id="comments"
             name="comments"
-            value={event.comments}
+            value={eventObj.comments}
             required
             className="form-control"
             placeholder="Add comments or a description!"
@@ -242,7 +234,11 @@ export const NewEventForm = () => {
           handleSaveEvent();
         }}
       >
-        {eventId ? <>Save those changes!</> : <>Build it!</>}
+        {eventId ? (
+          <>Save those changes!</>
+        ) : (
+          <>Create New Event</>
+        )}
       </button>
       <button
         className="cancel__button"
