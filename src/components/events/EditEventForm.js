@@ -13,6 +13,7 @@ export const EditEventForm = () => {
     updateEvent,
     getEvents,
     events,
+    deleteEvent,
   } = useContext(EventContext);
 
   const { users, getUsers } = useContext(UserContext);
@@ -234,6 +235,9 @@ export const EditEventForm = () => {
         </div>
       </fieldset>
       {/* ONE MORE */}
+      <button className="delete__button" onClick={deleteEvent}>
+        Delete
+      </button>
       <button
         className="btn btn-primary"
         disabled={isLoading}
@@ -254,6 +258,7 @@ export const EditEventForm = () => {
       >
         Cancel!
       </button>
+
       {/* ------------------------------------ */}
     </form>
   );

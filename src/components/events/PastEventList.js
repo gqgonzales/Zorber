@@ -36,6 +36,8 @@ export const PastEventList = () => {
         })}
 
         {filteredEvents.map((event) => {
+          // const humanReadableStartTime =
+          //   event.startTime.toLocaleTimeString();
           return (
             <div
               className="event"
