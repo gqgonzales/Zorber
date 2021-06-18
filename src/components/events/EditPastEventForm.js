@@ -202,7 +202,12 @@ export const EditPastEventForm = () => {
         </div>
       </fieldset>
       {/* ONE MORE */}
-      <button className="delete__button" onClick={deleteEvent}>
+      <button
+        className="delete__button"
+        onClick={(eventId) =>
+          deleteEvent(eventId).then(history.push("/past"))
+        }
+      >
         Delete
       </button>
       <button
