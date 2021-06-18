@@ -15,7 +15,7 @@ export const EventProvider = (props) => {
       .then((data) => setEvents(data));
   };
 
-  const addEvent = (eventObject) => {
+  const addEvent = (eventObj) => {
     return fetch(
       "http://localhost:8088/events?_embed=userEvents",
       {
@@ -23,7 +23,7 @@ export const EventProvider = (props) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(eventObject),
+        body: JSON.stringify(eventObj),
       }
     ).then(getEvents);
   };
@@ -34,13 +34,13 @@ export const EventProvider = (props) => {
     }).then(getEvents);
   };
 
-  const updateEvent = (event) => {
-    return fetch(`http://localhost:8088/events/${event.id}`, {
+  const updateEvent = (eventObj) => {
+    return fetch(`http://localhost:8088/events/${eventObj.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(event),
+      body: JSON.stringify(eventObj),
     }).then(getEvents);
   };
 

@@ -6,7 +6,7 @@ import { EventContext } from "./EventProvider";
 import { UserContext } from "../users/UserProvider";
 import { Multiselect } from "multiselect-react-dropdown";
 
-export const EditEventForm = () => {
+export const EditPastEventForm = () => {
   const {
     addEvent,
     getEventById,
@@ -22,7 +22,7 @@ export const EditEventForm = () => {
 
   //for edit, hold on to state of event in this view
   // The input fields need to be CONTROLLED and thus need to be definied form the outset.
-  const [event, setEvent] = useState({
+  const [eventObj, setEvent] = useState({
     title: "",
     location: "",
     date: "",
@@ -51,7 +51,7 @@ export const EditEventForm = () => {
   };
 
   const handleSaveEvent = () => {
-    if (parseInt(event.eventId) === 0) {
+    if (parseInt(eventObj.eventId) === 0) {
       window.alert(
         "Please enter all required fields to continue."
       );
@@ -60,23 +60,24 @@ export const EditEventForm = () => {
       setIsLoading(true);
       if (eventId) {
         //PUT - update
+        debugger;
         updateEvent({
-          eventId: parseInt(event.eventId),
-          title: event.title,
-          location: event.location,
-          date: event.date,
-          startTime: event.startTime,
-          userId: event.userId,
-          comments: event.comments,
+          eventId: parseInt(eventId),
+          title: eventObj.title,
+          location: eventObj.location,
+          date: eventObj.date,
+          startTime: eventObj.startTime,
+          userId: eventObj.userId,
+          comments: eventObj.comments,
         }).then(() => history.push(`/past`));
       } else {
         const newEventObject = {
-          title: event.title,
-          location: event.location,
-          date: event.date,
-          startTime: event.startTime,
-          userId: event.userId,
-          comments: event.comments,
+          title: eventObj.title,
+          location: eventObj.location,
+          date: eventObj.date,
+          startTime: eventObj.startTime,
+          userId: eventObj.userId,
+          comments: eventObj.comments,
         };
         addEvent(newEventObject).then(() =>
           history.push("/upcoming")
@@ -91,8 +92,8 @@ export const EditEventForm = () => {
       .then(getUsers())
       .then(() => {
         if (eventId) {
-          getEventById(eventId).then((event) => {
-            setEvent(event);
+          getEventById(eventId).then((eventRes) => {
+            setEvent(eventRes);
             setIsLoading(false);
           });
         } else {
@@ -125,8 +126,8 @@ export const EditEventForm = () => {
           <input
             type="text"
             id="eventTitle"
-            name="name"
-            value={event.title}
+            name="title"
+            value={eventObj.title}
             required
             autoFocus
             className="form-control"
@@ -143,7 +144,7 @@ export const EditEventForm = () => {
             type="text"
             id="eventLocation"
             name="location"
-            value={event.location}
+            value={eventObj.location}
             required
             autoFocus
             className="form-control"
@@ -160,7 +161,7 @@ export const EditEventForm = () => {
             type="date"
             id="eventDate"
             name="date"
-            value={event.date}
+            value={eventObj.date}
             required
             autoFocus
             className="form-control"
@@ -177,7 +178,7 @@ export const EditEventForm = () => {
             type="time"
             id="eventDate"
             name="startTime"
-            value={event.startTime}
+            value={eventObj.startTime}
             required
             autoFocus
             className="form-control"
@@ -226,7 +227,7 @@ export const EditEventForm = () => {
             type="text"
             id="eventComments"
             name="comments"
-            value={event.comments}
+            value={eventObj.comments}
             required
             className="form-control"
             placeholder="Add comments or a description!"

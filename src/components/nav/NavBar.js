@@ -5,6 +5,9 @@ import "./NavBar.css";
 export const NavBar = (props) => {
   return (
     <ul className="navbar">
+      <div className="navbar__header">
+        <h2>Zorber</h2>
+      </div>
       <li className="navbar__item active">
         <Link className="navbar__link" to="/upcoming">
           Find a Race

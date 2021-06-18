@@ -6,7 +6,7 @@ import { EventProvider } from "./events/EventProvider";
 import { UserProvider } from "./users/UserProvider";
 import { UserEventsProvider } from "./userEvents/UserEventsProvider";
 import { PastEventList } from "./events/PastEventList";
-import { EditEventForm } from "./events/EditEventForm";
+import { EditPastEventForm } from "./events/EditPastEventForm";
 
 export const ApplicationViews = () => {
   return (
@@ -28,7 +28,7 @@ export const ApplicationViews = () => {
             </Route>
 
             <Route exact path="/past/edit/:eventId(\d+)">
-              <EditEventForm />
+              <EditPastEventForm />
             </Route>
 
             {/* <Route exact path ="/users">
