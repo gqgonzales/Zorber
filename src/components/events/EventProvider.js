@@ -15,23 +15,7 @@ export const EventProvider = (props) => {
       .then((data) => setEvents(data));
   };
 
-  // const getPastEvents = () => {
-  //   return fetch(
-  //     "http://localhost:8088/events?_embed=userEvents"
-  //   )
-  //     .then((res) => res.json())
-  //     .then((data) => setEvents(data));
-  // };
-
-  // const getUpcomingEvents = () => {
-  //   return fetch(
-  //     "http://localhost:8088/events?_embed=userEvents"
-  //   )
-  //     .then((res) => res.json())
-  //     .then((data) => setEvents(data));
-  // };
-
-  const addEvent = (eventObject) => {
+  const addEvent = (eventObj) => {
     return fetch(
       "http://localhost:8088/events?_embed=userEvents",
       {
@@ -39,7 +23,7 @@ export const EventProvider = (props) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(eventObject),
+        body: JSON.stringify(eventObj),
       }
     ).then(getEvents);
   };
@@ -50,14 +34,17 @@ export const EventProvider = (props) => {
     }).then(getEvents);
   };
 
-  const updateEvent = (event) => {
-    return fetch(`http://localhost:8088/events/${event.id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(event),
-    }).then(getEvents);
+  const updateEvent = (eventObj) => {
+    return fetch(
+      `http://localhost:8088/events/${eventObj.id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(eventObj),
+      }
+    ).then(getEvents);
   };
 
   const getEventById = (eventId) => {
@@ -78,8 +65,6 @@ export const EventProvider = (props) => {
         deleteEvent,
         updateEvent,
         getEventById,
-        // getPastEvents,
-        // getUpcomingEvents,
       }}
     >
       {props.children}

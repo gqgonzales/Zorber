@@ -5,19 +5,18 @@ import { useHistory, useParams } from "react-router-dom";
 import { EventContext } from "./EventProvider";
 import { UserContext } from "../users/UserProvider";
 import { Multiselect } from "multiselect-react-dropdown";
-import { userEventContext } from "../userEvents/UserEventsProvider";
 
-export const NewEventForm = () => {
+export const EditPastEventForm = () => {
   const {
     addEvent,
     getEventById,
     updateEvent,
     getEvents,
     events,
+    deleteEvent,
   } = useContext(EventContext);
 
   const { users, getUsers } = useContext(UserContext);
-  const { addUserEvents } = useContext(userEventContext);
 
   const [user, serUsers] = useState([]);
 
@@ -28,7 +27,7 @@ export const NewEventForm = () => {
     location: "",
     date: "",
     startTime: "",
-    userId: parseInt(localStorage.getItem("zorber_user")),
+    userId: 0,
     comments: "",
   });
 
@@ -43,39 +42,33 @@ export const NewEventForm = () => {
   const handleControlledInputChange = (event) => {
     //When changing a state object or array,
     //always create a copy make changes, and then set state.
-    const newEvent = { ...eventObj };
+    const updatePastEvent = { ...eventObj };
     //event is an object with properties.
     //set the property to the new value
-    newEvent[event.target.name] = event.target.value;
+    updatePastEvent[event.target.name] = event.target.value;
     //update state
-    setEvent(newEvent);
+    setEvent(updatePastEvent);
   };
 
   const handleSaveEvent = () => {
-    //disable the button - no extra clicks
-    setIsLoading(true);
-    // if (eventId) {
-    //   //PUT - update
-    //   updateEvent({
-    //     eventId: parseInt(event.eventId),
-    //     title: event.title,
-    //     location: event.location,
-    //     date: event.date,
-    //     startTime: event.startTime,
-    //     userId: event.userId,
-    //     comments: event.comments,
-    //   }).then(() => history.push(`/upcomingå`));
-    // } else
-
-    // const newEventObject = {
-    //   title: event.title,
-    //   location: event.location,
-    //   date: event.date,
-    //   startTime: event.startTime,
-    //   userId: event.userId,
-    //   comments: event.comments,
-    // };
-    addEvent(eventObj).then(() => history.push("/upcoming"));
+    if (parseInt(eventObj.eventId) === 0) {
+      window.alert(
+        "Please enter all required fields to continue."
+      );
+    } else {
+      //disable the button - no extra clicks
+      setIsLoading(true);
+      //PUT - update
+      updateEvent({
+        id: parseInt(eventId),
+        title: eventObj.title,
+        location: eventObj.location,
+        date: eventObj.date,
+        startTime: eventObj.startTime,
+        userId: eventObj.userId,
+        comments: eventObj.comments,
+      }).then(() => history.push(`/past`));
+    }
   };
 
   // Get users and events. If eventId is in the URL, getEventById
@@ -84,7 +77,7 @@ export const NewEventForm = () => {
       .then(getUsers())
       .then(() => {
         if (eventId) {
-          getEventById(eventId).then((eventRes) => {
+          getEventById(parseInt(eventId)).then((eventRes) => {
             setEvent(eventRes);
             setIsLoading(false);
           });
@@ -109,7 +102,7 @@ export const NewEventForm = () => {
     <form className="eventForm">
       <div className="subsection__header__container">
         <h2 className="eventForm__title subsection__header">
-          Create a new event{" "}
+          Edit this Event{" "}
         </h2>
       </div>
       <fieldset>
@@ -165,10 +158,10 @@ export const NewEventForm = () => {
       {/* Start Time */}
       <fieldset>
         <div className="form-group">
-          <label htmlFor="startTime">Time: </label>
+          <label htmlFor="eventDate">Time: </label>
           <input
             type="time"
-            id="startTime"
+            id="eventDate"
             name="startTime"
             value={eventObj.startTime}
             required
@@ -192,32 +185,13 @@ export const NewEventForm = () => {
           />
         </div>
       </fieldset>
-      {/* <fieldset>
-        <div className="form-group">
-          <label htmlFor="userId">Participants: </label>
-          <select
-            value={users.id}
-            name="userId"
-            id="eventUsers"
-            className="form-control"
-            onChange={handleControlledInputChange}
-          >
-            <option value="0">Add users</option>
-            {users.map((u) => (
-              <option key={u.id} value={u.id}>
-                {u.name}
-              </option>
-            ))}
-          </select>
-        </div>
-      </fieldset> */}
       {/* COMMENTS */}
       <fieldset>
         <div className="form-group">
-          <label htmlFor="comments">Comments: </label>
+          <label htmlFor="eventComments">Comments: </label>
           <input
             type="text"
-            id="comments"
+            id="eventComments"
             name="comments"
             value={eventObj.comments}
             required
@@ -228,6 +202,9 @@ export const NewEventForm = () => {
         </div>
       </fieldset>
       {/* ONE MORE */}
+      <button className="delete__button" onClick={deleteEvent}>
+        Delete
+      </button>
       <button
         className="btn btn-primary"
         disabled={isLoading}
@@ -237,17 +214,19 @@ export const NewEventForm = () => {
         }}
       >
         {eventId ? (
-          <>Save those changes!</>
+          <>Save Changes</>
         ) : (
-          <>Create New Event</>
+          <>Something wrong with this ternary</>
         )}
       </button>
       <button
         className="cancel__button"
-        onClick={() => history.push("/upcoming")}
+        onClick={() => history.push("/past")}
       >
         Cancel!
       </button>
+
+      {/* ------------------------------------ */}
     </form>
   );
 };
