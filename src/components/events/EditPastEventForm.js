@@ -42,12 +42,12 @@ export const EditPastEventForm = () => {
   const handleControlledInputChange = (event) => {
     //When changing a state object or array,
     //always create a copy make changes, and then set state.
-    const newEvent = { ...event };
+    const updatePastEvent = { ...eventObj };
     //event is an object with properties.
     //set the property to the new value
-    newEvent[event.target.name] = event.target.value;
+    updatePastEvent[event.target.name] = event.target.value;
     //update state
-    setEvent(newEvent);
+    setEvent(updatePastEvent);
   };
 
   const handleSaveEvent = () => {
@@ -58,31 +58,16 @@ export const EditPastEventForm = () => {
     } else {
       //disable the button - no extra clicks
       setIsLoading(true);
-      if (eventId) {
-        //PUT - update
-        debugger;
-        updateEvent({
-          eventId: parseInt(eventId),
-          title: eventObj.title,
-          location: eventObj.location,
-          date: eventObj.date,
-          startTime: eventObj.startTime,
-          userId: eventObj.userId,
-          comments: eventObj.comments,
-        }).then(() => history.push(`/past`));
-      } else {
-        const newEventObject = {
-          title: eventObj.title,
-          location: eventObj.location,
-          date: eventObj.date,
-          startTime: eventObj.startTime,
-          userId: eventObj.userId,
-          comments: eventObj.comments,
-        };
-        addEvent(newEventObject).then(() =>
-          history.push("/upcoming")
-        );
-      }
+      //PUT - update
+      updateEvent({
+        id: parseInt(eventId),
+        title: eventObj.title,
+        location: eventObj.location,
+        date: eventObj.date,
+        startTime: eventObj.startTime,
+        userId: eventObj.userId,
+        comments: eventObj.comments,
+      }).then(() => history.push(`/past`));
     }
   };
 
@@ -92,7 +77,7 @@ export const EditPastEventForm = () => {
       .then(getUsers())
       .then(() => {
         if (eventId) {
-          getEventById(eventId).then((eventRes) => {
+          getEventById(parseInt(eventId)).then((eventRes) => {
             setEvent(eventRes);
             setIsLoading(false);
           });
@@ -200,25 +185,6 @@ export const EditPastEventForm = () => {
           />
         </div>
       </fieldset>
-      {/* <fieldset>
-        <div className="form-group">
-          <label htmlFor="userId">Participants: </label>
-          <select
-            value={users.id}
-            name="userId"
-            id="eventUsers"
-            className="form-control"
-            onChange={handleControlledInputChange}
-          >
-            <option value="0">Add users</option>
-            {users.map((u) => (
-              <option key={u.id} value={u.id}>
-                {u.name}
-              </option>
-            ))}
-          </select>
-        </div>
-      </fieldset> */}
       {/* COMMENTS */}
       <fieldset>
         <div className="form-group">
