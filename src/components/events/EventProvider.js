@@ -35,16 +35,13 @@ export const EventProvider = (props) => {
   };
 
   const updateEvent = (eventObj) => {
-    return fetch(
-      `http://localhost:8088/events/${eventObj.id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(eventObj),
-      }
-    ).then(getEvents);
+    return fetch(`http://localhost:8088/events/${eventObj.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(eventObj),
+    }).then(getEvents);
   };
 
   const getEventById = (eventId) => {

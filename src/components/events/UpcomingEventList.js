@@ -1,13 +1,14 @@
 import React, { useContext, useEffect } from "react";
 // To start, you need to import the context object you created in the provider component so that the useContext() hook can access the objects it exposes.
 import "./Event.css";
-// import { useHistory, Link } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { EventContext } from "./EventProvider";
 
 export const UpcomingEventList = () => {
   // This state changes when `getEvents()` is invoked below
   const { events, getEvents } = useContext(EventContext);
   // const history = useHistory();
+  const history = useHistory();
   let filteredEvents = [];
   //useEffect - reach out to the world for something
   useEffect(() => {
@@ -48,6 +49,17 @@ export const UpcomingEventList = () => {
                 <div className="event__comments">
                   {event.comments}
                 </div>
+              </div>
+              {/* BUTTONS */}
+              <div className="button_group">
+                <button
+                  className="btn"
+                  onClick={() => {
+                    history.push(`/upcoming/edit/${event.id}`);
+                  }}
+                >
+                  Edit Event
+                </button>
               </div>
             </div>
           );
