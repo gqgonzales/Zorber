@@ -20,6 +20,8 @@ export const NewEventForm = () => {
     time: "",
   });
 
+  const [participants] = useState([]);
+
   //for edit, hold on to state of event in this view
   // The input fields need to be CONTROLLED and thus need to be definied form the outset.
   const [eventObj, setEvent] = useState({
@@ -39,6 +41,12 @@ export const NewEventForm = () => {
 
   //when field changes, update state. This causes a re-render and updates the view.
   //Controlled component
+
+  const buildParticipantsArray = () => {
+    // If an object is selected in the multiselect, add the userId to the participants array.
+    // Then, iterate over the userIds (participants array) and invoke addUserEvents.
+  };
+
   const handleControlledInputChange = (event) => {
     //When changing a state object or array,
     //always create a copy make changes, and then set state.
