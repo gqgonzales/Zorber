@@ -54,9 +54,24 @@ export const EditUpcomingEventForm = () => {
   };
 
   const handleSaveEvent = () => {
-    //disable the button - no extra clicks
-    setIsLoading(true);
-    addEvent(eventObj).then(() => history.push("/upcoming"));
+    if (parseInt(eventObj.eventId) === 0) {
+      window.alert(
+        "Please enter all required fields to continue."
+      );
+    } else {
+      //disable the button - no extra clicks
+      setIsLoading(true);
+      //PUT - update
+      updateEvent({
+        id: parseInt(eventId),
+        title: eventObj.title,
+        location: eventObj.location,
+        date: eventObj.date,
+        startTime: eventObj.startTime,
+        userId: eventObj.userId,
+        comments: eventObj.comments,
+      }).then(() => history.push(`/upcoming`));
+    }
   };
 
   // Get users and events. If eventId is in the URL, getEventById
@@ -192,9 +207,10 @@ export const EditUpcomingEventForm = () => {
       {/* ONE MORE */}
       <button
         className="delete__button"
-        onClick={(eventId) =>
-          deleteEvent(eventId).then(history.push("/upcoming"))
-        }
+        onClick={() => {
+          deleteEvent(eventId);
+          history.push("/upcoming");
+        }}
       >
         Delete
       </button>
