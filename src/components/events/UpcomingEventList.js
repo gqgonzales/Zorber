@@ -3,18 +3,20 @@ import React, { useContext, useEffect } from "react";
 import "./Event.css";
 import { useHistory, Link } from "react-router-dom";
 import { EventContext } from "./EventProvider";
+import { UserContext } from "../users/UserProvider";
 
 export const UpcomingEventList = () => {
   // This state changes when `getEvents()` is invoked below
   const { events, getEvents } = useContext(EventContext);
-  // const history = useHistory();
+  const { users, getUsers } = useContext(UserContext);
+
   const history = useHistory();
+
   let filteredEvents = [];
   //useEffect - reach out to the world for something
   useEffect(() => {
-    getEvents();
+    getEvents().then(getUsers);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
-  //   The empty array bracket is the dependency array. It only runs on first render.
 
   return (
     <>
@@ -22,32 +24,34 @@ export const UpcomingEventList = () => {
         <h2 className="subsection__header">Upcoming Events</h2>
       </div>
       <div className="Events">
-        {events.forEach((event) => {
-          if (Date.parse(event.date) > Date.now()) {
-            filteredEvents.push(event);
+        {events.forEach((eventObj) => {
+          if (Date.parse(eventObj.date) > Date.now()) {
+            filteredEvents.push(eventObj);
           }
           return { filteredEvents };
         })}
 
-        {filteredEvents.map((event) => {
+        {filteredEvents.map((eventObj) => {
           return (
             <div
               className="event"
-              id={`event--${event.id}`}
-              key={`event--${event.id}`}
+              id={`event--${eventObj.id}`}
+              key={`event--${eventObj.id}`}
             >
               <div className="event__title option__name">
-                <h3>{event.title}</h3>
+                <h3>{eventObj.title}</h3>
               </div>
               <div className="event__info">
                 <h4 className="event__location">
-                  {event.location}
+                  {eventObj.location}
                 </h4>
+                {/* HOW CAN WE CONVERT THIS USERID TO THE APPROPRIATE NAME? */}
+                <div>Hosted by {eventObj.userId}</div>
                 <div className="event__date event__startTime">
-                  {event.date} at {event.startTime}
+                  {eventObj.date} at {eventObj.startTime}
                 </div>
                 <div className="event__comments">
-                  {event.comments}
+                  {eventObj.comments}
                 </div>
               </div>
               {/* BUTTONS */}
@@ -55,7 +59,9 @@ export const UpcomingEventList = () => {
                 <button
                   className="btn"
                   onClick={() => {
-                    history.push(`/upcoming/edit/${event.id}`);
+                    history.push(
+                      `/upcoming/edit/${eventObj.id}`
+                    );
                   }}
                 >
                   Edit Event
@@ -68,28 +74,3 @@ export const UpcomingEventList = () => {
     </>
   );
 };
-
-/* {events.map((event) => {
-          return (
-            <div
-              className="event"
-              id={`event--${event.id}`}
-              key={`event--${event.id}`}
-            >
-              <div className="event__title option__name">
-                <h3>{event.title}</h3>
-              </div>
-              <div className="event__info">
-                <h4 className="event__location">
-                  {event.location}
-                </h4>
-                <div className="event__date event__startTime">
-                  {event.date} at {event.startTime}
-                </div>
-                <div className="event__comments">
-                  {event.comments}
-                </div>
-              </div>
-            </div>
-          );
-        })} */

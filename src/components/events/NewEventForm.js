@@ -21,6 +21,12 @@ export const NewEventForm = () => {
 
   const [user, serUsers] = useState([]);
 
+  const [userEvent, setUserEvents] = useState({
+    userId: 0,
+    eventId: 0,
+    time: "",
+  });
+
   //for edit, hold on to state of event in this view
   // The input fields need to be CONTROLLED and thus need to be definied form the outset.
   const [eventObj, setEvent] = useState({
@@ -44,38 +50,23 @@ export const NewEventForm = () => {
     //When changing a state object or array,
     //always create a copy make changes, and then set state.
     const newEvent = { ...eventObj };
-    //event is an object with properties.
-    //set the property to the new value
+    const newUserEvent = { ...userEvent };
+
     newEvent[event.target.name] = event.target.value;
+    newUserEvent[event.target.name] = event.target.value;
     //update state
     setEvent(newEvent);
+    setUserEvents(newUserEvent);
   };
 
   const handleSaveEvent = () => {
     //disable the button - no extra clicks
     setIsLoading(true);
-    // if (eventId) {
-    //   //PUT - update
-    //   updateEvent({
-    //     eventId: parseInt(event.eventId),
-    //     title: event.title,
-    //     location: event.location,
-    //     date: event.date,
-    //     startTime: event.startTime,
-    //     userId: event.userId,
-    //     comments: event.comments,
-    //   }).then(() => history.push(`/upcomingå`));
-    // } else
 
-    // const newEventObject = {
-    //   title: event.title,
-    //   location: event.location,
-    //   date: event.date,
-    //   startTime: event.startTime,
-    //   userId: event.userId,
-    //   comments: event.comments,
-    // };
-    addEvent(eventObj).then(() => history.push("/upcoming"));
+    // addEvent(eventObj).then(() => history.push("/upcoming"));
+    addEvent(eventObj)
+      .then(addUserEvents(userEvent))
+      .then(() => history.push("/upcoming"));
   };
 
   // Get users and events. If eventId is in the URL, getEventById

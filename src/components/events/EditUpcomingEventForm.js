@@ -56,27 +56,6 @@ export const EditUpcomingEventForm = () => {
   const handleSaveEvent = () => {
     //disable the button - no extra clicks
     setIsLoading(true);
-    // if (eventId) {
-    //   //PUT - update
-    //   updateEvent({
-    //     eventId: parseInt(event.eventId),
-    //     title: event.title,
-    //     location: event.location,
-    //     date: event.date,
-    //     startTime: event.startTime,
-    //     userId: event.userId,
-    //     comments: event.comments,
-    //   }).then(() => history.push(`/upcomingå`));
-    // } else
-
-    // const newEventObject = {
-    //   title: event.title,
-    //   location: event.location,
-    //   date: event.date,
-    //   startTime: event.startTime,
-    //   userId: event.userId,
-    //   comments: event.comments,
-    // };
     addEvent(eventObj).then(() => history.push("/upcoming"));
   };
 
@@ -97,7 +76,7 @@ export const EditUpcomingEventForm = () => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   //   onSelect(selectedList, selectedItem) {
-  //     ...
+  //       addUserEvents()
   // }
 
   // onRemove(selectedList, removedItem) {
