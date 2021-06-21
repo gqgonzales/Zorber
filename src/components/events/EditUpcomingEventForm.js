@@ -8,21 +8,21 @@ import { Multiselect } from "multiselect-react-dropdown";
 import { userEventContext } from "../userEvents/UserEventsProvider";
 
 export const EditUpcomingEventForm = () => {
-  const {
-    addEvent,
-    getEventById,
-    updateEvent,
-    getEvents,
-    events,
-    deleteEvent,
-  } = useContext(EventContext);
+  const { getEventById, updateEvent, getEvents, deleteEvent } =
+    useContext(EventContext);
 
   const { users, getUsers } = useContext(UserContext);
 
   const { addUserEvents } = useContext(userEventContext);
 
-  const [user, serUsers] = useState([]);
+  // const [user, serUsers] = useState([]);
 
+  const [userEvent, setUserEvents] = useState({
+    userId: 0,
+    eventId: 0,
+    time: "",
+  });
+  
   //for edit, hold on to state of event in this view
   // The input fields need to be CONTROLLED and thus need to be definied form the outset.
   const [eventObj, setEvent] = useState({

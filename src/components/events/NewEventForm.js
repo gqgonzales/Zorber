@@ -8,18 +8,11 @@ import { Multiselect } from "multiselect-react-dropdown";
 import { userEventContext } from "../userEvents/UserEventsProvider";
 
 export const NewEventForm = () => {
-  const {
-    addEvent,
-    getEventById,
-    updateEvent,
-    getEvents,
-    events,
-  } = useContext(EventContext);
+  const { addEvent, getEventById, getEvents } =
+    useContext(EventContext);
 
   const { users, getUsers } = useContext(UserContext);
   const { addUserEvents } = useContext(userEventContext);
-
-  const [user, serUsers] = useState([]);
 
   const [userEvent, setUserEvents] = useState({
     userId: 0,
@@ -62,8 +55,9 @@ export const NewEventForm = () => {
   const handleSaveEvent = () => {
     //disable the button - no extra clicks
     setIsLoading(true);
-
+    //  Without particpants:
     // addEvent(eventObj).then(() => history.push("/upcoming"));
+    // With particpants:
     addEvent(eventObj)
       .then(addUserEvents(userEvent))
       .then(() => history.push("/upcoming"));
