@@ -8,18 +8,19 @@ import { Multiselect } from "multiselect-react-dropdown";
 import { userEventContext } from "../userEvents/UserEventsProvider";
 
 export const NewEventForm = () => {
-  const {
-    addEvent,
-    getEventById,
-    updateEvent,
-    getEvents,
-    events,
-  } = useContext(EventContext);
+  const { addEvent, getEventById, getEvents } =
+    useContext(EventContext);
 
   const { users, getUsers } = useContext(UserContext);
   const { addUserEvents } = useContext(userEventContext);
 
-  const [user, serUsers] = useState([]);
+  const [userEvent, setUserEvents] = useState({
+    userId: 0,
+    eventId: 0,
+    time: "",
+  });
+
+  // const [participants, setParticipants] = useState([]);
 
   //for edit, hold on to state of event in this view
   // The input fields need to be CONTROLLED and thus need to be definied form the outset.
@@ -40,42 +41,71 @@ export const NewEventForm = () => {
 
   //when field changes, update state. This causes a re-render and updates the view.
   //Controlled component
+
+  const [participants, setParticipants] = useState([]);
+
+  const onSelect = (selectedValue) => {
+    // If an object is selected in the multiselect, add the userId to the participants array.
+    // setParticipants([...participants, selectedValue]);
+    // const addSelected = [...participants];
+    // addSelected.push(selectedValue);
+    setParticipants(selectedValue);
+  };
+
+  const onRemove = (selectedValue) => {
+    // If an object is selected in the multiselect, add the userId to the participants array.
+    const removeSelected = [...participants].splice(
+      selectedValue
+    );
+    setParticipants(removeSelected);
+  };
+
+  // const getUserIds = () => {
+  //   // If an object is selected in the multiselect, add the userId to the participants array.
+  //   // Then, iterate over the userIds (participants array) and invoke addUserEvents.
+  //   const selectedIds = participants.map((userObj) => {
+  //     // DO YOU WANT TO GRAB THE USERID'S HERE?
+  //     return userObj.id;
+  //   });
+  //   console.log(selectedIds);
+  //   return selectedIds;
+  // };
+  // Cool, now you have an array of the selected ID's.
+
   const handleControlledInputChange = (event) => {
     //When changing a state object or array,
     //always create a copy make changes, and then set state.
     const newEvent = { ...eventObj };
-    //event is an object with properties.
-    //set the property to the new value
+    // const newUserEvent = { ...userEvent };
     newEvent[event.target.name] = event.target.value;
+    // newUserEvent[event.target.name] = event.target.value;
     //update state
     setEvent(newEvent);
+    // setUserEvents(newUserEvent);
   };
+
+  // const multiselectInputChange = (event) => {
+  //   const newUserEvent = { ...userEvent };
+  //   newUserEvent[event.target.name] = event.target.value;
+
+  //   setUserEvents(newUserEvent);
+  // };
 
   const handleSaveEvent = () => {
     //disable the button - no extra clicks
     setIsLoading(true);
-    // if (eventId) {
-    //   //PUT - update
-    //   updateEvent({
-    //     eventId: parseInt(event.eventId),
-    //     title: event.title,
-    //     location: event.location,
-    //     date: event.date,
-    //     startTime: event.startTime,
-    //     userId: event.userId,
-    //     comments: event.comments,
-    //   }).then(() => history.push(`/upcomingå`));
-    // } else
-
-    // const newEventObject = {
-    //   title: event.title,
-    //   location: event.location,
-    //   date: event.date,
-    //   startTime: event.startTime,
-    //   userId: event.userId,
-    //   comments: event.comments,
-    // };
-    addEvent(eventObj).then(() => history.push("/upcoming"));
+    addEvent(eventObj)
+      .then((res) => {
+        participants.forEach((singleId) => {
+          addUserEvents({
+            userId: singleId.id,
+            eventId: res.id,
+            time: "",
+          });
+        });
+      })
+      .then(getEvents)
+      .then(() => history.push("/upcoming"));
   };
 
   // Get users and events. If eventId is in the URL, getEventById
@@ -93,17 +123,6 @@ export const NewEventForm = () => {
         }
       });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  //   onSelect(selectedList, selectedItem) {
-  //     ...
-  // }
-
-  // onRemove(selectedList, removedItem) {
-  //     ...
-  // }
-
-  //since state controlls this component, we no longer need
-  //useRef(null) or ref
 
   return (
     <form className="eventForm">
@@ -162,7 +181,7 @@ export const NewEventForm = () => {
           />
         </div>
       </fieldset>
-      {/* Start Time */}
+      {/* START TIME */}
       <fieldset>
         <div className="form-group">
           <label htmlFor="startTime">Time: </label>
@@ -179,38 +198,23 @@ export const NewEventForm = () => {
           />
         </div>
       </fieldset>
-      {/* USERS? */}
+      {/* USERS */}
       <fieldset>
         <div className="form-group">
           <label htmlFor="userId">Participants: </label>
           <Multiselect
             options={users} // Options to display in the dropdown
             selectedValues={users.selectedValue} // Preselected value to persist in dropdown
-            onSelect={users.onSelect} // Function will trigger on select event
-            onRemove={users.onRemove} // Function will trigger on remove event
+            onSelect={(selectedValue) => {
+              onSelect(selectedValue);
+            }} // Function will trigger on select event
+            onRemove={(selectedValue) => {
+              onRemove(selectedValue);
+            }} // Function will trigger on remove event
             displayValue="name" // Property name to display in the dropdown options
           />
         </div>
       </fieldset>
-      {/* <fieldset>
-        <div className="form-group">
-          <label htmlFor="userId">Participants: </label>
-          <select
-            value={users.id}
-            name="userId"
-            id="eventUsers"
-            className="form-control"
-            onChange={handleControlledInputChange}
-          >
-            <option value="0">Add users</option>
-            {users.map((u) => (
-              <option key={u.id} value={u.id}>
-                {u.name}
-              </option>
-            ))}
-          </select>
-        </div>
-      </fieldset> */}
       {/* COMMENTS */}
       <fieldset>
         <div className="form-group">
@@ -227,7 +231,7 @@ export const NewEventForm = () => {
           />
         </div>
       </fieldset>
-      {/* ONE MORE */}
+      {/* BUTTONS */}
       <button
         className="btn btn-primary"
         disabled={isLoading}
