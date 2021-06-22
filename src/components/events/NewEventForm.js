@@ -60,16 +60,16 @@ export const NewEventForm = () => {
     setParticipants(removeSelected);
   };
 
-  const getUserIds = () => {
-    // If an object is selected in the multiselect, add the userId to the participants array.
-    // Then, iterate over the userIds (participants array) and invoke addUserEvents.
-    const selectedIds = participants.map((userObj) => {
-      // DO YOU WANT TO GRAB THE USERID'S HERE?
-      return userObj.id;
-    });
-    console.log(selectedIds);
-    return selectedIds;
-  };
+  // const getUserIds = () => {
+  //   // If an object is selected in the multiselect, add the userId to the participants array.
+  //   // Then, iterate over the userIds (participants array) and invoke addUserEvents.
+  //   const selectedIds = participants.map((userObj) => {
+  //     // DO YOU WANT TO GRAB THE USERID'S HERE?
+  //     return userObj.id;
+  //   });
+  //   console.log(selectedIds);
+  //   return selectedIds;
+  // };
   // Cool, now you have an array of the selected ID's.
 
   const handleControlledInputChange = (event) => {
@@ -84,26 +84,23 @@ export const NewEventForm = () => {
     // setUserEvents(newUserEvent);
   };
 
-  const multiselectInputChange = (event) => {
-    const newUserEvent = { ...userEvent };
-    newUserEvent[event.target.name] = event.target.value;
+  // const multiselectInputChange = (event) => {
+  //   const newUserEvent = { ...userEvent };
+  //   newUserEvent[event.target.name] = event.target.value;
 
-    setUserEvents(newUserEvent);
-  };
+  //   setUserEvents(newUserEvent);
+  // };
 
   const handleSaveEvent = () => {
     //disable the button - no extra clicks
     setIsLoading(true);
-    //  Without particpants:
-    // addEvent(eventObj).then(() => history.push("/upcoming"));
-    // With particpants:
     addEvent(eventObj)
       .then((res) => {
         participants.forEach((singleId) => {
           addUserEvents({
             userId: singleId.id,
             eventId: res.id,
-            time: "9:59",
+            time: "",
           });
         });
       })
