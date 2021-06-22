@@ -1,7 +1,7 @@
 import React, { useState, createContext } from "react";
 
 // The context is imported and used by individual components that need data
-export const userEventContext = createContext();
+export const UserEventsContext = createContext();
 
 // This component establishes what data can be used.
 export const UserEventsProvider = (props) => {
@@ -38,7 +38,7 @@ export const UserEventsProvider = (props) => {
     ).then(getUserEvents);
   };
 
-  const updateuserEvent = (userEvent) => {
+  const updateUserEvents = (userEvent) => {
     return fetch(
       `http://localhost:8088/userEvents/${userEvent.id}`,
       {
@@ -64,17 +64,17 @@ export const UserEventsProvider = (props) => {
   };
 
   return (
-    <userEventContext.Provider
+    <UserEventsContext.Provider
       value={{
         userEvents,
         getUserEvents,
         addUserEvents,
         deleteUserEvents,
-        updateuserEvent,
+        updateUserEvents,
         getUserEventsById,
       }}
     >
       {props.children}
-    </userEventContext.Provider>
+    </UserEventsContext.Provider>
   );
 };

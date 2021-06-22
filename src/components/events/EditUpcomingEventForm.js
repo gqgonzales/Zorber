@@ -5,7 +5,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { EventContext } from "./EventProvider";
 import { UserContext } from "../users/UserProvider";
 import { Multiselect } from "multiselect-react-dropdown";
-import { userEventContext } from "../userEvents/UserEventsProvider";
+import { UserEventsContext } from "../userEvents/UserEventsProvider";
 
 export const EditUpcomingEventForm = () => {
   const { getEventById, updateEvent, getEvents, deleteEvent } =
@@ -13,7 +13,7 @@ export const EditUpcomingEventForm = () => {
 
   const { users, getUsers } = useContext(UserContext);
 
-  const { addUserEvents } = useContext(userEventContext);
+  const { addUserEvents } = useContext(UserEventsContext);
 
   // const [user, serUsers] = useState([]);
 
@@ -22,7 +22,7 @@ export const EditUpcomingEventForm = () => {
     eventId: 0,
     time: "",
   });
-  
+
   //for edit, hold on to state of event in this view
   // The input fields need to be CONTROLLED and thus need to be definied form the outset.
   const [eventObj, setEvent] = useState({

@@ -4,15 +4,15 @@ import "./Event.css";
 import { useHistory } from "react-router-dom";
 import { EventContext } from "./EventProvider";
 import { UserContext } from "../users/UserProvider";
-// import { UserEventsProvider } from "../userEvents/UserEventsProvider";
+import { UserEventsContext } from "../userEvents/UserEventsProvider";
 
 export const PastEventList = () => {
   // This state changes when `getEvents()` is invoked below
   const { events, getEvents } = useContext(EventContext);
   const { getUsers } = useContext(UserContext);
-  // const { userEvents, getUserEvents } = useContext(
-  //   UserEventsProvider
-  // );
+  const { userEvents, getUserEvents } = useContext(
+    UserEventsContext
+  );
   const history = useHistory();
   let filteredEvents = [];
   let eventParticipants = [];

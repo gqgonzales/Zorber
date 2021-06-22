@@ -4,6 +4,7 @@ import "./Event.css";
 import { useHistory, useParams } from "react-router-dom";
 import { EventContext } from "./EventProvider";
 import { UserContext } from "../users/UserProvider";
+import { UserEventsContext } from "../userEvents/UserEventsProvider";
 import { Multiselect } from "multiselect-react-dropdown";
 
 export const EditPastEventForm = () => {
@@ -11,6 +12,13 @@ export const EditPastEventForm = () => {
     useContext(EventContext);
 
   const { users, getUsers } = useContext(UserContext);
+  const { updateUserEvents } = useContext(UserEventsContext);
+
+  const [userEvent, setUserEvents] = useState({
+    userId: 0,
+    eventId: 0,
+    time: "",
+  });
 
   // const [user, serUsers] = useState([]);
 
@@ -30,6 +38,21 @@ export const EditPastEventForm = () => {
 
   const { eventId } = useParams();
   const history = useHistory();
+
+  const [participants, setParticipants] = useState([]);
+
+  const onSelect = (selectedValue) => {
+    // If an object is selected in the multiselect, add the userId to the participants array.
+    setParticipants(selectedValue);
+  };
+
+  const onRemove = (selectedValue) => {
+    // If an object is selected in the multiselect, add the userId to the participants array.
+    const removeSelected = [...participants].splice(
+      selectedValue
+    );
+    setParticipants(removeSelected);
+  };
 
   //when field changes, update state. This causes a re-render and updates the view.
   //Controlled component
@@ -61,7 +84,18 @@ export const EditPastEventForm = () => {
         startTime: eventObj.startTime,
         userId: eventObj.userId,
         comments: eventObj.comments,
-      }).then(() => history.push(`/past`));
+      })
+        // .then((res) => {
+        //   participants.forEach((singleId) => {
+        //     updateUserEvents({
+        //       userId: singleId.id,
+        //       eventId: res.id,
+        //       time: "",
+        //     });
+        //   });
+        // })
+        // .then(getEvents)
+        .then(() => history.push(`/past`));
     }
   };
 
@@ -73,6 +107,7 @@ export const EditPastEventForm = () => {
         if (eventId) {
           getEventById(parseInt(eventId)).then((eventRes) => {
             setEvent(eventRes);
+            setUserEvents(eventRes);
             setIsLoading(false);
           });
         } else {
@@ -80,17 +115,6 @@ export const EditPastEventForm = () => {
         }
       });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  //   onSelect(selectedList, selectedItem) {
-  //     ...
-  // }
-
-  // onRemove(selectedList, removedItem) {
-  //     ...
-  // }
-
-  //since state controlls this component, we no longer need
-  //useRef(null) or ref
 
   return (
     <form className="eventForm">
@@ -173,8 +197,12 @@ export const EditPastEventForm = () => {
           <Multiselect
             options={users} // Options to display in the dropdown
             selectedValues={users.selectedValue} // Preselected value to persist in dropdown
-            onSelect={users.onSelect} // Function will trigger on select event
-            onRemove={users.onRemove} // Function will trigger on remove event
+            onSelect={(selectedValue) => {
+              onSelect(selectedValue);
+            }} // Function will trigger on select event
+            onRemove={(selectedValue) => {
+              onRemove(selectedValue);
+            }} // Function will trigger on remove event
             displayValue="name" // Property name to display in the dropdown options
           />
         </div>
