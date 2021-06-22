@@ -20,7 +20,7 @@ export const NewEventForm = () => {
     time: "",
   });
 
-  const [participants, setParticipants] = useState([]);
+  // const [participants, setParticipants] = useState([]);
 
   //for edit, hold on to state of event in this view
   // The input fields need to be CONTROLLED and thus need to be definied form the outset.
@@ -41,6 +41,8 @@ export const NewEventForm = () => {
 
   //when field changes, update state. This causes a re-render and updates the view.
   //Controlled component
+
+  const [participants, setParticipants] = useState([]);
 
   const onSelect = (selectedValue) => {
     // If an object is selected in the multiselect, add the userId to the participants array.
@@ -68,13 +70,13 @@ export const NewEventForm = () => {
     console.log(selectedIds);
     return selectedIds;
   };
+  // Cool, now you have an array of the selected ID's.
 
   const handleControlledInputChange = (event) => {
     //When changing a state object or array,
     //always create a copy make changes, and then set state.
     const newEvent = { ...eventObj };
     // const newUserEvent = { ...userEvent };
-
     newEvent[event.target.name] = event.target.value;
     // newUserEvent[event.target.name] = event.target.value;
     //update state
@@ -85,6 +87,7 @@ export const NewEventForm = () => {
   const multiselectInputChange = (event) => {
     const newUserEvent = { ...userEvent };
     newUserEvent[event.target.name] = event.target.value;
+
     setUserEvents(newUserEvent);
   };
 
@@ -95,8 +98,16 @@ export const NewEventForm = () => {
     // addEvent(eventObj).then(() => history.push("/upcoming"));
     // With particpants:
     addEvent(eventObj)
-      .then(getUserIds)
-      // .then(addUserEvents(userEvent))
+      .then((res) => {
+        participants.forEach((singleId) => {
+          addUserEvents({
+            userId: singleId.id,
+            eventId: res.id,
+            time: "9:59",
+          });
+        });
+      })
+      .then(getEvents)
       .then(() => history.push("/upcoming"));
   };
 
@@ -115,17 +126,6 @@ export const NewEventForm = () => {
         }
       });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  //   onSelect(selectedList, selectedItem) {
-  //     ...
-  // }
-
-  // onRemove(selectedList, removedItem) {
-  //     ...
-  // }
-
-  //since state controlls this component, we no longer need
-  //useRef(null) or ref
 
   return (
     <form className="eventForm">
@@ -184,7 +184,7 @@ export const NewEventForm = () => {
           />
         </div>
       </fieldset>
-      {/* Start Time */}
+      {/* START TIME */}
       <fieldset>
         <div className="form-group">
           <label htmlFor="startTime">Time: </label>
@@ -201,7 +201,7 @@ export const NewEventForm = () => {
           />
         </div>
       </fieldset>
-      {/* USERS? */}
+      {/* USERS */}
       <fieldset>
         <div className="form-group">
           <label htmlFor="userId">Participants: </label>
@@ -218,25 +218,6 @@ export const NewEventForm = () => {
           />
         </div>
       </fieldset>
-      {/* <fieldset>
-        <div className="form-group">
-          <label htmlFor="userId">Participants: </label>
-          <select
-            value={users.id}
-            name="userId"
-            id="eventUsers"
-            className="form-control"
-            onChange={handleControlledInputChange}
-          >
-            <option value="0">Add users</option>
-            {users.map((u) => (
-              <option key={u.id} value={u.id}>
-                {u.name}
-              </option>
-            ))}
-          </select>
-        </div>
-      </fieldset> */}
       {/* COMMENTS */}
       <fieldset>
         <div className="form-group">
@@ -253,7 +234,7 @@ export const NewEventForm = () => {
           />
         </div>
       </fieldset>
-      {/* ONE MORE */}
+      {/* BUTTONS */}
       <button
         className="btn btn-primary"
         disabled={isLoading}

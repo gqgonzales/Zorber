@@ -7,18 +7,12 @@ import { UserContext } from "../users/UserProvider";
 import { Multiselect } from "multiselect-react-dropdown";
 
 export const EditPastEventForm = () => {
-  const {
-    addEvent,
-    getEventById,
-    updateEvent,
-    getEvents,
-    events,
-    deleteEvent,
-  } = useContext(EventContext);
+  const { getEventById, updateEvent, getEvents, deleteEvent } =
+    useContext(EventContext);
 
   const { users, getUsers } = useContext(UserContext);
 
-  const [user, serUsers] = useState([]);
+  // const [user, serUsers] = useState([]);
 
   //for edit, hold on to state of event in this view
   // The input fields need to be CONTROLLED and thus need to be definied form the outset.

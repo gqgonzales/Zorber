@@ -25,7 +25,8 @@ export const UserEventsProvider = (props) => {
         },
         body: JSON.stringify(userEventObject),
       }
-    ).then(getUserEvents);
+    );
+    // .then(getUserEvents);
   };
 
   const deleteUserEvents = (userEventId) => {
