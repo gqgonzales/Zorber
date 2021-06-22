@@ -20,7 +20,7 @@ export const NewEventForm = () => {
     time: "",
   });
 
-  const [participants] = useState([{}]);
+  const [participants, setParticipants] = useState([]);
 
   //for edit, hold on to state of event in this view
   // The input fields need to be CONTROLLED and thus need to be definied form the outset.
@@ -44,22 +44,29 @@ export const NewEventForm = () => {
 
   const onSelect = (selectedValue) => {
     // If an object is selected in the multiselect, add the userId to the participants array.
-    participants.push(selectedValue);
+    // setParticipants([...participants, selectedValue]);
+    // const addSelected = [...participants];
+    // addSelected.push(selectedValue);
+    setParticipants(selectedValue);
   };
 
   const onRemove = (selectedValue) => {
     // If an object is selected in the multiselect, add the userId to the participants array.
-    participants.splice(selectedValue);
+    const removeSelected = [...participants].splice(
+      selectedValue
+    );
+    setParticipants(removeSelected);
   };
 
   const getUserIds = () => {
     // If an object is selected in the multiselect, add the userId to the participants array.
     // Then, iterate over the userIds (participants array) and invoke addUserEvents.
-    participants.forEach((userObj) => {
+    const selectedIds = participants.map((userObj) => {
       // DO YOU WANT TO GRAB THE USERID'S HERE?
-      let foundId = userObj.id;
-      return foundId;
+      return userObj.id;
     });
+    console.log(selectedIds);
+    return selectedIds;
   };
 
   const handleControlledInputChange = (event) => {
