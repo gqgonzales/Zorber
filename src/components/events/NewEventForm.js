@@ -20,7 +20,7 @@ export const NewEventForm = () => {
     time: "",
   });
 
-  const [participants] = useState([]);
+  const [participants] = useState([{}]);
 
   //for edit, hold on to state of event in this view
   // The input fields need to be CONTROLLED and thus need to be definied form the outset.
@@ -42,21 +42,42 @@ export const NewEventForm = () => {
   //when field changes, update state. This causes a re-render and updates the view.
   //Controlled component
 
-  const buildParticipantsArray = () => {
+  const onSelect = (selectedValue) => {
+    // If an object is selected in the multiselect, add the userId to the participants array.
+    participants.push(selectedValue);
+  };
+
+  const onRemove = (selectedValue) => {
+    // If an object is selected in the multiselect, add the userId to the participants array.
+    participants.splice(selectedValue);
+  };
+
+  const getUserIds = () => {
     // If an object is selected in the multiselect, add the userId to the participants array.
     // Then, iterate over the userIds (participants array) and invoke addUserEvents.
+    participants.forEach((userObj) => {
+      // DO YOU WANT TO GRAB THE USERID'S HERE?
+      let foundId = userObj.id;
+      return foundId;
+    });
   };
 
   const handleControlledInputChange = (event) => {
     //When changing a state object or array,
     //always create a copy make changes, and then set state.
     const newEvent = { ...eventObj };
-    const newUserEvent = { ...userEvent };
+    // const newUserEvent = { ...userEvent };
 
     newEvent[event.target.name] = event.target.value;
-    newUserEvent[event.target.name] = event.target.value;
+    // newUserEvent[event.target.name] = event.target.value;
     //update state
     setEvent(newEvent);
+    // setUserEvents(newUserEvent);
+  };
+
+  const multiselectInputChange = (event) => {
+    const newUserEvent = { ...userEvent };
+    newUserEvent[event.target.name] = event.target.value;
     setUserEvents(newUserEvent);
   };
 
@@ -67,7 +88,8 @@ export const NewEventForm = () => {
     // addEvent(eventObj).then(() => history.push("/upcoming"));
     // With particpants:
     addEvent(eventObj)
-      .then(addUserEvents(userEvent))
+      .then(getUserIds)
+      // .then(addUserEvents(userEvent))
       .then(() => history.push("/upcoming"));
   };
 
@@ -179,8 +201,12 @@ export const NewEventForm = () => {
           <Multiselect
             options={users} // Options to display in the dropdown
             selectedValues={users.selectedValue} // Preselected value to persist in dropdown
-            onSelect={users.onSelect} // Function will trigger on select event
-            onRemove={users.onRemove} // Function will trigger on remove event
+            onSelect={(selectedValue) => {
+              onSelect(selectedValue);
+            }} // Function will trigger on select event
+            onRemove={(selectedValue) => {
+              onRemove(selectedValue);
+            }} // Function will trigger on remove event
             displayValue="name" // Property name to display in the dropdown options
           />
         </div>
