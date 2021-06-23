@@ -39,9 +39,6 @@ export const NewEventForm = () => {
   const { eventId } = useParams();
   const history = useHistory();
 
-  //when field changes, update state. This causes a re-render and updates the view.
-  //Controlled component
-
   const [participants, setParticipants] = useState([]);
 
   const onSelect = (selectedValue) => {

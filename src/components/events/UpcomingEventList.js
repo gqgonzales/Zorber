@@ -4,18 +4,22 @@ import "./Event.css";
 import { useHistory } from "react-router-dom";
 import { EventContext } from "./EventProvider";
 import { UserContext } from "../users/UserProvider";
+import { UserEventsContext } from "../userEvents/UserEventsProvider";
 
 export const UpcomingEventList = () => {
   // This state changes when `getEvents()` is invoked below
   const { events, getEvents } = useContext(EventContext);
   const { getUsers } = useContext(UserContext);
+  const { userEvents, getUserEvents } = useContext(
+    UserEventsContext
+  );
 
   const history = useHistory();
 
   let filteredEvents = [];
   //useEffect - reach out to the world for something
   useEffect(() => {
-    getEvents().then(getUsers);
+    getEvents().then(getUsers()).then(getUserEvents());
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (

@@ -12,7 +12,9 @@ export const EditPastEventForm = () => {
     useContext(EventContext);
 
   const { users, getUsers } = useContext(UserContext);
-  const { updateUserEvents } = useContext(UserEventsContext);
+  const { updateUserEvents, getUserEvents } = useContext(
+    UserEventsContext
+  );
 
   const [userEvent, setUserEvents] = useState({
     userId: 0,
@@ -42,12 +44,10 @@ export const EditPastEventForm = () => {
   const [participants, setParticipants] = useState([]);
 
   const onSelect = (selectedValue) => {
-    // If an object is selected in the multiselect, add the userId to the participants array.
     setParticipants(selectedValue);
   };
 
   const onRemove = (selectedValue) => {
-    // If an object is selected in the multiselect, add the userId to the participants array.
     const removeSelected = [...participants].splice(
       selectedValue
     );
@@ -85,16 +85,25 @@ export const EditPastEventForm = () => {
         userId: eventObj.userId,
         comments: eventObj.comments,
       })
-        // .then((res) => {
-        //   participants.forEach((singleId) => {
-        //     updateUserEvents({
-        //       userId: singleId.id,
-        //       eventId: res.id,
-        //       time: "",
-        //     });
-        //   });
-        // })
-        // .then(getEvents)
+        // .then(
+        //   updateUserEvents({
+        //     id: userEventObj.id,
+        //     userId: userEventObj.userId,
+        //     eventId: parseInt(eventId),
+        //     time: "",
+        //   })
+        // )
+        .then((res) => {
+          participants.forEach((userEventObj) => {
+            updateUserEvents({
+              id: userEventObj.id,
+              userId: userEventObj.userId,
+              eventId: parseInt(eventId),
+              time: "",
+            });
+          });
+        })
+        .then(getEvents)
         .then(() => history.push(`/past`));
     }
   };
@@ -103,6 +112,7 @@ export const EditPastEventForm = () => {
   useEffect(() => {
     getEvents()
       .then(getUsers())
+      .then(getUserEvents())
       .then(() => {
         if (eventId) {
           getEventById(parseInt(eventId)).then((eventRes) => {

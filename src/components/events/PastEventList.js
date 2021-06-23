@@ -18,7 +18,7 @@ export const PastEventList = () => {
   let eventParticipants = [];
   //useEffect - reach out to the world for something
   useEffect(() => {
-    getEvents().then(getUsers);
+    getEvents().then(getUsers()).then(getUserEvents());
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
   //   The empty array bracket is the dependency array. It only runs on first render.
 
@@ -59,6 +59,7 @@ export const PastEventList = () => {
                 </div>
                 <div className="event__participants">
                   <div>
+                    Participants here
                     {events.forEach((event) => {
                       if (
                         event.id === event.userEvents.eventId

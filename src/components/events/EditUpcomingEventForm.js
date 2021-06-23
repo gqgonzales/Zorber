@@ -13,7 +13,9 @@ export const EditUpcomingEventForm = () => {
 
   const { users, getUsers } = useContext(UserContext);
 
-  const { addUserEvents } = useContext(UserEventsContext);
+  const { addUserEvents, getUserEvents } = useContext(
+    UserEventsContext
+  );
 
   // const [user, serUsers] = useState([]);
 
@@ -78,6 +80,7 @@ export const EditUpcomingEventForm = () => {
   useEffect(() => {
     getEvents()
       .then(getUsers())
+      .then(getUserEvents())
       .then(() => {
         if (eventId) {
           getEventById(eventId).then((eventRes) => {
