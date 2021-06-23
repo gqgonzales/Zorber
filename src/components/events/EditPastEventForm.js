@@ -16,7 +16,7 @@ export const EditPastEventForm = () => {
     UserEventsContext
   );
 
-  const [userEvent, setUserEvents] = useState({
+  const [userEventObj, setUserEvents] = useState({
     userId: 0,
     eventId: 0,
     time: "",
@@ -93,7 +93,7 @@ export const EditPastEventForm = () => {
         //     time: "",
         //   })
         // )
-        .then((res) => {
+        .then(() => {
           participants.forEach((userEventObj) => {
             updateUserEvents({
               id: userEventObj.id,
@@ -117,7 +117,8 @@ export const EditPastEventForm = () => {
         if (eventId) {
           getEventById(parseInt(eventId)).then((eventRes) => {
             setEvent(eventRes);
-            setUserEvents(eventRes);
+            // console.log(eventRes);
+            // setUserEvents(eventRes);
             setIsLoading(false);
           });
         } else {

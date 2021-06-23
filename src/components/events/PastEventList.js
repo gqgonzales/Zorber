@@ -5,22 +5,31 @@ import { useHistory } from "react-router-dom";
 import { EventContext } from "./EventProvider";
 import { UserContext } from "../users/UserProvider";
 import { UserEventsContext } from "../userEvents/UserEventsProvider";
+import userEvent from "@testing-library/user-event";
 
 export const PastEventList = () => {
   // This state changes when `getEvents()` is invoked below
   const { events, getEvents } = useContext(EventContext);
-  const { getUsers } = useContext(UserContext);
+  const { users, getUsers } = useContext(UserContext);
   const { userEvents, getUserEvents } = useContext(
     UserEventsContext
   );
+
+  // const [userEvents, setstate] = useState({})
+
   const history = useHistory();
   let filteredEvents = [];
-  let eventParticipants = [];
+  // let sorted = [
+  //   [...filteredEvents].sort((a, b) => b.date > a.date),
+  // ];
+  // let eventParticipants = useEffect();
   //useEffect - reach out to the world for something
   useEffect(() => {
-    getEvents().then(getUsers()).then(getUserEvents());
+    getEvents().then(getUsers).then(getUserEvents);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
   //   The empty array bracket is the dependency array. It only runs on first render.
+
+  useEffect(() => {}, [events]);
 
   return (
     <>
@@ -59,17 +68,24 @@ export const PastEventList = () => {
                 </div>
                 <div className="event__participants">
                   <div>
-                    Participants here
-                    {events.forEach((event) => {
-                      if (
-                        event.id === event.userEvents.eventId
-                      ) {
-                        eventParticipants.push(
-                          event.userEvents.userId
-                        );
-                      }
-                      return { eventParticipants };
-                    })}
+                    Participants here{" "}
+                    {/* {users.map(
+                      (user) => user.name.join(", ")
+                      // user.id === events.userEvents.userId
+                    )} */}
+                    {/* {userEvents
+                      .filter(
+                        (participant) =>
+                          participant.eventId === event.id
+                      )
+                      .join(" , ")} */}
+                    {userEvents
+                      .map((participant) => {
+                        if (participant.eventId === event.id) {
+                          return participant.userId;
+                        }
+                      })
+                      .join(" , ")}
                   </div>
                 </div>
                 <div className="event__participants__time">
@@ -95,6 +111,17 @@ export const PastEventList = () => {
     </>
   );
 };
+
+/* {events.forEach((event) => {
+                      if (
+                        event.id === event.userEvents.eventId
+                      ) {
+                        eventParticipants.push(
+                          event.userEvents.userId
+                        );
+                      }
+                      return { eventParticipants };
+                    })} */
 
 /* {events.map((event) => {
           return (
