@@ -12,15 +12,14 @@ export const EditPastEventForm = () => {
     useContext(EventContext);
 
   const { users, getUsers } = useContext(UserContext);
-  const { updateUserEvents, getUserEvents } = useContext(
-    UserEventsContext
-  );
+  const {
+    updateUserEvents,
+    getUserEvents,
+    getUserEventsByEventId,
+  } = useContext(UserEventsContext);
 
-  const [userEventObj, setUserEvents] = useState({
-    userId: 0,
-    eventId: 0,
-    time: "",
-  });
+  const [originalParticipants, setOriginalParticipants] =
+    useState([]);
 
   // const [user, serUsers] = useState([]);
 
@@ -111,13 +110,15 @@ export const EditPastEventForm = () => {
   // Get users and events. If eventId is in the URL, getEventById
   useEffect(() => {
     getEvents()
-      .then(getUsers())
-      .then(getUserEvents())
+      .then(getUsers)
+      .then((users) => {
+        getUserEvents(users);
+      })
       .then(() => {
         if (eventId) {
           getEventById(parseInt(eventId)).then((eventRes) => {
             setEvent(eventRes);
-            // console.log(eventRes);
+            console.log(eventRes);
             // setUserEvents(eventRes);
             setIsLoading(false);
           });
@@ -126,6 +127,17 @@ export const EditPastEventForm = () => {
         }
       });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    getUserEventsByEventId(eventId).then((res) => {
+      const participantsArray = res.map(
+        (userEventObj) => userEventObj.user
+      );
+      setOriginalParticipants(participantsArray);
+      setParticipants(participantsArray);
+    });
+  }, [eventId]); // eslint-disable-line react-hooks/exhaustive-deps
+  console.log(originalParticipants);
 
   return (
     <form className="eventForm">
@@ -207,7 +219,7 @@ export const EditPastEventForm = () => {
           <label htmlFor="userId">Participants: </label>
           <Multiselect
             options={users} // Options to display in the dropdown
-            selectedValues={users.selectedValue} // Preselected value to persist in dropdown
+            selectedValues={participants} // Preselected value to persist in dropdown
             onSelect={(selectedValue) => {
               onSelect(selectedValue);
             }} // Function will trigger on select event

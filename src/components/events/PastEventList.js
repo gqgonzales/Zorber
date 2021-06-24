@@ -1,11 +1,11 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 // To start, you need to import the context object you created in the provider component so that the useContext() hook can access the objects it exposes.
 import "./Event.css";
 import { useHistory } from "react-router-dom";
 import { EventContext } from "./EventProvider";
 import { UserContext } from "../users/UserProvider";
 import { UserEventsContext } from "../userEvents/UserEventsProvider";
-import userEvent from "@testing-library/user-event";
+// import userEvent from "@testing-library/user-event";
 
 export const PastEventList = () => {
   // This state changes when `getEvents()` is invoked below
@@ -18,18 +18,23 @@ export const PastEventList = () => {
   // const [userEvents, setstate] = useState({})
 
   const history = useHistory();
-  let filteredEvents = [];
-  // let sorted = [
-  //   [...filteredEvents].sort((a, b) => b.date > a.date),
-  // ];
-  // let eventParticipants = useEffect();
+  
+  const [filteredEvents, setFilteredEvents] = useState([]);
+
   //useEffect - reach out to the world for something
   useEffect(() => {
     getEvents().then(getUsers).then(getUserEvents);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
   //   The empty array bracket is the dependency array. It only runs on first render.
 
-  useEffect(() => {}, [events]);
+  useEffect(() => {
+    const dateFilter = events.filter((event) => {
+      if (Date.parse(event.date) < Date.now()) {
+        return true;
+      }
+    });
+    setFilteredEvents(dateFilter);
+  }, [events]);
 
   return (
     <>
@@ -37,16 +42,17 @@ export const PastEventList = () => {
         <h2 className="subsection__header">Past Events</h2>
       </div>
       <div className="Events">
-        {events.forEach((event) => {
+        {/* {events.forEach((event) => {
           if (Date.parse(event.date) < Date.now()) {
             filteredEvents.push(event);
           }
           return { filteredEvents };
-        })}
+        })} */}
 
         {filteredEvents.map((event) => {
           // const humanReadableStartTime =
           //   event.startTime.toLocaleTimeString();
+          // console.log(filteredEvents);
           return (
             <div
               className="event"
@@ -79,13 +85,13 @@ export const PastEventList = () => {
                           participant.eventId === event.id
                       )
                       .join(" , ")} */}
-                    {userEvents
+                    {/* {filteredEvents.userEvents
                       .map((participant) => {
                         if (participant.eventId === event.id) {
                           return participant.userId;
                         }
                       })
-                      .join(" , ")}
+                      .join(" , ")} */}
                   </div>
                 </div>
                 <div className="event__participants__time">

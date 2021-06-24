@@ -9,17 +9,37 @@ import { UserEventsContext } from "../userEvents/UserEventsProvider";
 export const UpcomingEventList = () => {
   // This state changes when `getEvents()` is invoked below
   const { events, getEvents } = useContext(EventContext);
-  const { getUsers } = useContext(UserContext);
+  const { users, getUsers } = useContext(UserContext);
   const { userEvents, getUserEvents } = useContext(
     UserEventsContext
   );
 
   const history = useHistory();
 
+  const host = users.forEach((user) => {
+    events.forEach((event) => {
+      if (event.userId === user.id) {
+        return user.name;
+      }
+    });
+  });
+
+  let allEvents = events.map((event) => {
+    return { event };
+  });
+
+  // console.log(allEvents);
+
+  // const host = users.forEach((user) => {
+  //   if (user.id === events.userId) {
+  //     return user.name;
+  //   }
+  // });
+
   let filteredEvents = [];
   //useEffect - reach out to the world for something
   useEffect(() => {
-    getEvents().then(getUsers()).then(getUserEvents());
+    getEvents().then(getUsers).then(getUserEvents);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
@@ -50,7 +70,15 @@ export const UpcomingEventList = () => {
                   {eventObj.location}
                 </h4>
                 {/* HOW CAN WE CONVERT THIS USERID TO THE APPROPRIATE NAME? */}
-                <div>Hosted by {eventObj.userId}</div>
+                <div>
+                  Hosted by {host}
+                  {/* {users.forEach((user) => {
+                    if (user.id === eventObj.userId) {
+                      return user.name;
+                    }
+                  })} */}
+                  ;
+                </div>
                 <div className="event__date event__startTime">
                   {eventObj.date} at {eventObj.startTime}
                 </div>

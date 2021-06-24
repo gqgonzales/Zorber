@@ -20,17 +20,17 @@ export const UserEventsProvider = (props) => {
       .then((data) => setUserEvents(data));
   };
 
-  // const getUserEventsByEventId = (userEventId) => {
-  //   return fetch(
-  //     `http://localhost:8088/userEvents/${userEventId}`,
-  //     {
-  //       method: "GET",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     }
-  //   ).then((res) => res.json());
-  // };
+  const getUserEventsByEventId = (eventId) => {
+    return fetch(
+      `http://localhost:8088/userEvents?eventId=${eventId}&_expand=user`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    ).then((res) => res.json());
+  };
 
   const addUserEvents = (userEventObject) => {
     return fetch(
@@ -89,7 +89,7 @@ export const UserEventsProvider = (props) => {
         deleteUserEvents,
         updateUserEvents,
         getUserEventsById,
-        // getUserEventsByEventId,
+        getUserEventsByEventId,
       }}
     >
       {props.children}
