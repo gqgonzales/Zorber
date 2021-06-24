@@ -12,35 +12,35 @@ export const EditPastEventForm = () => {
     useContext(EventContext);
 
   const { users, getUsers } = useContext(UserContext);
+
   const {
+    addUserEvents,
     updateUserEvents,
     getUserEvents,
     getUserEventsByEventId,
   } = useContext(UserEventsContext);
 
-  const [originalParticipants, setOriginalParticipants] =
-    useState([]);
-
-  // const [user, serUsers] = useState([]);
-
-  //for edit, hold on to state of event in this view
-  // The input fields need to be CONTROLLED and thus need to be definied form the outset.
   const [eventObj, setEvent] = useState({
     title: "",
     location: "",
     date: "",
     startTime: "",
-    userId: 0,
+    userId: parseInt(localStorage.getItem("zorber_user")),
     comments: "",
   });
 
-  //wait for data before button is active
+  // This is our ORIGINAL copy of the userEvents associated with this event.
+  const [originalParticipants, setOriginalParticipants] =
+    useState([]);
+
+  // This is the dynamic copy of the userEvents that is updated by our changes.
+  const [participants, setParticipants] = useState([]);
+
   const [isLoading, setIsLoading] = useState(true);
 
   const { eventId } = useParams();
-  const history = useHistory();
 
-  const [participants, setParticipants] = useState([]);
+  const history = useHistory();
 
   const onSelect = (selectedValue) => {
     setParticipants(selectedValue);
@@ -92,17 +92,17 @@ export const EditPastEventForm = () => {
         //     time: "",
         //   })
         // )
+        .then(getEvents)
         .then(() => {
-          participants.forEach((userEventObj) => {
+          participants.forEach((participant) => {
             updateUserEvents({
-              id: userEventObj.id,
-              userId: userEventObj.userId,
+              id: participant.id,
+              userId: participant.userId,
               eventId: parseInt(eventId),
               time: "",
             });
           });
         })
-        .then(getEvents)
         .then(() => history.push(`/past`));
     }
   };
@@ -118,7 +118,7 @@ export const EditPastEventForm = () => {
         if (eventId) {
           getEventById(parseInt(eventId)).then((eventRes) => {
             setEvent(eventRes);
-            console.log(eventRes);
+            // console.log(eventRes);
             // setUserEvents(eventRes);
             setIsLoading(false);
           });
@@ -137,7 +137,7 @@ export const EditPastEventForm = () => {
       setParticipants(participantsArray);
     });
   }, [eventId]); // eslint-disable-line react-hooks/exhaustive-deps
-  console.log(originalParticipants);
+  // console.log(originalParticipants);
 
   return (
     <form className="eventForm">

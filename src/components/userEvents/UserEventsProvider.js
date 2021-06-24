@@ -70,7 +70,7 @@ export const UserEventsProvider = (props) => {
 
   const getUserEventsById = (userEventId) => {
     return fetch(
-      `http://localhost:8088/userEvents/${userEventId}`,
+      `http://localhost:8088/userEvents/${userEventId}&_expand=user`,
       {
         method: "GET",
         headers: {

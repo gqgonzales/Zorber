@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 // To start, you need to import the context object you created in the provider component so that the useContext() hook can access the objects it exposes.
 import "./Event.css";
 import { useHistory } from "react-router-dom";
@@ -16,17 +16,28 @@ export const UpcomingEventList = () => {
 
   const history = useHistory();
 
-  const host = users.forEach((user) => {
-    events.forEach((event) => {
+  const [filteredEvents, setFilteredEvents] = useState([]);
+
+  useEffect(() => {
+    const dateFilter = events.filter((event) => {
+      if (Date.parse(event.date) > Date.now()) {
+        return true;
+      }
+    });
+    setFilteredEvents(dateFilter);
+  }, [events]);
+
+  const host = filteredEvents.forEach((event) => {
+    users.forEach((user) => {
       if (event.userId === user.id) {
         return user.name;
       }
     });
   });
 
-  let allEvents = events.map((event) => {
-    return { event };
-  });
+  // let allEvents = events.map((event) => {
+  //   return { event };
+  // });
 
   // console.log(allEvents);
 
@@ -36,7 +47,6 @@ export const UpcomingEventList = () => {
   //   }
   // });
 
-  let filteredEvents = [];
   //useEffect - reach out to the world for something
   useEffect(() => {
     getEvents().then(getUsers).then(getUserEvents);
@@ -48,12 +58,12 @@ export const UpcomingEventList = () => {
         <h2 className="subsection__header">Upcoming Events</h2>
       </div>
       <div className="Events">
-        {events.forEach((eventObj) => {
+        {/* {events.forEach((eventObj) => {
           if (Date.parse(eventObj.date) > Date.now()) {
             filteredEvents.push(eventObj);
           }
           return { filteredEvents };
-        })}
+        })} */}
 
         {filteredEvents.map((eventObj) => {
           return (
@@ -71,13 +81,12 @@ export const UpcomingEventList = () => {
                 </h4>
                 {/* HOW CAN WE CONVERT THIS USERID TO THE APPROPRIATE NAME? */}
                 <div>
-                  Hosted by {host}
-                  {/* {users.forEach((user) => {
+                  Hosted by{" "}
+                  {users.map((user) => {
                     if (user.id === eventObj.userId) {
                       return user.name;
                     }
-                  })} */}
-                  ;
+                  })}
                 </div>
                 <div className="event__date event__startTime">
                   {eventObj.date} at {eventObj.startTime}

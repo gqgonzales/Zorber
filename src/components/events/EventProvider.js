@@ -9,7 +9,7 @@ export const EventProvider = (props) => {
 
   const getEvents = () => {
     return fetch(
-      "http://localhost:8088/events?_embed=userEvents"
+      "http://localhost:8088/events?_embed=userEvents&_expand=user"
     )
       .then((res) => res.json())
       .then((data) => setEvents(data));

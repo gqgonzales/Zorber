@@ -13,20 +13,13 @@ export const EditUpcomingEventForm = () => {
 
   const { users, getUsers } = useContext(UserContext);
 
-  const { addUserEvents, getUserEvents } = useContext(
-    UserEventsContext
-  );
+  const {
+    addUserEvents,
+    updateUserEvents,
+    getUserEvents,
+    getUserEventsByEventId,
+  } = useContext(UserEventsContext);
 
-  // const [user, serUsers] = useState([]);
-
-  const [userEvent, setUserEvents] = useState({
-    userId: 0,
-    eventId: 0,
-    time: "",
-  });
-
-  //for edit, hold on to state of event in this view
-  // The input fields need to be CONTROLLED and thus need to be definied form the outset.
   const [eventObj, setEvent] = useState({
     title: "",
     location: "",
@@ -36,23 +29,39 @@ export const EditUpcomingEventForm = () => {
     comments: "",
   });
 
-  //wait for data before button is active
+  const [originalParticipants, setOriginalParticipants] =
+    useState([]);
+
+  const [participants, setParticipants] = useState([]);
+
   const [isLoading, setIsLoading] = useState(true);
 
   const { eventId } = useParams();
+
   const history = useHistory();
+
+  const onSelect = (selectedValue) => {
+    setParticipants(selectedValue);
+  };
+
+  const onRemove = (selectedValue) => {
+    const removeSelected = [...participants].splice(
+      selectedValue
+    );
+    setParticipants(removeSelected);
+  };
 
   //when field changes, update state. This causes a re-render and updates the view.
   //Controlled component
   const handleControlledInputChange = (event) => {
     //When changing a state object or array,
     //always create a copy make changes, and then set state.
-    const newEvent = { ...eventObj };
+    const updateUpcomingEvent = { ...eventObj };
     //event is an object with properties.
     //set the property to the new value
-    newEvent[event.target.name] = event.target.value;
+    updateUpcomingEvent[event.target.name] = event.target.value;
     //update state
-    setEvent(newEvent);
+    setEvent(updateUpcomingEvent);
   };
 
   const handleSaveEvent = () => {
@@ -72,15 +81,27 @@ export const EditUpcomingEventForm = () => {
         startTime: eventObj.startTime,
         userId: eventObj.userId,
         comments: eventObj.comments,
-      }).then(() => history.push(`/upcoming`));
+      })
+        .then(getEvents)
+        .then(() => {
+          participants.forEach((userEventObj) => {
+            updateUserEvents({
+              id: userEventObj.id,
+              userId: userEventObj.userId,
+              eventId: parseInt(eventId),
+              time: "",
+            });
+          });
+        })
+        .then(() => history.push(`/upcoming`));
     }
   };
 
   // Get users and events. If eventId is in the URL, getEventById
   useEffect(() => {
     getEvents()
-      .then(getUsers())
-      .then(getUserEvents())
+      .then(getUsers)
+      .then(getUserEvents)
       .then(() => {
         if (eventId) {
           getEventById(eventId).then((eventRes) => {
@@ -93,16 +114,16 @@ export const EditUpcomingEventForm = () => {
       });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  //   onSelect(selectedList, selectedItem) {
-  //       addUserEvents()
-  // }
-
-  // onRemove(selectedList, removedItem) {
-  //     ...
-  // }
-
-  //since state controlls this component, we no longer need
-  //useRef(null) or ref
+  useEffect(() => {
+    getUserEventsByEventId(eventId).then((res) => {
+      const participantsArray = res.map(
+        (userEventObj) => userEventObj.user
+      );
+      setOriginalParticipants(participantsArray);
+      setParticipants(participantsArray);
+    });
+  }, [eventId]); // eslint-disable-line react-hooks/exhaustive-deps
+  // console.log(originalParticipants);
 
   return (
     <form className="eventForm">
@@ -184,9 +205,13 @@ export const EditUpcomingEventForm = () => {
           <label htmlFor="userId">Participants: </label>
           <Multiselect
             options={users} // Options to display in the dropdown
-            selectedValues={users.selectedValue} // Preselected value to persist in dropdown
-            onSelect={users.onSelect} // Function will trigger on select event
-            onRemove={users.onRemove} // Function will trigger on remove event
+            selectedValues={participants} // Preselected value to persist in dropdown
+            onSelect={(selectedValue) => {
+              onSelect(selectedValue);
+            }} // Function will trigger on select event
+            onRemove={(selectedValue) => {
+              onRemove(selectedValue);
+            }} // Function will trigger on remove event
             displayValue="name" // Property name to display in the dropdown options
           />
         </div>
