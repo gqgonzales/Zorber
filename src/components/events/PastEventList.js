@@ -32,7 +32,6 @@ export const PastEventList = () => {
   useEffect(() => {
     getEvents().then(getUsers).then(getUserEvents);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
-  //   The empty array bracket is the dependency array. It only runs on first render.
 
   useEffect(() => {
     const dateFilter = events.filter((event) => {

@@ -27,13 +27,13 @@ export const UpcomingEventList = () => {
     setFilteredEvents(dateFilter);
   }, [events]);
 
-  const host = filteredEvents.forEach((event) => {
-    users.forEach((user) => {
-      if (event.userId === user.id) {
-        return user.name;
-      }
-    });
-  });
+  // const host = filteredEvents.forEach((event) => {
+  //   users.forEach((user) => {
+  //     if (event.userId === user.id) {
+  //       return user.name;
+  //     }
+  //   });
+  // });
 
   // let allEvents = events.map((event) => {
   //   return { event };
@@ -81,7 +81,7 @@ export const UpcomingEventList = () => {
                 </h4>
                 {/* HOW CAN WE CONVERT THIS USERID TO THE APPROPRIATE NAME? */}
                 <div>
-                  Hosted by{" "}
+                  Posted by{" "}
                   {users.map((user) => {
                     if (user.id === eventObj.userId) {
                       return user.name;

@@ -8,7 +8,7 @@ export const EventDetail = ({ eventObj }) => {
   console.log(eventObj);
   const history = useHistory();
 
-  const { events, getEvents } = useContext(EventContext);
+  const { getEvents } = useContext(EventContext);
   const { getUsers } = useContext(UserContext);
   const { userEvents, getUserEvents, getUserEventsById } =
     useContext(UserEventsContext);
@@ -24,7 +24,6 @@ export const EventDetail = ({ eventObj }) => {
   //       setParticipants(res);
   //     });
   //   }, []);
-
   //   console.log(participants);
 
   return (
@@ -32,8 +31,8 @@ export const EventDetail = ({ eventObj }) => {
       <div className="events__container">
         <div
           className="event"
-          //   id={`eventObj--${eventObj.id}`}
-          //   key={`eventObj--${eventObj.id}`}
+          id={`eventObj--${eventObj}`}
+          key={`eventObj--${eventObj}`}
         >
           <div className="event__title option__name">
             <h3>
