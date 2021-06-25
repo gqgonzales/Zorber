@@ -35,14 +35,21 @@ export const EventDetail = ({ eventObj }) => {
     return participant[0];
   };
 
+  const sortedUsers = [...userEvents].sort(
+    (a, b) => a.time - b.time
+  );
+  console.log("LABEL:", sortedUsers);
+  // return sortedUsers;
+  // };
+
   return (
     <div
       className="event__card"
       id={`event--${id}`}
       key={`event--${id}`}
     >
-      <div className="event__title option__name">
-        <h3>{title}</h3>
+      <div className="event__title__container option__name">
+        <h3 className="event__title">{title}</h3>
       </div>
       <div className="event__info">
         <h4 className="event__location">{location}</h4>
@@ -50,15 +57,18 @@ export const EventDetail = ({ eventObj }) => {
           {date} at {startTime}
         </div>
         <div className="event__comments">{comments}</div>
-        {userEvents.map((userEvent) => {
-          return (
-            <div className="event__participant">
-              {getUserById(userEvent.userId).name}, who completed
-              the course in {userEvent.time}
-            </div>
-          );
-          // .sort((a, b) => a.time - b.time);
-        })}
+        {
+          sortedUsers.map((userEvent) => {
+            return (
+              <div className="event__participant">
+                {getUserById(userEvent.userId).name}, who
+                completed the course in {userEvent.time}
+              </div>
+            );
+            // .sort((a, b) => a.time - b.time);
+          })
+          // .sort((a, b) => a.time - b.time)
+        }
       </div>
       <div className="button_group">
         <button

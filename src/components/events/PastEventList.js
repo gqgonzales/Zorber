@@ -73,7 +73,7 @@ export const PastEventList = () => {
           return (
             <EventDetail
               eventObj={eventObj}
-              key={`event--${eventObj.id}`}
+              key={`eventObj--${eventObj.id}`}
             />
           );
         })}
