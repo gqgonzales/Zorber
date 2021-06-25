@@ -31,7 +31,6 @@ export const ApplicationViews = () => {
 
             <Route exact path="/past">
               <PastEventList />
-              <EventDetail />
             </Route>
 
             <Route exact path="/past/edit/:eventId(\d+)">
