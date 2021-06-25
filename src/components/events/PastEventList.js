@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { EventContext } from "./EventProvider";
 import { UserContext } from "../users/UserProvider";
 import { UserEventsContext } from "../userEvents/UserEventsProvider";
-import { EventDetail } from "../events/EventDetail";
+import { PastEventDetail } from "./PastEventDetail";
 // import userEvent from "@testing-library/user-event";
 
 export const PastEventList = () => {
@@ -70,12 +70,7 @@ export const PastEventList = () => {
       >
         {filteredEvents.map((eventObj) => {
           // console.log(eventObj);
-          return (
-            <EventDetail
-              eventObj={eventObj}
-              key={`eventObj--${eventObj.id}`}
-            />
-          );
+          return <PastEventDetail eventObj={eventObj} />;
         })}
       </div>
     </>

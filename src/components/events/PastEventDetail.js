@@ -4,7 +4,7 @@ import { EventContext } from "./EventProvider";
 import { UserContext } from "../users/UserProvider";
 import { UserEventsContext } from "../userEvents/UserEventsProvider";
 
-export const EventDetail = ({ eventObj }) => {
+export const PastEventDetail = ({ eventObj }) => {
   const {
     title,
     id,
@@ -38,9 +38,15 @@ export const EventDetail = ({ eventObj }) => {
   const sortedUsers = [...userEvents].sort(
     (a, b) => a.time - b.time
   );
-  console.log("LABEL:", sortedUsers);
+  // console.log("LABEL:", sortedUsers);
   // return sortedUsers;
   // };
+
+  // const updatedStartTime = { startTime };
+  // updatedStartTime.toLocaleTimeString([], {
+  //   hour: "2-digit",
+  //   minute: "2-digit",
+  // });
 
   return (
     <div
@@ -87,9 +93,9 @@ export const EventDetail = ({ eventObj }) => {
 // TIME CONVERTED BELOW
 // https://stackoverflow.com/questions/13898423/javascript-convert-24-hour-time-of-day-string-to-12-hour-time-with-am-pm-and-no
 
-// var timeString = "15:00";
-// var H = +timeString.substr(0, 2);
+// var startTimeString = "15:00";
+// var H = +startTimeString.substr(0, 2);
 // var h = H % 12 || 12;
 // var ampm = H < 12 ? "AM" : "PM";
-// timeString = h + timeString.substr(2, 3) + " " + ampm;
-// document.write(timeString);
+// startTimeString = h + startTimeString.substr(2, 3) + " " + ampm;
+// document.write(startTimeString);

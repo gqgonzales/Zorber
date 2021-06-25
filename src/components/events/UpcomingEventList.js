@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import { EventContext } from "./EventProvider";
 import { UserContext } from "../users/UserProvider";
 import { UserEventsContext } from "../userEvents/UserEventsProvider";
+import userEvent from "@testing-library/user-event";
 
 export const UpcomingEventList = () => {
   // This state changes when `getEvents()` is invoked below
@@ -45,6 +46,9 @@ export const UpcomingEventList = () => {
           return { filteredEvents };
         })} */}
 
+        {/* Devin's advice: You could set a ternary where line 50 is that still runs the same `if else` check, 
+        but instead returns 1 of 2 functions based on the conditional. You'd define the functions above using the appropriate JSX. */}
+
         {filteredEvents.map((eventObj) => {
           if (
             parseInt(localStorage.getItem("zorber_user")) ===
@@ -78,6 +82,7 @@ export const UpcomingEventList = () => {
                   <div className="event__comments">
                     {eventObj.comments}
                   </div>
+                  <div>Expected attendees:</div>
                 </div>
                 {/* BUTTONS */}
                 <div className="button_group">
@@ -145,3 +150,14 @@ export const UpcomingEventList = () => {
     </>
   );
 };
+
+/* 
+
+  {users.map((user) => {
+                      if (userEvent.userid === user.id) {
+                        console.log("TAG HERE:", user.name);
+                        return user.name;
+                      }
+                    })}
+
+*/

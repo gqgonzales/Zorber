@@ -8,7 +8,7 @@ import { UserEventsProvider } from "./userEvents/UserEventsProvider";
 import { PastEventList } from "./events/PastEventList";
 import { EditPastEventForm } from "./events/EditPastEventForm";
 import { EditUpcomingEventForm } from "./events/EditUpcomingEventForm";
-import { EventDetail } from "./events/EventDetail";
+// import { PastEventDetail } from "./events/PastEventDetail";
 
 export const ApplicationViews = () => {
   return (
