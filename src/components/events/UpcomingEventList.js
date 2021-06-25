@@ -27,26 +27,6 @@ export const UpcomingEventList = () => {
     setFilteredEvents(dateFilter);
   }, [events]);
 
-  // const host = filteredEvents.forEach((event) => {
-  //   users.forEach((user) => {
-  //     if (event.userId === user.id) {
-  //       return user.name;
-  //     }
-  //   });
-  // });
-
-  // let allEvents = events.map((event) => {
-  //   return { event };
-  // });
-
-  // console.log(allEvents);
-
-  // const host = users.forEach((user) => {
-  //   if (user.id === events.userId) {
-  //     return user.name;
-  //   }
-  // });
-
   //useEffect - reach out to the world for something
   useEffect(() => {
     getEvents().then(getUsers).then(getUserEvents);
