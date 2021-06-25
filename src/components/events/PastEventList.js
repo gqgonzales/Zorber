@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { EventContext } from "./EventProvider";
 import { UserContext } from "../users/UserProvider";
 import { UserEventsContext } from "../userEvents/UserEventsProvider";
-import { EventDetail } from "../events/EventDetail";
+import { PastEventDetail } from "./PastEventDetail";
 // import userEvent from "@testing-library/user-event";
 
 export const PastEventList = () => {
@@ -29,11 +29,13 @@ export const PastEventList = () => {
   const [filteredEvents, setFilteredEvents] = useState([]);
 
   useEffect(() => {
-    const dateFilter = events.filter((event) => {
-      if (Date.parse(event.date) < Date.now()) {
-        return true;
-      }
-    });
+    const dateFilter = events
+      .filter((event) => {
+        if (Date.parse(event.date) < Date.now()) {
+          return true;
+        }
+      })
+      .sort((a, b) => b.date - a.date);
     setFilteredEvents(dateFilter);
   }, [events]);
   // console.log(filteredEvents);
@@ -62,15 +64,19 @@ export const PastEventList = () => {
       <div className="subsection__header__container">
         <h2 className="subsection__header">Past Events</h2>
       </div>
-      {filteredEvents.map((eventObj) => {
-        // console.log(eventObj);
-        return (
-          <EventDetail eventObj={eventObj} key={eventObj.id} />
-        );
-      })}
+      <div
+        className="event__container"
+        //   YOU ONLY NEED THIS CONTAINER FOR CSS PURPOSES
+      >
+        {filteredEvents.map((eventObj) => {
+          // console.log(eventObj);
+          return <PastEventDetail eventObj={eventObj} />;
+        })}
+      </div>
     </>
   );
 };
+// eslint-disable-next-line no-undef
 
 /* {events.forEach((event) => {
                       if (
@@ -107,5 +113,3 @@ export const PastEventList = () => {
             </div>
           );
         })} */
-
-

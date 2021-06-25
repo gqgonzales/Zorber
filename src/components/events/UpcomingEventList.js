@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import { EventContext } from "./EventProvider";
 import { UserContext } from "../users/UserProvider";
 import { UserEventsContext } from "../userEvents/UserEventsProvider";
+import userEvent from "@testing-library/user-event";
 
 export const UpcomingEventList = () => {
   // This state changes when `getEvents()` is invoked below
@@ -45,53 +46,118 @@ export const UpcomingEventList = () => {
           return { filteredEvents };
         })} */}
 
+        {/* Devin's advice: You could set a ternary where line 50 is that still runs the same `if else` check, 
+        but instead returns 1 of 2 functions based on the conditional. You'd define the functions above using the appropriate JSX. */}
+
         {filteredEvents.map((eventObj) => {
-          return (
-            <div
-              className="event"
-              id={`event--${eventObj.id}`}
-              key={`event--${eventObj.id}`}
-            >
-              <div className="event__title option__name">
-                <h3>{eventObj.title}</h3>
-              </div>
-              <div className="event__info">
-                <h4 className="event__location">
-                  {eventObj.location}
-                </h4>
-                {/* HOW CAN WE CONVERT THIS USERID TO THE APPROPRIATE NAME? */}
-                <div>
-                  Posted by{" "}
-                  {users.map((user) => {
-                    if (user.id === eventObj.userId) {
-                      return user.name;
-                    }
-                  })}
+          if (
+            parseInt(localStorage.getItem("zorber_user")) ===
+            eventObj.userId
+          ) {
+            return (
+              <div
+                className="event"
+                id={`event--${eventObj.id}`}
+                key={`event--${eventObj.id}`}
+              >
+                <div className="event__title option__name">
+                  <h3>{eventObj.title}</h3>
                 </div>
-                <div className="event__date event__startTime">
-                  {eventObj.date} at {eventObj.startTime}
+                <div className="event__info">
+                  <h4 className="event__location">
+                    {eventObj.location}
+                  </h4>
+                  {/* HOW CAN WE CONVERT THIS USERID TO THE APPROPRIATE NAME? */}
+                  <div>
+                    Posted by{" "}
+                    {users.map((user) => {
+                      if (user.id === eventObj.userId) {
+                        return user.name;
+                      }
+                    })}
+                  </div>
+                  <div className="event__date event__startTime">
+                    {eventObj.date} at {eventObj.startTime}
+                  </div>
+                  <div className="event__comments">
+                    {eventObj.comments}
+                  </div>
+                  <div>Expected attendees:</div>
                 </div>
-                <div className="event__comments">
-                  {eventObj.comments}
+                {/* BUTTONS */}
+                <div className="button_group">
+                  <button
+                    className="btn"
+                    onClick={() => {
+                      history.push(
+                        `/upcoming/edit/${eventObj.id}`
+                      );
+                    }}
+                  >
+                    Edit Event
+                  </button>
                 </div>
               </div>
-              {/* BUTTONS */}
-              <div className="button_group">
-                <button
-                  className="btn"
-                  onClick={() => {
-                    history.push(
-                      `/upcoming/edit/${eventObj.id}`
-                    );
-                  }}
-                >
-                  Edit Event
-                </button>
+            );
+          } else {
+            return (
+              <div
+                className="event"
+                id={`event--${eventObj.id}`}
+                key={`event--${eventObj.id}`}
+              >
+                <div className="event__title option__name">
+                  <h3>{eventObj.title}</h3>
+                </div>
+                <div className="event__info">
+                  <h4 className="event__location">
+                    {eventObj.location}
+                  </h4>
+                  {/* POST AUTHOR / CREATOR */}
+                  <div>
+                    Posted by{" "}
+                    {users.map((user) => {
+                      if (user.id === eventObj.userId) {
+                        return user.name;
+                      }
+                    })}
+                  </div>
+                  <div className="event__date event__startTime">
+                    {eventObj.date} at {eventObj.startTime}
+                  </div>
+                  <div className="event__comments">
+                    {eventObj.comments}
+                  </div>
+                </div>
+                {/* BUTTONS */}
+                {/* <div className="button_group">
+                  <button
+                    className="btn"
+                    onClick={() => {
+                      history.push(
+                        `/upcoming/edit/${eventObj.id}`
+                      );
+                    }}
+                  >
+                    Edit Event
+                  </button>
+                </div> */}
               </div>
-            </div>
-          );
+            );
+          }
         })}
       </div>
     </>
   );
 };
+
+/* 
+
+  {users.map((user) => {
+                      if (userEvent.userid === user.id) {
+                        console.log("TAG HERE:", user.name);
+                        return user.name;
+                      }
+                    })}
+
+*/
