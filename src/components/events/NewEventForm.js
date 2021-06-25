@@ -5,14 +5,14 @@ import { useHistory, useParams } from "react-router-dom";
 import { EventContext } from "./EventProvider";
 import { UserContext } from "../users/UserProvider";
 import { Multiselect } from "multiselect-react-dropdown";
-import { userEventContext } from "../userEvents/UserEventsProvider";
+import { UserEventsContext } from "../userEvents/UserEventsProvider";
 
 export const NewEventForm = () => {
   const { addEvent, getEventById, getEvents } =
     useContext(EventContext);
 
   const { users, getUsers } = useContext(UserContext);
-  const { addUserEvents } = useContext(userEventContext);
+  const { addUserEvents } = useContext(UserEventsContext);
 
   const [userEvent, setUserEvents] = useState({
     userId: 0,
@@ -39,9 +39,6 @@ export const NewEventForm = () => {
   const { eventId } = useParams();
   const history = useHistory();
 
-  //when field changes, update state. This causes a re-render and updates the view.
-  //Controlled component
-
   const [participants, setParticipants] = useState([]);
 
   const onSelect = (selectedValue) => {
@@ -67,7 +64,6 @@ export const NewEventForm = () => {
   //     // DO YOU WANT TO GRAB THE USERID'S HERE?
   //     return userObj.id;
   //   });
-  //   console.log(selectedIds);
   //   return selectedIds;
   // };
   // Cool, now you have an array of the selected ID's.

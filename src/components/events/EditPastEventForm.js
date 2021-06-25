@@ -4,6 +4,7 @@ import "./Event.css";
 import { useHistory, useParams } from "react-router-dom";
 import { EventContext } from "./EventProvider";
 import { UserContext } from "../users/UserProvider";
+import { UserEventsContext } from "../userEvents/UserEventsProvider";
 import { Multiselect } from "multiselect-react-dropdown";
 
 export const EditPastEventForm = () => {
@@ -12,24 +13,45 @@ export const EditPastEventForm = () => {
 
   const { users, getUsers } = useContext(UserContext);
 
-  // const [user, serUsers] = useState([]);
+  const {
+    addUserEvents,
+    updateUserEvents,
+    getUserEvents,
+    getUserEventsByEventId,
+  } = useContext(UserEventsContext);
 
-  //for edit, hold on to state of event in this view
-  // The input fields need to be CONTROLLED and thus need to be definied form the outset.
   const [eventObj, setEvent] = useState({
     title: "",
     location: "",
     date: "",
     startTime: "",
-    userId: 0,
+    userId: parseInt(localStorage.getItem("zorber_user")),
     comments: "",
   });
 
-  //wait for data before button is active
+  // This is our ORIGINAL copy of the userEvents associated with this event.
+  const [originalParticipants, setOriginalParticipants] =
+    useState([]);
+
+  // This is the dynamic copy of the userEvents that is updated by our changes.
+  const [participants, setParticipants] = useState([]);
+
   const [isLoading, setIsLoading] = useState(true);
 
   const { eventId } = useParams();
+
   const history = useHistory();
+
+  const onSelect = (selectedValue) => {
+    setParticipants(selectedValue);
+  };
+
+  const onRemove = (selectedValue) => {
+    const removeSelected = [...participants].splice(
+      selectedValue
+    );
+    setParticipants(removeSelected);
+  };
 
   //when field changes, update state. This causes a re-render and updates the view.
   //Controlled component
@@ -61,18 +83,43 @@ export const EditPastEventForm = () => {
         startTime: eventObj.startTime,
         userId: eventObj.userId,
         comments: eventObj.comments,
-      }).then(() => history.push(`/past`));
+      })
+        // .then(
+        //   updateUserEvents({
+        //     id: userEventObj.id,
+        //     userId: userEventObj.userId,
+        //     eventId: parseInt(eventId),
+        //     time: "",
+        //   })
+        // )
+        .then(getEvents)
+        .then(() => {
+          participants.forEach((participant) => {
+            updateUserEvents({
+              id: participant.id,
+              userId: participant.userId,
+              eventId: parseInt(eventId),
+              time: "",
+            });
+          });
+        })
+        .then(() => history.push(`/past`));
     }
   };
 
   // Get users and events. If eventId is in the URL, getEventById
   useEffect(() => {
     getEvents()
-      .then(getUsers())
+      .then(getUsers)
+      .then((users) => {
+        getUserEvents(users);
+      })
       .then(() => {
         if (eventId) {
           getEventById(parseInt(eventId)).then((eventRes) => {
             setEvent(eventRes);
+            // console.log(eventRes);
+            // setUserEvents(eventRes);
             setIsLoading(false);
           });
         } else {
@@ -81,16 +128,16 @@ export const EditPastEventForm = () => {
       });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  //   onSelect(selectedList, selectedItem) {
-  //     ...
-  // }
-
-  // onRemove(selectedList, removedItem) {
-  //     ...
-  // }
-
-  //since state controlls this component, we no longer need
-  //useRef(null) or ref
+  useEffect(() => {
+    getUserEventsByEventId(eventId).then((res) => {
+      const participantsArray = res.map(
+        (userEventObj) => userEventObj.user
+      );
+      setOriginalParticipants(participantsArray);
+      setParticipants(participantsArray);
+    });
+  }, [eventId]); // eslint-disable-line react-hooks/exhaustive-deps
+  // console.log(originalParticipants);
 
   return (
     <form className="eventForm">
@@ -172,9 +219,13 @@ export const EditPastEventForm = () => {
           <label htmlFor="userId">Participants: </label>
           <Multiselect
             options={users} // Options to display in the dropdown
-            selectedValues={users.selectedValue} // Preselected value to persist in dropdown
-            onSelect={users.onSelect} // Function will trigger on select event
-            onRemove={users.onRemove} // Function will trigger on remove event
+            selectedValues={participants} // Preselected value to persist in dropdown
+            onSelect={(selectedValue) => {
+              onSelect(selectedValue);
+            }} // Function will trigger on select event
+            onRemove={(selectedValue) => {
+              onRemove(selectedValue);
+            }} // Function will trigger on remove event
             displayValue="name" // Property name to display in the dropdown options
           />
         </div>
