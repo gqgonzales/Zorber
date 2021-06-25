@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { EventContext } from "./EventProvider";
 import { UserContext } from "../users/UserProvider";
-// import { UserEventsContext } from "../userEvents/UserEventsProvider";
+import { UserEventsContext } from "../userEvents/UserEventsProvider";
 
 export const EventDetail = ({ eventObj }) => {
   const {
@@ -17,6 +17,7 @@ export const EventDetail = ({ eventObj }) => {
 
   const history = useHistory();
   const { users } = useContext(UserContext);
+  // const { userEventsObj } = useContext(UserEventsContext);
 
   //   const { getEvents } = useContext(EventContext);
 
@@ -36,38 +37,38 @@ export const EventDetail = ({ eventObj }) => {
 
   return (
     <div
-      className="event"
-      //   YOU ONLY NEED THIS CONTAINER FOR CSS PURPOSES
+      className="event__card"
+      id={`event--${id}`}
+      key={`event--${id}`}
     >
-      <div className="event__card" id={`event--${id}`}>
-        <div className="event__title option__name">
-          <h3>{title}</h3>
+      <div className="event__title option__name">
+        <h3>{title}</h3>
+      </div>
+      <div className="event__info">
+        <h4 className="event__location">{location}</h4>
+        <div className="event__date event__startTime">
+          {date} at {startTime}
         </div>
-        <div className="event__info">
-          <h4 className="event__location">{location}</h4>
-          <div className="event__date event__startTime">
-            {date} at {startTime}
-          </div>
-          <div className="event__comments">{comments}</div>
-          {userEvents.map((userEvent) => {
-            console.log(userEvent);
-            return (
-              <div className="event__participant">
-                {getUserById(userEvent.userId).name}
-              </div>
-            );
-          })}
-        </div>
-        <div className="button_group">
-          <button
-            className="btn"
-            onClick={() => {
-              history.push(`/past/edit/${id}`);
-            }}
-          >
-            Edit Event
-          </button>
-        </div>
+        <div className="event__comments">{comments}</div>
+        {userEvents.map((userEvent) => {
+          return (
+            <div className="event__participant">
+              {getUserById(userEvent.userId).name}, who completed
+              the course in {userEvent.time}
+            </div>
+          );
+          // .sort((a, b) => a.time - b.time);
+        })}
+      </div>
+      <div className="button_group">
+        <button
+          className="btn"
+          onClick={() => {
+            history.push(`/past/edit/${id}`);
+          }}
+        >
+          Edit Event
+        </button>
       </div>
     </div>
   );
