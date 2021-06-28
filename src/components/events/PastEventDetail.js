@@ -35,8 +35,8 @@ export const PastEventDetail = ({ eventObj }) => {
     return participant[0];
   };
 
-  const sortedUsers = [...userEvents].sort(
-    (a, b) => a.time - b.time
+  const sortedUsers = [...userEvents].sort((a, b) =>
+    a.time.localeCompare(b.time)
   );
   // console.log("LABEL:", sortedUsers);
   // return sortedUsers;
@@ -47,6 +47,15 @@ export const PastEventDetail = ({ eventObj }) => {
   //   hour: "2-digit",
   //   minute: "2-digit",
   // });
+
+  // FILTERING BY TIME
+  /* 
+  const sortedTimes = targetArray.sort(
+      (a, b) => parseInt(a.time) - parseInt(b.time)
+    );
+    console.log("TAG", sortedTimes);
+    setFilteredEvents(sortedTimes);
+  */
 
   return (
     <div
@@ -63,18 +72,17 @@ export const PastEventDetail = ({ eventObj }) => {
           {date} at {startTime}
         </div>
         <div className="event__comments">{comments}</div>
-        {
-          sortedUsers.map((userEvent) => {
-            return (
-              <div className="event__participant">
-                {getUserById(userEvent.userId).name}, who
-                completed the course in {userEvent.time}
-              </div>
-            );
-            // .sort((a, b) => a.time - b.time);
-          })
-          // .sort((a, b) => a.time - b.time)
-        }
+        {sortedUsers.map((userEvent) => {
+          return (
+            <div
+              className="event__participant"
+              key={`event__participant--${userEvent.id}`}
+            >
+              {getUserById(userEvent.userId).name}, who completed
+              the course in {userEvent.time}
+            </div>
+          );
+        })}
       </div>
       <div className="button_group">
         <button

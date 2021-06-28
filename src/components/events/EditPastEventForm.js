@@ -67,6 +67,12 @@ export const EditPastEventForm = () => {
   };
 
   const handleSaveEvent = () => {
+    console.log(
+      "ORIG:",
+      originalParticipants,
+      "CURRENT:",
+      participants
+    );
     if (parseInt(eventObj.eventId) === 0) {
       window.alert(
         "Please enter all required fields to continue."
@@ -92,18 +98,19 @@ export const EditPastEventForm = () => {
         //     time: "",
         //   })
         // )
-        .then(getEvents)
-        .then(() => {
-          participants.forEach((participant) => {
-            updateUserEvents({
-              id: participant.id,
-              userId: participant.userId,
-              eventId: parseInt(eventId),
-              time: "",
-            });
-          });
-        })
-        .then(() => history.push(`/past`));
+        // .then(getEvents)
+
+        // .then(() => {
+        //   participants.forEach((participant) => {
+        //     updateUserEvents({
+        //       id: participant.id,
+        //       userId: participant.userId,
+        //       eventId: parseInt(eventId),
+        //       time: "",
+        //     });
+        //   });
+        // })
+        // .then(() => history.push(`/past`));
     }
   };
 

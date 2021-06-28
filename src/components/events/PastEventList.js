@@ -29,14 +29,16 @@ export const PastEventList = () => {
   const [filteredEvents, setFilteredEvents] = useState([]);
 
   useEffect(() => {
-    const dateFilter = events
-      .filter((event) => {
-        if (Date.parse(event.date) < Date.now()) {
-          return true;
-        }
-      })
-      .sort((a, b) => b.date - a.date);
-    setFilteredEvents(dateFilter);
+    const dateFilter = events.filter((event) => {
+      if (Date.parse(event.date) < Date.now()) {
+        return true;
+      }
+    });
+    const sorted = dateFilter.sort(
+      (a, b) => Date.parse(b.date) - Date.parse(a.date)
+    );
+    console.log("TAG", sorted);
+    setFilteredEvents(sorted);
   }, [events]);
   // console.log(filteredEvents);
 
