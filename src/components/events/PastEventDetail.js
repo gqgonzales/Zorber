@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { EventContext } from "./EventProvider";
 import { UserContext } from "../users/UserProvider";
 import { UserEventsContext } from "../userEvents/UserEventsProvider";
+import "../events/Event.css";
 
 export const PastEventDetail = ({ eventObj }) => {
   const {
@@ -72,10 +73,12 @@ export const PastEventDetail = ({ eventObj }) => {
           {date} at {startTime}
         </div>
         <div className="event__comments">{comments}</div>
-        {sortedUsers.map((userEvent) => {
+        {sortedUsers.map((userEvent, index) => {
+          var cls =
+            index === 0 ? "winner" : "event__participant";
           return (
             <div
-              className="event__participant"
+              className={cls}
               key={`event__participant--${userEvent.id}`}
             >
               {getUserById(userEvent.userId).name}, who completed
