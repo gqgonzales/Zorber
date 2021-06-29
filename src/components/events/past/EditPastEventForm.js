@@ -20,6 +20,8 @@ export const EditPastEventForm = () => {
     getUserEventsByEventId,
   } = useContext(UserEventsContext);
 
+  const { eventId } = useParams();
+
   const [eventObj, setEvent] = useState({
     title: "",
     location: "",
@@ -36,9 +38,43 @@ export const EditPastEventForm = () => {
   // This is the dynamic copy of the userEvents that is updated by our changes.
   const [participants, setParticipants] = useState([]);
 
-  const [isLoading, setIsLoading] = useState(true);
+  // Write a function that returns an array of all added users
+  const findAdded = () => {
+    const added = [];
 
-  const { eventId } = useParams();
+    participants.forEach((participant) => {
+      const found = originalParticipants.find(
+        (originalParticipantObj) =>
+          originalParticipantObj.id === participant.id
+      );
+      if (!found) {
+        added.push(participant);
+      }
+    });
+    const newParticpantObjects = added.map((userObj) => {
+      return {
+        userId: userObj.id,
+        eventId: parseInt(eventId),
+        time: "",
+      };
+    });
+    return newParticpantObjects;
+  };
+
+  // Write a function that returns an array of all removed users
+  const findRemoved = () => {
+    const removed = [];
+    originalParticipants.forEach((user) => {
+      const found = participants.find((u) => u === user.id);
+      if (!found) {
+        removed.push(user);
+      }
+    });
+
+    return removed;
+  };
+
+  const [isLoading, setIsLoading] = useState(true);
 
   const history = useHistory();
 
@@ -89,30 +125,46 @@ export const EditPastEventForm = () => {
         startTime: eventObj.startTime,
         userId: eventObj.userId,
         comments: eventObj.comments,
-      });
-      // .then(
-      //   updateUserEvents({
-      //     id: userEventObj.id,
-      //     userId: userEventObj.userId,
-      //     eventId: parseInt(eventId),
-      //     time: "",
-      //   })
-      // )
-      // .then(getEvents)
+      })
+        .then(() => {
+          // console.log(findAdded());
+          if (findAdded().length > 0) {
+            for (const relationshipObj of findAdded()) {
+              addUserEvents(relationshipObj);
+            }
+          }
+        })
+        // .then(
+        //   addUserEvents({
+        //     id: userEventObj.id,
+        //     userId: userEventObj.userId,
+        //     eventId: parseInt(eventId),
+        //     time: "",
+        //   })
+        // )
+        // .then(getEvents)
 
-      // .then(() => {
-      //   participants.forEach((participant) => {
-      //     updateUserEvents({
-      //       id: participant.id,
-      //       userId: participant.userId,
-      //       eventId: parseInt(eventId),
-      //       time: "",
-      //     });
-      //   });
-      // })
-      // .then(() => history.push(`/past`));
+        // .then(() => {
+        //   participants.forEach((participant) => {
+        //     updateUserEvents({
+        //       id: participant.id,
+        //       userId: participant.userId,
+        //       eventId: parseInt(eventId),
+        //       time: "",
+        //     });
+        //   });
+        // })
+
+        // Run a setTimeout or a promise.all here????
+        .then(() => history.push(`/past`));
     }
   };
+
+  // eventObj produces response. RES has to come back first, then place it in a useEffect
+  // then run after a set ammount of time / promise has been delivered.
+  // Check if new participants have been added
+  // If yes, add these userEvents obj to db.
+  // BUT FIRST,
 
   // Get users and events. If eventId is in the URL, getEventById
   useEffect(() => {

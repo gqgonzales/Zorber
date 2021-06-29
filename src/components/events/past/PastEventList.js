@@ -36,7 +36,7 @@ export const PastEventList = () => {
     const sorted = dateFilter.sort(
       (a, b) => Date.parse(b.date) - Date.parse(a.date)
     );
-    console.log("TAG", sorted);
+    // console.log("TAG", sorted);
     setFilteredEvents(sorted);
   }, [events]);
   // console.log(filteredEvents);

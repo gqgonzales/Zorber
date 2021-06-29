@@ -20,6 +20,8 @@ export const EditUpcomingEventForm = () => {
     getUserEventsByEventId,
   } = useContext(UserEventsContext);
 
+  const { eventId } = useParams();
+
   const [eventObj, setEvent] = useState({
     title: "",
     location: "",
@@ -34,9 +36,30 @@ export const EditUpcomingEventForm = () => {
 
   const [participants, setParticipants] = useState([]);
 
-  const [isLoading, setIsLoading] = useState(true);
+  // Write a function that returns an array of all added users
+  const findAdded = () => {
+    const added = [];
 
-  const { eventId } = useParams();
+    participants.forEach((participant) => {
+      const found = originalParticipants.find(
+        (originalParticipantObj) =>
+          originalParticipantObj.id === participant.id
+      );
+      if (!found) {
+        added.push(participant);
+      }
+    });
+    const newParticpantObjects = added.map((userObj) => {
+      return {
+        userId: userObj.id,
+        eventId: parseInt(eventId),
+        time: "",
+      };
+    });
+    return newParticpantObjects;
+  };
+
+  const [isLoading, setIsLoading] = useState(true);
 
   const history = useHistory();
 
@@ -82,16 +105,13 @@ export const EditUpcomingEventForm = () => {
         userId: eventObj.userId,
         comments: eventObj.comments,
       })
-        .then(getEvents)
         .then(() => {
-          participants.forEach((userEventObj) => {
-            updateUserEvents({
-              id: userEventObj.id,
-              userId: userEventObj.userId,
-              eventId: parseInt(eventId),
-              time: "",
-            });
-          });
+          console.log(findAdded());
+          if (findAdded().length > 0) {
+            for (const relationshipObj of findAdded()) {
+              addUserEvents(relationshipObj);
+            }
+          }
         })
         .then(() => history.push(`/upcoming`));
     }

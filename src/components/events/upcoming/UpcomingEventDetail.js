@@ -114,7 +114,7 @@ export const UpcomingEventDetail = ({ eventObj }) => {
               return (
                 <div
                   className="event__participant"
-                  key={`event__participant--${id}`}
+                  key={`event__participant--${userEvent.id}`}
                 >
                   {getUserById(userEvent.userId).name}
                 </div>
