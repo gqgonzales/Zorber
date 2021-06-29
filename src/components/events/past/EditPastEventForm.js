@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 
-import "./Event.css";
+import "../Event.css";
 import { useHistory, useParams } from "react-router-dom";
-import { EventContext } from "./EventProvider";
-import { UserContext } from "../users/UserProvider";
+import { EventContext } from "../EventProvider";
 import { Multiselect } from "multiselect-react-dropdown";
-import { UserEventsContext } from "../userEvents/UserEventsProvider";
+import { UserEventsContext } from "../../userEvents/UserEventsProvider";
+import { UserContext } from "../../users/UserProvider";
 
-export const EditUpcomingEventForm = () => {
+export const EditPastEventForm = () => {
   const { getEventById, updateEvent, getEvents, deleteEvent } =
     useContext(EventContext);
 
@@ -29,9 +29,11 @@ export const EditUpcomingEventForm = () => {
     comments: "",
   });
 
+  // This is our ORIGINAL copy of the userEvents associated with this event.
   const [originalParticipants, setOriginalParticipants] =
     useState([]);
 
+  // This is the dynamic copy of the userEvents that is updated by our changes.
   const [participants, setParticipants] = useState([]);
 
   const [isLoading, setIsLoading] = useState(true);
@@ -56,15 +58,21 @@ export const EditUpcomingEventForm = () => {
   const handleControlledInputChange = (event) => {
     //When changing a state object or array,
     //always create a copy make changes, and then set state.
-    const updateUpcomingEvent = { ...eventObj };
+    const updatePastEvent = { ...eventObj };
     //event is an object with properties.
     //set the property to the new value
-    updateUpcomingEvent[event.target.name] = event.target.value;
+    updatePastEvent[event.target.name] = event.target.value;
     //update state
-    setEvent(updateUpcomingEvent);
+    setEvent(updatePastEvent);
   };
 
   const handleSaveEvent = () => {
+    console.log(
+      "ORIG:",
+      originalParticipants,
+      "CURRENT:",
+      participants
+    );
     if (parseInt(eventObj.eventId) === 0) {
       window.alert(
         "Please enter all required fields to continue."
@@ -81,19 +89,28 @@ export const EditUpcomingEventForm = () => {
         startTime: eventObj.startTime,
         userId: eventObj.userId,
         comments: eventObj.comments,
-      })
-        .then(getEvents)
-        .then(() => {
-          participants.forEach((userEventObj) => {
-            updateUserEvents({
-              id: userEventObj.id,
-              userId: userEventObj.userId,
-              eventId: parseInt(eventId),
-              time: "",
-            });
-          });
-        })
-        .then(() => history.push(`/upcoming`));
+      });
+      // .then(
+      //   updateUserEvents({
+      //     id: userEventObj.id,
+      //     userId: userEventObj.userId,
+      //     eventId: parseInt(eventId),
+      //     time: "",
+      //   })
+      // )
+      // .then(getEvents)
+
+      // .then(() => {
+      //   participants.forEach((participant) => {
+      //     updateUserEvents({
+      //       id: participant.id,
+      //       userId: participant.userId,
+      //       eventId: parseInt(eventId),
+      //       time: "",
+      //     });
+      //   });
+      // })
+      // .then(() => history.push(`/past`));
     }
   };
 
@@ -101,11 +118,15 @@ export const EditUpcomingEventForm = () => {
   useEffect(() => {
     getEvents()
       .then(getUsers)
-      .then(getUserEvents)
+      .then((users) => {
+        getUserEvents(users);
+      })
       .then(() => {
         if (eventId) {
-          getEventById(eventId).then((eventRes) => {
+          getEventById(parseInt(eventId)).then((eventRes) => {
             setEvent(eventRes);
+            // console.log(eventRes);
+            // setUserEvents(eventRes);
             setIsLoading(false);
           });
         } else {
@@ -129,7 +150,7 @@ export const EditUpcomingEventForm = () => {
     <form className="eventForm">
       <div className="subsection__header__container">
         <h2 className="eventForm__title subsection__header">
-          Create a new event{" "}
+          Edit this Event{" "}
         </h2>
       </div>
       <fieldset>
@@ -185,10 +206,10 @@ export const EditUpcomingEventForm = () => {
       {/* Start Time */}
       <fieldset>
         <div className="form-group">
-          <label htmlFor="startTime">Time: </label>
+          <label htmlFor="eventDate">Time: </label>
           <input
             type="time"
-            id="startTime"
+            id="eventDate"
             name="startTime"
             value={eventObj.startTime}
             required
@@ -219,10 +240,10 @@ export const EditUpcomingEventForm = () => {
       {/* COMMENTS */}
       <fieldset>
         <div className="form-group">
-          <label htmlFor="comments">Comments: </label>
+          <label htmlFor="eventComments">Comments: </label>
           <input
             type="text"
-            id="comments"
+            id="eventComments"
             name="comments"
             value={eventObj.comments}
             required
@@ -237,7 +258,7 @@ export const EditUpcomingEventForm = () => {
         className="delete__button"
         onClick={() => {
           deleteEvent(eventId);
-          history.push("/upcoming");
+          history.push("/past");
         }}
       >
         Delete
@@ -251,17 +272,19 @@ export const EditUpcomingEventForm = () => {
         }}
       >
         {eventId ? (
-          <>Save those changes!</>
+          <>Save Changes</>
         ) : (
-          <>Create New Event</>
+          <>Something wrong with this ternary</>
         )}
       </button>
       <button
         className="cancel__button"
-        onClick={() => history.push("/upcoming")}
+        onClick={() => history.push("/past")}
       >
         Cancel!
       </button>
+
+      {/* ------------------------------------ */}
     </form>
   );
 };

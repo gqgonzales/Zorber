@@ -1,15 +1,18 @@
 import React from "react";
 import { Route } from "react-router-dom";
-import { UpcomingEventList } from "./events/UpcomingEventList";
-import { NewEventForm } from "./events/NewEventForm";
+//
 import { EventProvider } from "./events/EventProvider";
 import { UserProvider } from "./users/UserProvider";
 import { UserEventsProvider } from "./userEvents/UserEventsProvider";
-import { PastEventList } from "./events/PastEventList";
-import { EditPastEventForm } from "./events/EditPastEventForm";
-import { EditUpcomingEventForm } from "./events/EditUpcomingEventForm";
-// import { PastEventDetail } from "./events/PastEventDetail";
-
+//
+import { UpcomingEventList } from "./events/upcoming/UpcomingEventList";
+import { EditUpcomingEventForm } from "./events/upcoming/EditUpcomingEventForm";
+//
+import { NewEventForm } from "./events/NewEventForm";
+//
+import { PastEventList } from "./events/past/PastEventList";
+import { EditPastEventForm } from "./events/past/EditPastEventForm";
+//
 export const ApplicationViews = () => {
   return (
     <>
