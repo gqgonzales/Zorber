@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
-import { EventContext } from "./EventProvider";
-import { UserContext } from "../users/UserProvider";
-import { UserEventsContext } from "../userEvents/UserEventsProvider";
-import "../events/Event.css";
+// import { EventContext } from "../EventProvider";
+import { UserContext } from "../../users/UserProvider";
+// import { UserEventsContext } from "../../userEvents/UserEventsProvider";
+import "../Event.css";
 
 export const PastEventDetail = ({ eventObj }) => {
   const {

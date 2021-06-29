@@ -1,14 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 // To start, you need to import the context object you created in the provider component so that the useContext() hook can access the objects it exposes.
-import "./Event.css";
-// import { useHistory } from "react-router-dom";
-import { EventContext } from "./EventProvider";
-import { UserContext } from "../users/UserProvider";
-import { UserEventsContext } from "../userEvents/UserEventsProvider";
+import "../Event.css"; // import { useHistory } from "react-router-dom";
+import { EventContext } from "../EventProvider";
+import { UserContext } from "../../users/UserProvider";
+import { UserEventsContext } from "../../userEvents/UserEventsProvider";
 import { UpcomingEventDetail } from "./UpcomingEventDetail";
 // import userEvent from "@testing-library/user-event";
 
-export const CompactUpcomingEventList = () => {
+export const UpcomingEventList = () => {
   // This state changes when `getEvents()` is invoked below
   const { events, getEvents } = useContext(EventContext);
   const { getUsers } = useContext(UserContext);

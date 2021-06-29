@@ -1,10 +1,9 @@
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 // import { EventContext } from "./EventProvider";
-import { UserContext } from "../users/UserProvider";
+import { UserContext } from "../../users/UserProvider";
 // import { UserEventsContext } from "../userEvents/UserEventsProvider";
-import "../events/Event.css";
-
+import "../Event.css";
 export const UpcomingEventDetail = ({ eventObj }) => {
   const {
     title,
