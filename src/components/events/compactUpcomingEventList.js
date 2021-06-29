@@ -36,7 +36,7 @@ export const CompactUpcomingEventList = () => {
     const sorted = dateFilter.sort(
       (a, b) => Date.parse(a.date) - Date.parse(b.date)
     );
-    console.log("TAG", sorted);
+    // console.log("TAG", sorted);
     setFilteredEvents(sorted);
   }, [events]);
   // console.log(filteredEvents);

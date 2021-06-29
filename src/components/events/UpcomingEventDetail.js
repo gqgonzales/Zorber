@@ -19,9 +19,9 @@ export const UpcomingEventDetail = ({ eventObj }) => {
   const history = useHistory();
   const { users } = useContext(UserContext);
 
-  const getUserById = (id) => {
+  const getUserById = (userId) => {
     const participant = users.filter((user) => {
-      return user.id === id;
+      return user.id === userId;
     });
 
     return participant[0];
@@ -55,7 +55,20 @@ export const UpcomingEventDetail = ({ eventObj }) => {
             {date} at {startTime}
           </div>
           <div className="event__comments">{comments}</div>
-          <div>Expected attendees:</div>
+          {/* EXPECTED ATTENDEES */}
+          <div className="event__participants">
+            Expected attendees:{" "}
+            {userEvents.map((userEvent) => {
+              return (
+                <div
+                  className="event__participant"
+                  key={`event__participant--${id}`}
+                >
+                  {getUserById(userEvent.userId).name}
+                </div>
+              );
+            })}
+          </div>
         </div>
         {/* BUTTONS */}
         <div className="button_group">
@@ -96,16 +109,19 @@ export const UpcomingEventDetail = ({ eventObj }) => {
           </div>
           <div className="event__comments">{comments}</div>
           {/* EXPECTED ATTENDEES */}
-          {/* {users.map((userEvent) => {
-            <div
-              className="event__participant"
-              key={`event__participant--${id}`}
-            >
-              Expected attendees:{" "}
-              {getUserById(userEvent.userId).name}
-            </div>;
-          })}
-        </div> */}
+          <div className="event__participants">
+            Expected attendees:{" "}
+            {userEvents.map((userEvent) => {
+              return (
+                <div
+                  className="event__participant"
+                  key={`event__participant--${id}`}
+                >
+                  {getUserById(userEvent.userId).name}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     );
