@@ -1,6 +1,6 @@
 import React from "react";
 import { Route } from "react-router-dom";
-import { UpcomingEventList } from "./events/UpcomingEventList";
+// import { UpcomingEventList } from "./events/UpcomingEventList";
 import { NewEventForm } from "./events/NewEventForm";
 import { EventProvider } from "./events/EventProvider";
 import { UserProvider } from "./users/UserProvider";
@@ -8,6 +8,7 @@ import { UserEventsProvider } from "./userEvents/UserEventsProvider";
 import { PastEventList } from "./events/PastEventList";
 import { EditPastEventForm } from "./events/EditPastEventForm";
 import { EditUpcomingEventForm } from "./events/EditUpcomingEventForm";
+import { CompactUpcomingEventList } from "./events/compactUpcomingEventList";
 // import { PastEventDetail } from "./events/PastEventDetail";
 
 export const ApplicationViews = () => {
@@ -18,7 +19,8 @@ export const ApplicationViews = () => {
           <UserEventsProvider>
             {/* HOME / UPCOMING */}
             <Route exact path="/upcoming">
-              <UpcomingEventList />
+              {/* <UpcomingEventList /> */}
+              <CompactUpcomingEventList />
             </Route>
 
             <Route exact path="/upcoming/edit/:eventId(\d+)">

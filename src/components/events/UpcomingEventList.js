@@ -128,6 +128,7 @@ export const UpcomingEventList = () => {
                   <div className="event__comments">
                     {eventObj.comments}
                   </div>
+                  <div>Expected attendees:</div>
                 </div>
                 {/* BUTTONS */}
                 {/* <div className="button_group">
