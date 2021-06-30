@@ -6,6 +6,7 @@ import { EventContext } from "../EventProvider";
 import { Multiselect } from "multiselect-react-dropdown";
 import { UserEventsContext } from "../../userEvents/UserEventsProvider";
 import { UserContext } from "../../users/UserProvider";
+import { TimesForm } from "./TimesForm";
 
 export const EditPastEventForm = () => {
   const { getEventById, updateEvent, getEvents, deleteEvent } =
@@ -73,6 +74,19 @@ export const EditPastEventForm = () => {
 
     return removed;
   };
+
+  // const findRemoved = () => {
+  //   const removed = [];
+
+  //   originalParticipants.forEach((participant) => {
+  //     const found = participants.find(
+  //       (originalParticipantObj) =>
+  //         originalParticipantObj.id === participant.id
+  //     );
+  //     if (!found) {
+  //       removed.push(participant);
+  //     }
+  //   });
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -289,6 +303,8 @@ export const EditPastEventForm = () => {
           />
         </div>
       </fieldset>
+      {/* TESTING TABLES */}
+      <TimesForm eventObj={eventObj} />
       {/* COMMENTS */}
       <fieldset>
         <div className="form-group">
@@ -335,7 +351,6 @@ export const EditPastEventForm = () => {
       >
         Cancel!
       </button>
-
       {/* ------------------------------------ */}
     </form>
   );
