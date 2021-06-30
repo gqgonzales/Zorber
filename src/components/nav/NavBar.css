@@ -2,14 +2,22 @@
   display: flex;
   flex-wrap: nowrap;
   justify-content: left;
+  position: sticky;
+  top: 0;
+  background-color: salmon;
+  margin: 0;
 }
 
 .navbar__item {
   flex-basis: 20%;
   list-style-type: none;
+  border: seagreen 2px dotted;
 }
 
 .navbar__header {
   display: flex;
-  align-content: flex-start;
+  align-content: flex-end;
+  color: seashell;
+  border: seagreen 2px dotted;
+  padding: 0.05rem 1rem;
 }
