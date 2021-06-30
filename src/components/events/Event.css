@@ -1,3 +1,26 @@
+.subsection__header__container {
+  display: flex;
+  justify-content: center;
+}
+
+/* .subsection__header {
+} */
+
+.event__container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.event {
+  border: seagreen 2px dashed;
+  padding: 1rem;
+  margin: 0.5rem;
+  width: 20rem;
+  flex-basis: auto;
+}
+
 .winner {
   color: goldenrod;
 }

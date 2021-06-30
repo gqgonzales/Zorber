@@ -60,7 +60,7 @@ export const PastEventDetail = ({ eventObj }) => {
 
   return (
     <div
-      className="event__card"
+      className="event"
       id={`event--${id}`}
       key={`event--${id}`}
     >

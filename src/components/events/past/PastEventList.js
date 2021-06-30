@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 // To start, you need to import the context object you created in the provider component so that the useContext() hook can access the objects it exposes.
 import "../Event.css";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import { EventContext } from "../EventProvider";
 import { UserContext } from "../../users/UserProvider";
 import { UserEventsContext } from "../../userEvents/UserEventsProvider";
@@ -16,14 +16,14 @@ export const PastEventList = () => {
 
   // const [userEvents, setstate] = useState({})
 
-  const history = useHistory();
+  // const history = useHistory();
 
-  // This is our ORIGINAL copy of the userEvents associated with this event.
-  const [originalParticipants, setOriginalParticipants] =
-    useState([]);
+  // // This is our ORIGINAL copy of the userEvents associated with this event.
+  // const [originalParticipants, setOriginalParticipants] =
+  //   useState([]);
 
-  // This is the dynamic copy of the userEvents that is updated by our changes.
-  const [participants, setParticipants] = useState([]);
+  // // This is the dynamic copy of the userEvents that is updated by our changes.
+  // const [participants, setParticipants] = useState([]);
 
   const [filteredEvents, setFilteredEvents] = useState([]);
 
@@ -78,39 +78,3 @@ export const PastEventList = () => {
   );
 };
 // eslint-disable-next-line no-undef
-
-/* {events.forEach((event) => {
-                      if (
-                        event.id === event.userEvents.eventId
-                      ) {
-                        eventParticipants.push(
-                          event.userEvents.userId
-                        );
-                      }
-                      return { eventParticipants };
-                    })} */
-
-/* {events.map((event) => {
-          return (
-            <div
-              className="event"
-              id={`event--${event.id}`}
-              key={`event--${event.id}`}
-            >
-              <div className="event__title option__name">
-                <h3>{event.title}</h3>
-              </div>
-              <div className="event__info">
-                <h4 className="event__location">
-                  {event.location}
-                </h4>
-                <div className="event__date event__startTime">
-                  {event.date} at {event.startTime}
-                </div>
-                <div className="event__comments">
-                  {event.comments}
-                </div>
-              </div>
-            </div>
-          );
-        })} */
