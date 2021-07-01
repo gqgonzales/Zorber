@@ -7,6 +7,7 @@ import { Multiselect } from "multiselect-react-dropdown";
 import { UserEventsContext } from "../../userEvents/UserEventsProvider";
 import { UserContext } from "../../users/UserProvider";
 import { TimesForm } from "./TimesForm";
+// import Table from "react-bootstrap/Table";
 
 export const EditPastEventForm = () => {
   const { getEventById, updateEvent, getEvents, deleteEvent } =
@@ -32,12 +33,29 @@ export const EditPastEventForm = () => {
     comments: "",
   });
 
+  // Object that needs to be updated dynamically though state for each object returned from a map.
+  const [userEvent, setUserEvent] = useState({
+    userId: 0,
+    eventId: eventId,
+    time: "",
+  });
+
   // This is our ORIGINAL copy of the userEvents associated with this event.
   const [originalParticipants, setOriginalParticipants] =
     useState([]);
 
   // This is the dynamic copy of the userEvents that is updated by our changes.
   const [participants, setParticipants] = useState([]);
+
+  const [timesArray, setTimesArray] = useState([
+    // {
+    //   userId: 0,
+    //   eventId: eventId,
+    //   time: "",
+    // },
+  ]);
+
+  // console.log(timesArray);
 
   // Write a function that returns an array of all added users
   const findAdded = () => {
@@ -116,6 +134,18 @@ export const EditPastEventForm = () => {
     setEvent(updatePastEvent);
   };
 
+  const handleRelationshipObjChange = (event) => {
+    const timesArrayDeconstruction = [...timesArray];
+    timesArrayDeconstruction.forEach((userEvent) => {
+      console.log("Please track me in state:", userEvent);
+      setUserEvent(userEvent);
+    });
+    // const updateRelationshipObj = { ...userEvent };
+    // // debugger;
+    // updateRelationshipObj[event.target.id] = event.target.value;
+    // setUserEvent(updateRelationshipObj);
+  };
+
   // const handleRelationshipObjChange = (userEvent) => {
   //   const updateRelationshipObj = { ...timesArray };
   //   updateRelationshipObj[userEvent.target.name] =
@@ -124,12 +154,12 @@ export const EditPastEventForm = () => {
   // };
 
   const handleSaveEvent = () => {
-    console.log(
-      "ORIG:",
-      originalParticipants,
-      "CURRENT:",
-      participants
-    );
+    // console.log(
+    //   "ORIG:",
+    //   originalParticipants,
+    //   "CURRENT:",
+    //   participants
+    // );
     if (parseInt(eventObj.eventId) === 0) {
       window.alert(
         "Please enter all required fields to continue."
@@ -156,17 +186,6 @@ export const EditPastEventForm = () => {
           }
         })
         // .then(() => {timesArray.forEach(userEventObj) => {updateUserEvents({
-
-        // })}})
-        // .then(
-        //   addUserEvents({
-        //     id: userEventObj.id,
-        //     userId: userEventObj.userId,
-        //     eventId: parseInt(eventId),
-        //     time: "",
-        //   })
-        // )
-        // .then(getEvents)
 
         // .then(() => {
         //   timesArray.forEach((relationshipObj) => {
@@ -218,6 +237,7 @@ export const EditPastEventForm = () => {
       );
       setOriginalParticipants(participantsArray);
       setParticipants(participantsArray);
+      setTimesArray(res);
     });
   }, [eventId]); // eslint-disable-line react-hooks/exhaustive-deps
   // console.log(originalParticipants);
@@ -319,7 +339,36 @@ export const EditPastEventForm = () => {
         </div>
       </fieldset>
       {/* TESTING TABLES */}
-      <TimesForm eventObj={eventObj} />
+      <TimesForm eventObj={userEvent} />
+      {/* <Table striped bordered hover size="sm">
+        <thead>
+          <tr>
+            <th>Particpant</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        {timesArray.map((relationshipObj) => {
+          return (
+            <tbody>
+              <tr>
+                <td>{relationshipObj.user.name}</td>
+                <td>{getUserById(userEvent.userId).name}</td>
+                <td>
+                  <input
+                    className="time__input"
+                    type="text"
+                    name="time"
+                    // id={`time__input__${relationshipObj.userId}`}
+                    // placeholder={relationshipObj.time}
+                    defaultValue={relationshipObj.time}
+                    onChange={handleRelationshipObjChange}
+                  ></input>
+                </td>
+              </tr>
+            </tbody>
+          );
+        })}
+      </Table> */}
       {/* COMMENTS */}
       <fieldset>
         <div className="form-group">

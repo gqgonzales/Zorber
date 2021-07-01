@@ -28,7 +28,7 @@ export const TimesForm = ({ eventObj }) => {
 
   const [timesArray, setTimesArray] = useState([]);
 
-  const [userEvent] = useState({
+  const [userEvent, setUserEvent] = useState({
     userId: 0,
     eventId: eventId,
     time: "",
@@ -60,22 +60,23 @@ export const TimesForm = ({ eventObj }) => {
 
   useEffect(() => {
     getUserEventsByEventId(eventId).then((res) => {
-      const participantsArray = res.map(
-        (userEventObj) => userEventObj.user
-      );
-      setOriginalParticipants(participantsArray);
-      setParticipants(participantsArray);
+      // const participantsArray = res.map(
+      //   (userEventObj) => userEventObj.user
+      // );
+      // setOriginalParticipants(participantsArray);
+      // setParticipants(participantsArray);
       setTimesArray(res);
     });
   }, [eventId]);
 
   const handleRelationshipObjChange = (event) => {
     const updateRelationshipObj = { ...userEvent };
+    // debugger;
     updateRelationshipObj[event.target.name] =
       event.target.value;
-    setTimesArray(updateRelationshipObj);
+    setUserEvent(updateRelationshipObj);
   };
-  console.log(timesArray);
+  // console.log(timesArray);
 
   // const handleSaveTimes = timesArray.forEach(
   //   (relationshipObj) => {
@@ -114,8 +115,10 @@ export const TimesForm = ({ eventObj }) => {
                   <input
                     className="time__input"
                     type="text"
-                    name="name"
-                    value={relationshipObj.time}
+                    name="time"
+                    // id={`time__input__${relationshipObj.userId}`}
+                    // placeholder={relationshipObj.time}
+                    defaultValue={relationshipObj.time}
                     onChange={handleRelationshipObjChange}
                   ></input>
                 </td>
