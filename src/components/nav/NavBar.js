@@ -11,6 +11,12 @@ export const NavBar = (props) => {
         <h2>Zorber</h2>
       </div>
       <li className="navbar__item active">
+        {/* <img
+          src={"../images/zorbButton.png"}
+          alt="zorb button"
+          class="test__button"
+          onClick={() => history.push("/upcoming")}
+        /> */}
         <button
           type="button"
           class="btn btn-secondary btn-circle btn-md"
@@ -18,6 +24,7 @@ export const NavBar = (props) => {
         >
           Find Races
         </button>
+
         {/* OLD BELOW */}
         {/* <Link className="navbar__link" to="/upcoming">
           Find a Race
