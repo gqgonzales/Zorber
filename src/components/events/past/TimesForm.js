@@ -28,6 +28,12 @@ export const TimesForm = ({ eventObj }) => {
 
   const [timesArray, setTimesArray] = useState([]);
 
+  const [userEvent] = useState({
+    userId: 0,
+    eventId: eventId,
+    time: "",
+  });
+
   // const handleControlledInputChange = (userEventObj) => {
   //   //When changing a state object or array,
   //   //always create a copy make changes, and then set state.
@@ -63,20 +69,21 @@ export const TimesForm = ({ eventObj }) => {
     });
   }, [eventId]);
 
-  // const handleRelationshipObjChange = (userEvent) => {
-  //   const updateRelationshipObj = { ...timesArray };
-  //   updateRelationshipObj[userEvent.target.name] =
-  //     userEvent.target.value;
-  //   setTimesArray(updateRelationshipObj);
-  // };
-  // console.log(timesArray);
+  const handleRelationshipObjChange = (event) => {
+    const updateRelationshipObj = { ...userEvent };
+    updateRelationshipObj[event.target.name] =
+      event.target.value;
+    setTimesArray(updateRelationshipObj);
+  };
+  console.log(timesArray);
 
-  // const handleSaveEvent = timesArray.forEach(
+  // const handleSaveTimes = timesArray.forEach(
   //   (relationshipObj) => {
   //     updateUserEvents({
   //       id: relationshipObj.id,
   //       userId: relationshipObj.userId,
   //       eventId: parseInt(eventId),
+  //       time: relationshipObj.time,
   //     });
   //   }
   // );
@@ -107,8 +114,9 @@ export const TimesForm = ({ eventObj }) => {
                   <input
                     className="time__input"
                     type="text"
-                    placeholder={relationshipObj.time}
-                    // onChange={handleRelationshipObjChange}
+                    name="name"
+                    value={relationshipObj.time}
+                    onChange={handleRelationshipObjChange}
                   ></input>
                 </td>
               </tr>
