@@ -72,7 +72,7 @@ export const UpcomingEventDetail = ({ eventObj }) => {
         {/* BUTTONS */}
         <div className="button_group">
           <button
-            className="btn"
+            className="button"
             onClick={() => {
               history.push(`/upcoming/edit/${id}`);
             }}

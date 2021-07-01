@@ -1,27 +1,53 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+// import Button from "react-bootstrap/Button";
 import "./NavBar.css";
 
 export const NavBar = (props) => {
+  const history = useHistory();
   return (
     <ul className="navbar">
       <div className="navbar__header">
         <h2>Zorber</h2>
       </div>
       <li className="navbar__item active">
-        <Link className="navbar__link" to="/upcoming">
+        <button
+          type="button"
+          class="btn btn-secondary btn-circle btn-md"
+          onClick={() => history.push("/upcoming")}
+        >
+          Find Races
+        </button>
+        {/* OLD BELOW */}
+        {/* <Link className="navbar__link" to="/upcoming">
           Find a Race
-        </Link>
+        </Link> */}
       </li>
       <li className="navbar__item">
-        <Link className="navbar__link" to="/create">
+        <button
+          type="button"
+          class="btn btn-secondary btn-circle btn-md"
+          onClick={() => history.push("/create")}
+        >
+          Create New
+        </button>
+        {/* OLD BELOW */}
+        {/* <Link className="navbar__link" to="/create">
           Create a Race
-        </Link>
+        </Link> */}
       </li>
       <li className="navbar__item">
-        <Link className="navbar__link" to="/past">
+        <button
+          type="button"
+          class="btn btn-secondary btn-circle btn-md"
+          onClick={() => history.push("/past")}
+        >
           Past Races
-        </Link>
+        </button>
+        {/* OLD BELOW */}
+        {/* <Link className="navbar__link" to="/past">
+          Past Races
+        </Link> */}
       </li>
       <li className="navbar__item">
         <Link

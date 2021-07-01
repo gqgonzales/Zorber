@@ -6,6 +6,7 @@ import { EventContext } from "../EventProvider";
 import { Multiselect } from "multiselect-react-dropdown";
 import { UserEventsContext } from "../../userEvents/UserEventsProvider";
 import { UserContext } from "../../users/UserProvider";
+import { TimesForm } from "./TimesForm";
 
 export const EditPastEventForm = () => {
   const { getEventById, updateEvent, getEvents, deleteEvent } =
@@ -74,6 +75,19 @@ export const EditPastEventForm = () => {
     return removed;
   };
 
+  // const findRemoved = () => {
+  //   const removed = [];
+
+  //   originalParticipants.forEach((participant) => {
+  //     const found = participants.find(
+  //       (originalParticipantObj) =>
+  //         originalParticipantObj.id === participant.id
+  //     );
+  //     if (!found) {
+  //       removed.push(participant);
+  //     }
+  //   });
+
   const [isLoading, setIsLoading] = useState(true);
 
   const history = useHistory();
@@ -101,6 +115,13 @@ export const EditPastEventForm = () => {
     //update state
     setEvent(updatePastEvent);
   };
+
+  // const handleRelationshipObjChange = (userEvent) => {
+  //   const updateRelationshipObj = { ...timesArray };
+  //   updateRelationshipObj[userEvent.target.name] =
+  //     userEvent.target.value;
+  //   setTimesArray(updateRelationshipObj);
+  // };
 
   const handleSaveEvent = () => {
     console.log(
@@ -134,6 +155,9 @@ export const EditPastEventForm = () => {
             }
           }
         })
+        // .then(() => {timesArray.forEach(userEventObj) => {updateUserEvents({
+
+        // })}})
         // .then(
         //   addUserEvents({
         //     id: userEventObj.id,
@@ -145,12 +169,12 @@ export const EditPastEventForm = () => {
         // .then(getEvents)
 
         // .then(() => {
-        //   participants.forEach((participant) => {
+        //   timesArray.forEach((relationshipObj) => {
         //     updateUserEvents({
-        //       id: participant.id,
-        //       userId: participant.userId,
+        //       id: relationshipObj.id,
+        //       userId: relationshipObj.userId,
         //       eventId: parseInt(eventId),
-        //       time: "",
+        //       time: ,
         //     });
         //   });
         // })
@@ -197,6 +221,11 @@ export const EditPastEventForm = () => {
     });
   }, [eventId]); // eslint-disable-line react-hooks/exhaustive-deps
   // console.log(originalParticipants);
+
+  // useEffect(() => {
+  //   getUserEvents();
+  //   console.log(participants);
+  // }, [participants]);
 
   return (
     <form className="eventForm">
@@ -289,6 +318,8 @@ export const EditPastEventForm = () => {
           />
         </div>
       </fieldset>
+      {/* TESTING TABLES */}
+      <TimesForm eventObj={eventObj} />
       {/* COMMENTS */}
       <fieldset>
         <div className="form-group">
@@ -316,7 +347,7 @@ export const EditPastEventForm = () => {
         Delete
       </button>
       <button
-        className="btn btn-primary"
+        className="button"
         disabled={isLoading}
         onClick={(event) => {
           event.preventDefault(); // Prevent browser from submitting the form and refreshing the page
@@ -335,7 +366,6 @@ export const EditPastEventForm = () => {
       >
         Cancel!
       </button>
-
       {/* ------------------------------------ */}
     </form>
   );

@@ -28,3 +28,7 @@
 /* .event__participant {
   color: blue;
 } */
+
+.time__input {
+  max-width: 50%;
+}
