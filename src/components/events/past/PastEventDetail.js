@@ -89,7 +89,7 @@ export const PastEventDetail = ({ eventObj }) => {
       </div>
       <div className="button_group">
         <button
-          className="btn"
+          className="button"
           onClick={() => {
             history.push(`/past/edit/${id}`);
           }}

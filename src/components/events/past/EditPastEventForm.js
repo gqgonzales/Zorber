@@ -116,6 +116,13 @@ export const EditPastEventForm = () => {
     setEvent(updatePastEvent);
   };
 
+  // const handleRelationshipObjChange = (userEvent) => {
+  //   const updateRelationshipObj = { ...timesArray };
+  //   updateRelationshipObj[userEvent.target.name] =
+  //     userEvent.target.value;
+  //   setTimesArray(updateRelationshipObj);
+  // };
+
   const handleSaveEvent = () => {
     console.log(
       "ORIG:",
@@ -148,6 +155,9 @@ export const EditPastEventForm = () => {
             }
           }
         })
+        // .then(() => {timesArray.forEach(userEventObj) => {updateUserEvents({
+
+        // })}})
         // .then(
         //   addUserEvents({
         //     id: userEventObj.id,
@@ -159,12 +169,12 @@ export const EditPastEventForm = () => {
         // .then(getEvents)
 
         // .then(() => {
-        //   participants.forEach((participant) => {
+        //   timesArray.forEach((relationshipObj) => {
         //     updateUserEvents({
-        //       id: participant.id,
-        //       userId: participant.userId,
+        //       id: relationshipObj.id,
+        //       userId: relationshipObj.userId,
         //       eventId: parseInt(eventId),
-        //       time: "",
+        //       time: ,
         //     });
         //   });
         // })
@@ -211,6 +221,11 @@ export const EditPastEventForm = () => {
     });
   }, [eventId]); // eslint-disable-line react-hooks/exhaustive-deps
   // console.log(originalParticipants);
+
+  // useEffect(() => {
+  //   getUserEvents();
+  //   console.log(participants);
+  // }, [participants]);
 
   return (
     <form className="eventForm">
@@ -332,7 +347,7 @@ export const EditPastEventForm = () => {
         Delete
       </button>
       <button
-        className="btn btn-primary"
+        className="button"
         disabled={isLoading}
         onClick={(event) => {
           event.preventDefault(); // Prevent browser from submitting the form and refreshing the page

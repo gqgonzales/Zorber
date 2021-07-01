@@ -53,10 +53,6 @@ export const TimesForm = ({ eventObj }) => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    getUserEvents();
-  }, [participants]);
-
-  useEffect(() => {
     getUserEventsByEventId(eventId).then((res) => {
       const participantsArray = res.map(
         (userEventObj) => userEventObj.user
@@ -66,6 +62,29 @@ export const TimesForm = ({ eventObj }) => {
       setTimesArray(res);
     });
   }, [eventId]);
+
+  // const handleRelationshipObjChange = (userEvent) => {
+  //   const updateRelationshipObj = { ...timesArray };
+  //   updateRelationshipObj[userEvent.target.name] =
+  //     userEvent.target.value;
+  //   setTimesArray(updateRelationshipObj);
+  // };
+  // console.log(timesArray);
+
+  // const handleSaveEvent = timesArray.forEach(
+  //   (relationshipObj) => {
+  //     updateUserEvents({
+  //       id: relationshipObj.id,
+  //       userId: relationshipObj.userId,
+  //       eventId: parseInt(eventId),
+  //     });
+  //   }
+  // );
+
+  // useEffect(() => {
+  //   getUserEvents();
+  //   console.log(participants);
+  // }, [participants]);
 
   return (
     <>
@@ -89,6 +108,7 @@ export const TimesForm = ({ eventObj }) => {
                     className="time__input"
                     type="text"
                     placeholder={relationshipObj.time}
+                    // onChange={handleRelationshipObjChange}
                   ></input>
                 </td>
               </tr>
