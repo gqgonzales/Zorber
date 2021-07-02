@@ -339,7 +339,7 @@ export const EditPastEventForm = () => {
         </div>
       </fieldset>
       {/* TESTING TABLES */}
-      <TimesForm eventObj={userEvent} />
+      {/* <TimesForm eventObj={userEvent} /> */}
       {/* COMMENTS */}
       <fieldset>
         <div className="form-group">
