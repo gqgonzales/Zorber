@@ -340,35 +340,6 @@ export const EditPastEventForm = () => {
       </fieldset>
       {/* TESTING TABLES */}
       <TimesForm eventObj={userEvent} />
-      {/* <Table striped bordered hover size="sm">
-        <thead>
-          <tr>
-            <th>Particpant</th>
-            <th>Time</th>
-          </tr>
-        </thead>
-        {timesArray.map((relationshipObj) => {
-          return (
-            <tbody>
-              <tr>
-                <td>{relationshipObj.user.name}</td>
-                <td>{getUserById(userEvent.userId).name}</td>
-                <td>
-                  <input
-                    className="time__input"
-                    type="text"
-                    name="time"
-                    // id={`time__input__${relationshipObj.userId}`}
-                    // placeholder={relationshipObj.time}
-                    defaultValue={relationshipObj.time}
-                    onChange={handleRelationshipObjChange}
-                  ></input>
-                </td>
-              </tr>
-            </tbody>
-          );
-        })}
-      </Table> */}
       {/* COMMENTS */}
       <fieldset>
         <div className="form-group">
