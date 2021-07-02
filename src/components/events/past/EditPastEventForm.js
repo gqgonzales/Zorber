@@ -47,7 +47,7 @@ export const EditPastEventForm = () => {
   // This is the dynamic copy of the userEvents that is updated by our changes.
   const [participants, setParticipants] = useState([]);
 
-  const [timesArray, setTimesArray] = useState([
+  const [originalTimesArray, setOriginalTimesArray] = useState([
     // {
     //   userId: 0,
     //   eventId: eventId,
@@ -55,7 +55,7 @@ export const EditPastEventForm = () => {
     // },
   ]);
 
-  // console.log(timesArray);
+  console.log(originalTimesArray);
 
   // Write a function that returns an array of all added users
   const findAdded = () => {
@@ -81,8 +81,13 @@ export const EditPastEventForm = () => {
   };
 
   // Write a function that returns an array of all removed users
+
+  // Check originalParticipants for any values NOT present in participants
+  // For those found values, you get a user object...you need the relationship object instead.
+  // THEN send the delete request and pass in the relationship object.
   const findRemoved = () => {
     const removed = [];
+
     originalParticipants.forEach((user) => {
       const found = participants.find((u) => u === user.id);
       if (!found) {
@@ -115,10 +120,8 @@ export const EditPastEventForm = () => {
   };
 
   const onRemove = (selectedValue) => {
-    const removeSelected = [...participants].splice(
-      selectedValue
-    );
-    setParticipants(removeSelected);
+    console.log(selectedValue);
+    setParticipants(selectedValue);
   };
 
   //when field changes, update state. This causes a re-render and updates the view.
@@ -135,9 +138,9 @@ export const EditPastEventForm = () => {
   };
 
   const handleRelationshipObjChange = (event) => {
-    const timesArrayDeconstruction = [...timesArray];
+    const timesArrayDeconstruction = [...originalTimesArray];
     timesArrayDeconstruction.forEach((userEvent) => {
-      console.log("Please track me in state:", userEvent);
+      // console.log("Please track me in state:", userEvent);
       setUserEvent(userEvent);
     });
     // const updateRelationshipObj = { ...userEvent };
@@ -237,7 +240,7 @@ export const EditPastEventForm = () => {
       );
       setOriginalParticipants(participantsArray);
       setParticipants(participantsArray);
-      setTimesArray(res);
+      setOriginalTimesArray(res);
     });
   }, [eventId]); // eslint-disable-line react-hooks/exhaustive-deps
   // console.log(originalParticipants);
