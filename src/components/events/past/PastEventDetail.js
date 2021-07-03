@@ -1,9 +1,10 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 // import { EventContext } from "../EventProvider";
 import { UserContext } from "../../users/UserProvider";
 // import { UserEventsContext } from "../../userEvents/UserEventsProvider";
 import "../Event.css";
+import { TinyTimeForm } from "./TinyTimeForm";
 
 export const PastEventDetail = ({ eventObj }) => {
   const {
@@ -77,13 +78,26 @@ export const PastEventDetail = ({ eventObj }) => {
           var cls =
             index === 0 ? "winner" : "event__participant";
           return (
-            <div
-              className={cls}
-              key={`event__participant--${userEvent.id}`}
-            >
-              {getUserById(userEvent.userId).name}, who completed
-              the course in {userEvent.time}
-            </div>
+            <>
+              <div
+                className={cls}
+                key={`event__participant--${userEvent.id}`}
+              >
+                {getUserById(userEvent.userId).name}, who
+                completed the course in {userEvent.time}
+              </div>
+              <div>
+                <TinyTimeForm userEvent={userEvent} />
+              </div>
+              {/* <button
+                className="button"
+                onClick={() => {
+                  onClick();
+                }}
+              >
+                {showTimeForm ? <>Cancel</> : <>Change</>}{" "}
+              </button> */}
+            </>
           );
         })}
       </div>
