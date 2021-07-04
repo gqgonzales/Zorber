@@ -25,7 +25,7 @@ export const TinyTimeForm = ({ userEvent }) => {
   //   const [timesArray, setTimesArray] = useState([]);
 
   const [userEventTime, setUserEventTime] = useState("");
-  console.log("Tag:", userEvent);
+  // console.log("userEventTime:", userEvent);
 
   //   TO DO LIST:
   // – HandleInputFieldChange function

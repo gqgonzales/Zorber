@@ -73,7 +73,10 @@ export const PastEventDetail = ({ eventObj }) => {
         <div className="event__date event__startTime">
           {date} at {startTime}
         </div>
-        <div className="event__comments">{comments}</div>
+        <div className="event__comments">
+          <b>{comments}</b>
+        </div>
+        <div className="event__label">Participants:</div>
         {sortedUsers.map((userEvent, index) => {
           var cls =
             index === 0 ? "winner" : "event__participant";
