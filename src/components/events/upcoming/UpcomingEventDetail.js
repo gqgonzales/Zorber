@@ -40,9 +40,16 @@ export const UpcomingEventDetail = ({ eventObj }) => {
           <h3>{title}</h3>
         </div>
         <div className="event__info">
-          <h4 className="event__location">{location}</h4>
-          {/* HOW CAN WE CONVERT THIS USERID TO THE APPROPRIATE NAME? */}
-          <div>
+          <div className="event__location">
+            {"📍 "}
+            {location}
+          </div>
+          <div className="event__date event__startTime">
+            {"🗓 "}
+            {date} at {startTime}
+          </div>
+          <div className="event__comments">{comments}</div>
+          <div className="event__author">
             Posted by{" "}
             {users.map((user) => {
               if (user.id === eventObj.userId) {
@@ -50,19 +57,16 @@ export const UpcomingEventDetail = ({ eventObj }) => {
               }
             })}
           </div>
-          <div className="event__date event__startTime">
-            {date} at {startTime}
-          </div>
-          <div className="event__comments">{comments}</div>
           {/* EXPECTED ATTENDEES */}
           <div className="event__participants">
-            Expected attendees:{" "}
+            <b>Expected attendees:</b>{" "}
             {userEvents.map((userEvent) => {
               return (
                 <div
                   className="event__participant"
                   key={`event__participant--${id}`}
                 >
+                  {"– "}
                   {getUserById(userEvent.userId).name}
                 </div>
               );
@@ -72,7 +76,7 @@ export const UpcomingEventDetail = ({ eventObj }) => {
         {/* BUTTONS */}
         <div className="button_group">
           <button
-            className="button"
+            className="button button__edit"
             onClick={() => {
               history.push(`/upcoming/edit/${id}`);
             }}
@@ -93,9 +97,17 @@ export const UpcomingEventDetail = ({ eventObj }) => {
           <h3>{title}</h3>
         </div>
         <div className="event__info">
-          <h4 className="event__location">{location}</h4>
+          <div className="event__location">
+            {"📍 "}
+            {location}
+          </div>
+          <div className="event__date event__startTime">
+            {"🗓 "}
+            {date} at {startTime}
+          </div>
+          <div className="event__comments">{comments}</div>
           {/* POST AUTHOR / CREATOR */}
-          <div>
+          <div className="event__author">
             Posted by{" "}
             {users.map((user) => {
               if (user.id === eventObj.userId) {
@@ -103,10 +115,6 @@ export const UpcomingEventDetail = ({ eventObj }) => {
               }
             })}
           </div>
-          <div className="event__date event__startTime">
-            {date} at {startTime}
-          </div>
-          <div className="event__comments">{comments}</div>
           {/* EXPECTED ATTENDEES */}
           <div className="event__participants">
             Expected attendees:{" "}
@@ -116,6 +124,7 @@ export const UpcomingEventDetail = ({ eventObj }) => {
                   className="event__participant"
                   key={`event__participant--${userEvent.id}`}
                 >
+                  {"– "}
                   {getUserById(userEvent.userId).name}
                 </div>
               );

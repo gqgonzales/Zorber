@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 
-import "../Event.css";
+import "../EventForms.css";
 import { useHistory, useParams } from "react-router-dom";
 import { EventContext } from "../EventProvider";
 import { UserContext } from "../../users/UserProvider";
@@ -147,7 +147,7 @@ export const EditUpcomingEventForm = () => {
 
   return (
     <form className="eventForm">
-      <div className="subsection__header__container">
+      <div className="subsection__header__container__form">
         <h2 className="eventForm__title subsection__header">
           Create a new event{" "}
         </h2>
@@ -263,7 +263,7 @@ export const EditUpcomingEventForm = () => {
         Delete
       </button>
       <button
-        className="btn btn-primary"
+        className="save__button"
         disabled={isLoading}
         onClick={(event) => {
           event.preventDefault(); // Prevent browser from submitting the form and refreshing the page

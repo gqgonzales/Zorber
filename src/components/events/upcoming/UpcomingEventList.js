@@ -48,7 +48,9 @@ export const UpcomingEventList = () => {
   return (
     <>
       <div className="subsection__header__container">
-        <h2 className="subsection__header">Upcoming Events</h2>
+        <h2 className="subsection__header eventForm__title">
+          Upcoming Events
+        </h2>
       </div>
       <div
         className="event__container"

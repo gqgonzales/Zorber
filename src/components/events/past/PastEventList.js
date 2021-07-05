@@ -14,17 +14,6 @@ export const PastEventList = () => {
   const { getUsers } = useContext(UserContext);
   const { getUserEvents } = useContext(UserEventsContext);
 
-  // const [userEvents, setstate] = useState({})
-
-  // const history = useHistory();
-
-  // // This is our ORIGINAL copy of the userEvents associated with this event.
-  // const [originalParticipants, setOriginalParticipants] =
-  //   useState([]);
-
-  // // This is the dynamic copy of the userEvents that is updated by our changes.
-  // const [participants, setParticipants] = useState([]);
-
   const [filteredEvents, setFilteredEvents] = useState([]);
 
   useEffect(() => {
@@ -47,23 +36,10 @@ export const PastEventList = () => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
   //   The empty array bracket is the dependency array. It only runs on first render.
 
-  // const participantFilter = [];
-  // useEffect(() => {
-  //   for (const participant of userEvents) {
-  //     users.forEach((user) => {
-  //       if (participant.userId === user.id) {
-  //         participantFilter.push(user);
-  //       }
-  //     });
-  //   }
-  //   console.log(participantFilter);
-  //   setParticipants(participantFilter);
-  // }, [userEvents]);
-
   return (
     <>
       <div className="subsection__header__container">
-        <h2 className="subsection__header">Past Events</h2>
+        <h2 className="subsection__header eventForm__title">Past Events</h2>
       </div>
       <div
         className="event__container"

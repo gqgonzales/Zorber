@@ -4,22 +4,26 @@
   justify-content: left;
   position: sticky;
   top: 0;
-  background-color: salmon;
+  background-color: #214f4b;
+  /* border-radius: 0px 0px 25px 25px; */
   margin: 0;
 }
 
 .navbar__item {
+  display: flex;
   flex-basis: 20%;
   list-style-type: none;
-  border: seagreen 2px dotted;
+  /* border: seagreen 2px dotted; */
+  max-width: fit-content;
+  justify-content: flex-end;
 }
 
 .navbar__header {
   display: flex;
   align-content: flex-end;
-  color: seashell;
-  border: seagreen 2px dotted;
-  padding: 0.05rem 1rem;
+  color: #c7ef00;
+  /* border: seagreen 2px dotted; */
+  /* padding: 0.05rem 1rem; */
 }
 
 .btn-circle.btn-md {
@@ -29,4 +33,6 @@
   border-radius: 25px;
   font-size: 10px;
   text-align: center;
+  background-color: #7daa92;
+  color: #214f4b;
 }
