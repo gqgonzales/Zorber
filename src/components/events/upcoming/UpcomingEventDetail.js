@@ -80,7 +80,7 @@ export const UpcomingEventDetail = ({ eventObj }) => {
               history.push(`/upcoming/edit/${id}`);
             }}
           >
-            Edit Event
+            {" ✍️ "}
           </button>
         </div>
       </div>

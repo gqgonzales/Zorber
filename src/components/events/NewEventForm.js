@@ -238,17 +238,20 @@ export const NewEventForm = () => {
             handleSaveEvent();
           }}
         >
-          {eventId ? (
+          {/* {eventId ? (
             <>Save those changes!</>
           ) : (
             <>Create New Event</>
-          )}
+          )} */}
+          {/* SAVE BUTTON */}
+          {" ✅  "}
         </button>
         <button
           className="cancel__button"
           onClick={() => history.push("/upcoming")}
         >
-          Cancel!
+          {/* CANCEL / BACK BUTTON */}
+          {" 🔙  "}
         </button>
       </div>
     </form>

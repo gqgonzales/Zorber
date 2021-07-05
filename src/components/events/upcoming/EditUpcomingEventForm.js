@@ -284,7 +284,8 @@ export const EditUpcomingEventForm = () => {
           history.push("/upcoming");
         }}
       >
-        Delete
+        {/* DELETE BUTTON */}
+        {" ❌  "}
       </button>
       <button
         className="save__button"
@@ -294,17 +295,15 @@ export const EditUpcomingEventForm = () => {
           handleSaveEvent();
         }}
       >
-        {eventId ? (
-          <>Save those changes!</>
-        ) : (
-          <>Create New Event</>
-        )}
+        {/* SAVE BUTTON */}
+        {eventId ? <>{" ✅  "}</> : <>Create New Event</>}
       </button>
       <button
         className="cancel__button"
         onClick={() => history.push("/upcoming")}
       >
-        Cancel!
+        {/* CANCEL / BACK BUTTON */}
+        {" 🔙  "}
       </button>
     </form>
   );

@@ -53,7 +53,8 @@
 } */
 
 .button__edit {
-  background-color: #214f4b;
+  /* background-color: #214f4b; */
+  background-color: #7daa92;
   color: white;
 }
 
@@ -63,7 +64,7 @@
 }
 
 .time__edit {
-  background-color: #214f4b;
+  background-color: #7daa92;
   color: white;
   display: flex;
   justify-content: flex-end;

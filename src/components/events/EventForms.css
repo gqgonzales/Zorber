@@ -36,8 +36,10 @@
 .cancel__button,
 .save__button,
 .delete__button {
-  background-color: #214f4b;
+  /* background-color: #214f4b; */
+  background-color: #7daa92;
   color: white;
+  padding: 0rem 1rem;
 }
 
 .cancel__button:hover,

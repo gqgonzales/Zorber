@@ -365,7 +365,8 @@ export const EditPastEventForm = () => {
           history.push("/past");
         }}
       >
-        Delete
+        {/* DELETE BUTTON */}
+        {" ❌  "}
       </button>
       <button
         className="save__button"
@@ -375,8 +376,9 @@ export const EditPastEventForm = () => {
           handleSaveEvent();
         }}
       >
+        {/* SAVE BUTTON */}
         {eventId ? (
-          <>Save Changes</>
+          <>{" ✅  "}</>
         ) : (
           <>Something wrong with this ternary</>
         )}
@@ -385,7 +387,8 @@ export const EditPastEventForm = () => {
         className="cancel__button"
         onClick={() => history.push("/past")}
       >
-        Cancel!
+        {/* CANCEL / BACK BUTTON */}
+        {" 🔙  "}
       </button>
       {/* ------------------------------------ */}
     </form>
