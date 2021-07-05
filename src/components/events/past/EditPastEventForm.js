@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 
-import "../Event.css";
+import "../EventForms.css";
 import { useHistory, useParams } from "react-router-dom";
 import { EventContext } from "../EventProvider";
 import { Multiselect } from "multiselect-react-dropdown";
@@ -145,10 +145,10 @@ export const EditPastEventForm = () => {
   //   return removed;
   // };
 
-  // Send your edit command participants 
-  // All you need is the userIds from the multiselect 
-  // Then write the getUserEventsByUserId fetch call. 
-  // You need a formstate object? 
+  // Send your edit command participants
+  // All you need is the userIds from the multiselect
+  // Then write the getUserEventsByUserId fetch call.
+  // You need a formstate object?
   // getUserEventsByUserId
 
   const [isLoading, setIsLoading] = useState(true);
@@ -299,7 +299,7 @@ export const EditPastEventForm = () => {
 
   return (
     <form className="eventForm">
-      <div className="subsection__header__container">
+      <div className="subsection__header__container__form">
         <h2 className="eventForm__title subsection__header">
           Edit this Event{" "}
         </h2>
@@ -420,7 +420,7 @@ export const EditPastEventForm = () => {
         Delete
       </button>
       <button
-        className="button"
+        className="save__button"
         disabled={isLoading}
         onClick={(event) => {
           event.preventDefault(); // Prevent browser from submitting the form and refreshing the page

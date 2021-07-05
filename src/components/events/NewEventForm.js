@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 
-import "./Event.css";
+import "./EventForms.css";
 import { useHistory, useParams } from "react-router-dom";
 import { EventContext } from "./EventProvider";
 import { UserContext } from "../users/UserProvider";
@@ -122,7 +122,7 @@ export const NewEventForm = () => {
 
   return (
     <form className="eventForm">
-      <div className="subsection__header__container">
+      <div className="subsection__header__container__form">
         <h2 className="eventForm__title subsection__header">
           Create a new event{" "}
         </h2>
@@ -199,6 +199,7 @@ export const NewEventForm = () => {
         <div className="form-group">
           <label htmlFor="userId">Participants: </label>
           <Multiselect
+            className="multiselect"
             options={users} // Options to display in the dropdown
             selectedValues={users.selectedValue} // Preselected value to persist in dropdown
             onSelect={(selectedValue) => {
@@ -228,26 +229,28 @@ export const NewEventForm = () => {
         </div>
       </fieldset>
       {/* BUTTONS */}
-      <button
-        className="btn btn-primary"
-        disabled={isLoading}
-        onClick={(event) => {
-          event.preventDefault(); // Prevent browser from submitting the form and refreshing the page
-          handleSaveEvent();
-        }}
-      >
-        {eventId ? (
-          <>Save those changes!</>
-        ) : (
-          <>Create New Event</>
-        )}
-      </button>
-      <button
-        className="cancel__button"
-        onClick={() => history.push("/upcoming")}
-      >
-        Cancel!
-      </button>
+      <div className="button__group">
+        <button
+          className="button save__button"
+          disabled={isLoading}
+          onClick={(event) => {
+            event.preventDefault(); // Prevent browser from submitting the form and refreshing the page
+            handleSaveEvent();
+          }}
+        >
+          {eventId ? (
+            <>Save those changes!</>
+          ) : (
+            <>Create New Event</>
+          )}
+        </button>
+        <button
+          className="cancel__button"
+          onClick={() => history.push("/upcoming")}
+        >
+          Cancel!
+        </button>
+      </div>
     </form>
   );
 };

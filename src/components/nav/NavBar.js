@@ -56,7 +56,7 @@ export const NavBar = (props) => {
           to="/login"
           onClick={() => localStorage.removeItem("zorber_user")}
         >
-          Logout
+          Sign Out
         </Link>
       </li>
     </ul>
