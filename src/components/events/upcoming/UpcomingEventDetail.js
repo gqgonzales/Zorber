@@ -40,7 +40,10 @@ export const UpcomingEventDetail = ({ eventObj }) => {
           <h3>{title}</h3>
         </div>
         <div className="event__info">
-          <h4 className="event__location">{location}</h4>
+          <div className="event__location">
+            {"📍 "}
+            {location}
+          </div>
           {/* HOW CAN WE CONVERT THIS USERID TO THE APPROPRIATE NAME? */}
           <div>
             Posted by{" "}
@@ -56,13 +59,14 @@ export const UpcomingEventDetail = ({ eventObj }) => {
           <div className="event__comments">{comments}</div>
           {/* EXPECTED ATTENDEES */}
           <div className="event__participants">
-            Expected attendees:{" "}
+            <b>Expected attendees:</b>{" "}
             {userEvents.map((userEvent) => {
               return (
                 <div
                   className="event__participant"
                   key={`event__participant--${id}`}
                 >
+                  {"– "}
                   {getUserById(userEvent.userId).name}
                 </div>
               );
@@ -72,7 +76,7 @@ export const UpcomingEventDetail = ({ eventObj }) => {
         {/* BUTTONS */}
         <div className="button_group">
           <button
-            className="button"
+            className="button button__edit"
             onClick={() => {
               history.push(`/upcoming/edit/${id}`);
             }}
@@ -93,7 +97,10 @@ export const UpcomingEventDetail = ({ eventObj }) => {
           <h3>{title}</h3>
         </div>
         <div className="event__info">
-          <h4 className="event__location">{location}</h4>
+          <h4 className="event__location">
+            {"📍 "}
+            {location}
+          </h4>
           {/* POST AUTHOR / CREATOR */}
           <div>
             Posted by{" "}

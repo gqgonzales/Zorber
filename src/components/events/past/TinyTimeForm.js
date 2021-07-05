@@ -72,6 +72,7 @@ export const TinyTimeForm = ({ userEvent }) => {
             onChange={handleUserEventTimeChange}
           ></input>
           <button
+            className="button time__edit"
             onClick={() => {
               handleSaveTimeChange();
             }}
@@ -79,6 +80,7 @@ export const TinyTimeForm = ({ userEvent }) => {
             Save
           </button>
           <button
+            className="button time__edit"
             onClick={() => {
               onClick();
             }}
@@ -88,6 +90,7 @@ export const TinyTimeForm = ({ userEvent }) => {
         </>
       ) : (
         <button
+          className="button time__edit"
           onClick={() => {
             onClick();
           }}

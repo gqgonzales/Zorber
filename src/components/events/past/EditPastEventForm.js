@@ -145,6 +145,12 @@ export const EditPastEventForm = () => {
   //   return removed;
   // };
 
+  // Send your edit command participants 
+  // All you need is the userIds from the multiselect 
+  // Then write the getUserEventsByUserId fetch call. 
+  // You need a formstate object? 
+  // getUserEventsByUserId
+
   const [isLoading, setIsLoading] = useState(true);
 
   const history = useHistory();

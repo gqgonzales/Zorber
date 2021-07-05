@@ -69,14 +69,18 @@ export const PastEventDetail = ({ eventObj }) => {
         <h3 className="event__title">{title}</h3>
       </div>
       <div className="event__info">
-        <h4 className="event__location">{location}</h4>
+        <div className="event__location">
+          {"📍 "}
+          {location}
+        </div>
         <div className="event__date event__startTime">
+          {"🗓 "}
           {date} at {startTime}
         </div>
-        <div className="event__comments">
-          <b>{comments}</b>
+        <div className="event__comments">{comments}</div>
+        <div className="event__label">
+          <b>Participants:</b>
         </div>
-        <div className="event__label">Participants:</div>
         {sortedUsers.map((userEvent, index) => {
           var cls =
             index === 0 ? "winner" : "event__participant";
@@ -86,12 +90,15 @@ export const PastEventDetail = ({ eventObj }) => {
                 className={cls}
                 key={`event__participant--${userEvent.id}`}
               >
+                {"– "}
                 {getUserById(userEvent.userId).name}, who
                 completed the course in {userEvent.time}
-              </div>
-              <div>
+                <br></br>
                 <TinyTimeForm userEvent={userEvent} />
               </div>
+              {/* <div>
+                <TinyTimeForm userEvent={userEvent} />
+              </div> */}
               {/* <button
                 className="button"
                 onClick={() => {
@@ -106,7 +113,7 @@ export const PastEventDetail = ({ eventObj }) => {
       </div>
       <div className="button_group">
         <button
-          className="button"
+          className="button button__edit"
           onClick={() => {
             history.push(`/past/edit/${id}`);
           }}

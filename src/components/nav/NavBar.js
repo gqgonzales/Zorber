@@ -5,6 +5,7 @@ import "./NavBar.css";
 
 export const NavBar = (props) => {
   const history = useHistory();
+
   return (
     <ul className="navbar">
       <div className="navbar__header">
@@ -13,7 +14,7 @@ export const NavBar = (props) => {
       <li className="navbar__item active">
         <button
           type="button"
-          class="btn btn-secondary btn-circle btn-md"
+          className="btn btn-secondary btn-circle btn-md"
           onClick={() => history.push("/upcoming")}
         >
           Find Races
@@ -26,7 +27,7 @@ export const NavBar = (props) => {
       <li className="navbar__item">
         <button
           type="button"
-          class="btn btn-secondary btn-circle btn-md"
+          className="btn btn-secondary btn-circle btn-md"
           onClick={() => history.push("/create")}
         >
           Create New
@@ -39,7 +40,7 @@ export const NavBar = (props) => {
       <li className="navbar__item">
         <button
           type="button"
-          class="btn btn-secondary btn-circle btn-md"
+          className="btn btn-secondary btn-circle btn-md"
           onClick={() => history.push("/past")}
         >
           Past Races
@@ -51,7 +52,7 @@ export const NavBar = (props) => {
       </li>
       <li className="navbar__item">
         <Link
-          className="navbar__link"
+          className="navbar__link btn btn-secondary btn-circle btn-md"
           to="/login"
           onClick={() => localStorage.removeItem("zorber_user")}
         >
