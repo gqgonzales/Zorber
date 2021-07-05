@@ -24,15 +24,17 @@
 }
 
 .winner {
-  color: #214f4b;
-  background-color: goldenrod;
-  /* opacity: 0.75; */
+  /* color: #214f4b; */
+  border: goldenrod 3px solid;
   border-radius: 15px;
   padding: 0.5rem;
   margin: 0.5rem;
 }
 
 .event__participant__past {
+  /* color: white; */
+  border: #7daa92 3px solid;
+  border-radius: 15px;
   padding: 0.5rem;
   margin: 0.5rem;
 }
