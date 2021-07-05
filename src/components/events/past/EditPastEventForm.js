@@ -17,7 +17,7 @@ export const EditPastEventForm = () => {
   const {
     addUserEvents,
     updateUserEvents,
-    deleteUserEvents,
+    deleteUserEvent,
     getUserEvents,
     getUserEventsByEventId,
   } = useContext(UserEventsContext);
@@ -87,43 +87,27 @@ export const EditPastEventForm = () => {
   // THEN send the delete request and pass in the relationship object.
 
   const findRemoved = () => {
-    console.log("Participants:", participants);
-    const currentParticipants = participants.map(
-      (participant) => {
-        return participant.id;
+    // console.log("Participants:", participants);
+    // const removedParticipants = [];
+    const userEventIdsToRemove = [];
+    originalTimesArray.forEach(
+      (userEvent) => {
+        if (
+          !participants.find((participant) => {
+            return participant.id === userEvent.userId;
+          })
+        ) {
+          userEventIdsToRemove.push(userEvent.id);
+        }
       }
+      // originalParticipants.forEach((originalParticipant) => {
+      //   if (!participants.includes(originalParticipant)) {
+      //     removedParticipants.push(originalParticipant.id);
+      //   }
+      // }
     );
-    // const currentParticipants = [5];
-    // const toBeDeleted = [];
-    const filteredParticipants = originalParticipants.filter(
-      (originalParticipant) => {
-        return currentParticipants.includes(
-          originalParticipant.id
-        );
-      }
-    );
-    console.log("FP:", filteredParticipants);
-    console.log("Part:", participants);
-
-    // console.log("TBD", toBeDeleted);
-    // const removed = [];
-    // originalParticipants.forEach((participant) => {
-    //   const found = participants.find(
-    //     (participantObj) => participantObj.id === participant.id
-    //   );
-    //   if (!found) {
-    //     removed.push(participant);
-    //   }
-    // });
-    // const deletedParticipants = removed.forEach(
-    //   (participant) => {
-    //     const objsToRemove = [];
-    //     if (participant.id === originalTimesArray.userId) {
-
-    //     }
-    //   }
-    // );
-    // return deletedParticipants;
+    return userEventIdsToRemove;
+    // return removedParticipants;
   };
 
   // // Maybe there's another way
@@ -164,7 +148,7 @@ export const EditPastEventForm = () => {
   const onRemove = (selectedValue) => {
     console.log("Selected R:", selectedValue);
     setParticipants(selectedValue);
-    setTimeout(findRemoved, 1000);
+    // setTimeout(findRemoved, 1000);
   };
 
   //when field changes, update state. This causes a re-render and updates the view.
@@ -225,24 +209,28 @@ export const EditPastEventForm = () => {
       })
         .then(() => {
           // console.log(findAdded());
-          if (findAdded().length > 0) {
-            for (const relationshipObj of findAdded()) {
+          const added = findAdded();
+          if (added.length > 0) {
+            for (const relationshipObj of added) {
               addUserEvents(relationshipObj);
             }
           }
         })
-        // .then(() => {
-        //   if (findRemoved().length > 0) {
-        //     // NEED TO GET THE USEREVENTS FOR EACH REMOVED PARTICIPANT
-        //     for (const relationshipObj of findRemoved()) {
-        //       deleteUserEvents(relationshipObj);
-        //     }
-        //   }
-        // })
+        .then(() => {
+          const removed = findRemoved();
+          //   if (removed.length > 0) {
+          //     originalTimesArray.forEach((userEvent) => {
+          //       if (removed.includes(userEvent.userId)) {
+          //         deleteUserEvent(userEvent.id);
+          //       }
+          //     });
+          //   }
+          // }
 
-        // Then a .then for findRemoved().length to show what is deleted.
-
-        // Run a setTimeout or a promise.all here????
+          removed.forEach((userEventId) => {
+            deleteUserEvent(userEventId);
+          });
+        })
         .then(() => history.push(`/past`));
     }
   };

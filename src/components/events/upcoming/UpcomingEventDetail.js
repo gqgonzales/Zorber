@@ -45,8 +45,7 @@ export const UpcomingEventDetail = ({ eventObj }) => {
             {location}
           </div>
           <div className="event__date event__startTime">
-            {"🗓 "}{" "}
-            {date} at {startTime}
+            {"🗓 "} {date} at {startTime}
           </div>
           <div className="event__comments">{comments}</div>
           <div className="event__author">
@@ -102,8 +101,7 @@ export const UpcomingEventDetail = ({ eventObj }) => {
             {location}
           </div>
           <div className="event__date event__startTime">
-          {"🗓 "}{" "}
-            {date} at {startTime}
+            {"🗓 "} {date} at {startTime}
           </div>
           <div className="event__comments">{comments}</div>
           {/* POST AUTHOR / CREATOR */}
@@ -117,7 +115,7 @@ export const UpcomingEventDetail = ({ eventObj }) => {
           </div>
           {/* EXPECTED ATTENDEES */}
           <div className="event__participants">
-            Expected attendees:{" "}
+            <b>Expected attendees:</b>{" "}
             {userEvents.map((userEvent) => {
               return (
                 <div

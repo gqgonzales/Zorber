@@ -20,7 +20,7 @@ export const TinyTimeForm = ({ userEvent }) => {
     getUserEvents,
     updateUserEvents,
     getUserEventsByEventId,
-    deleteUserEvents,
+    deleteUserEvent,
   } = useContext(UserEventsContext);
 
   //   const [timesArray, setTimesArray] = useState([]);
@@ -56,7 +56,7 @@ export const TinyTimeForm = ({ userEvent }) => {
 
   const handleDeleteUserEvent = () => {
     setIsLoading(true);
-    deleteUserEvents(userEvent.id).then(() => {
+    deleteUserEvent(userEvent.id).then(() => {
       onClick();
       getEvents();
     });
