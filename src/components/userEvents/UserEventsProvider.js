@@ -46,7 +46,7 @@ export const UserEventsProvider = (props) => {
     // .then(getUserEvents);
   };
 
-  const deleteUserEvents = (userEventId) => {
+  const deleteUserEvent = (userEventId) => {
     return fetch(
       `http://localhost:8088/userEvents/${userEventId}`,
       {
@@ -86,7 +86,7 @@ export const UserEventsProvider = (props) => {
         userEvents,
         getUserEvents,
         addUserEvents,
-        deleteUserEvents,
+        deleteUserEvent,
         updateUserEvents,
         getUserEventsById,
         getUserEventsByEventId,

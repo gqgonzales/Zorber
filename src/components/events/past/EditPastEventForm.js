@@ -16,8 +16,7 @@ export const EditPastEventForm = () => {
 
   const {
     addUserEvents,
-    updateUserEvents,
-    deleteUserEvents,
+    deleteUserEvent,
     getUserEvents,
     getUserEventsByEventId,
   } = useContext(UserEventsContext);
@@ -55,8 +54,6 @@ export const EditPastEventForm = () => {
   // Our dynamic copy of the userEvents Object
   const [timesArray, setTimesArray] = useState([]);
 
-  console.log("originalTimesArray:", originalTimesArray);
-
   // Write a function that returns an array of all added users
   const findAdded = () => {
     const added = [];
@@ -87,63 +84,28 @@ export const EditPastEventForm = () => {
   // THEN send the delete request and pass in the relationship object.
 
   const findRemoved = () => {
-    console.log("Participants:", participants);
-    const currentParticipants = participants.map(
-      (participant) => {
-        return participant.id;
+    // console.log("Participants:", participants);
+    // const removedParticipants = [];
+    const userEventIdsToRemove = [];
+    originalTimesArray.forEach(
+      (userEvent) => {
+        if (
+          !participants.find((participant) => {
+            return participant.id === userEvent.userId;
+          })
+        ) {
+          userEventIdsToRemove.push(userEvent.id);
+        }
       }
+      // originalParticipants.forEach((originalParticipant) => {
+      //   if (!participants.includes(originalParticipant)) {
+      //     removedParticipants.push(originalParticipant.id);
+      //   }
+      // }
     );
-    // const currentParticipants = [5];
-    // const toBeDeleted = [];
-    const filteredParticipants = originalParticipants.filter(
-      (originalParticipant) => {
-        return currentParticipants.includes(
-          originalParticipant.id
-        );
-      }
-    );
-    console.log("FP:", filteredParticipants);
-    console.log("Part:", participants);
-
-    // console.log("TBD", toBeDeleted);
-    // const removed = [];
-    // originalParticipants.forEach((participant) => {
-    //   const found = participants.find(
-    //     (participantObj) => participantObj.id === participant.id
-    //   );
-    //   if (!found) {
-    //     removed.push(participant);
-    //   }
-    // });
-    // const deletedParticipants = removed.forEach(
-    //   (participant) => {
-    //     const objsToRemove = [];
-    //     if (participant.id === originalTimesArray.userId) {
-
-    //     }
-    //   }
-    // );
-    // return deletedParticipants;
+    return userEventIdsToRemove;
+    // return removedParticipants;
   };
-
-  // // Maybe there's another way
-
-  // const findRemovedTwo = () => {
-  //   const removedTwo = [];
-  //   timesArray.forEach((relationshipObj) => {});
-  // };
-
-  // const findRemoved = () => {
-  //   const removed = [];
-  //   originalParticipants.forEach((user) => {
-  //     const found = participants.find((u) => u === user.id);
-  //     if (!found) {
-  //       removed.push(user);
-  //     }
-  //   });
-
-  //   return removed;
-  // };
 
   // Send your edit command participants
   // All you need is the userIds from the multiselect
@@ -164,7 +126,7 @@ export const EditPastEventForm = () => {
   const onRemove = (selectedValue) => {
     console.log("Selected R:", selectedValue);
     setParticipants(selectedValue);
-    setTimeout(findRemoved, 1000);
+    // setTimeout(findRemoved, 1000);
   };
 
   //when field changes, update state. This causes a re-render and updates the view.
@@ -225,24 +187,28 @@ export const EditPastEventForm = () => {
       })
         .then(() => {
           // console.log(findAdded());
-          if (findAdded().length > 0) {
-            for (const relationshipObj of findAdded()) {
+          const added = findAdded();
+          if (added.length > 0) {
+            for (const relationshipObj of added) {
               addUserEvents(relationshipObj);
             }
           }
         })
-        // .then(() => {
-        //   if (findRemoved().length > 0) {
-        //     // NEED TO GET THE USEREVENTS FOR EACH REMOVED PARTICIPANT
-        //     for (const relationshipObj of findRemoved()) {
-        //       deleteUserEvents(relationshipObj);
-        //     }
-        //   }
-        // })
+        .then(() => {
+          const removed = findRemoved();
+          //   if (removed.length > 0) {
+          //     originalTimesArray.forEach((userEvent) => {
+          //       if (removed.includes(userEvent.userId)) {
+          //         deleteUserEvent(userEvent.id);
+          //       }
+          //     });
+          //   }
+          // }
 
-        // Then a .then for findRemoved().length to show what is deleted.
-
-        // Run a setTimeout or a promise.all here????
+          removed.forEach((userEventId) => {
+            deleteUserEvent(userEventId);
+          });
+        })
         .then(() => history.push(`/past`));
     }
   };
@@ -287,16 +253,6 @@ export const EditPastEventForm = () => {
   }, [eventId]); // eslint-disable-line react-hooks/exhaustive-deps
   // console.log(originalParticipants);
 
-  // useEffect(() => {
-  //   getUserEventsByEventId(eventId).then((res) => {
-  //     const participantsArray = res.map(
-  //       (userEventObj) => userEventObj.user
-  //     );
-  //     setParticipants(participantsArray);
-  //     setTimesArray(res);
-  //   });
-  // }, [participants]);
-
   return (
     <form className="eventForm">
       <div className="subsection__header__container__form">
@@ -304,6 +260,7 @@ export const EditPastEventForm = () => {
           Edit this Event{" "}
         </h2>
       </div>
+      {/* TITLE */}
       <fieldset>
         <div className="form-group">
           <label htmlFor="eventName">Title: </label>
@@ -320,7 +277,7 @@ export const EditPastEventForm = () => {
           />
         </div>
       </fieldset>
-      {/* location */}
+      {/* LOCATION */}
       <fieldset>
         <div className="form-group">
           <label htmlFor="eventLocation">Location: </label>
@@ -354,7 +311,7 @@ export const EditPastEventForm = () => {
           />
         </div>
       </fieldset>
-      {/* Start Time */}
+      {/* START TIME */}
       <fieldset>
         <div className="form-group">
           <label htmlFor="eventDate">Time: </label>
@@ -371,7 +328,7 @@ export const EditPastEventForm = () => {
           />
         </div>
       </fieldset>
-      {/* USERS? */}
+      {/* PARTICIPANTS */}
       <fieldset>
         <div className="form-group">
           <label htmlFor="userId">Participants: </label>
@@ -379,20 +336,11 @@ export const EditPastEventForm = () => {
             options={users} // Options to display in the dropdown
             selectedValues={participants} // Preselected value to persist in dropdown
             onSelect={onSelect}
-            // {(selectedValue) => {
-            //   onSelect(selectedValue);
-            // }}
-            // Function will trigger on select event
             onRemove={onRemove}
-            // {(selectedValue) => {
-            //   onRemove(selectedValue);
-            // }} // Function will trigger on remove event
             displayValue="name" // Property name to display in the dropdown options
           />
         </div>
       </fieldset>
-      {/* TESTING TABLES */}
-      {/* <TimesForm eventObj={userEvent} /> */}
       {/* COMMENTS */}
       <fieldset>
         <div className="form-group">
@@ -409,7 +357,7 @@ export const EditPastEventForm = () => {
           />
         </div>
       </fieldset>
-      {/* ONE MORE */}
+      {/* BUTTONS */}
       <button
         className="delete__button"
         onClick={() => {

@@ -15,7 +15,7 @@ export const EditUpcomingEventForm = () => {
 
   const {
     addUserEvents,
-    updateUserEvents,
+    deleteUserEvent,
     getUserEvents,
     getUserEventsByEventId,
   } = useContext(UserEventsContext);
@@ -35,6 +35,13 @@ export const EditUpcomingEventForm = () => {
     useState([]);
 
   const [participants, setParticipants] = useState([]);
+
+  // This is the orginal copy of the userEvents associated with a past event.
+  const [originalTimesArray, setOriginalTimesArray] = useState(
+    []
+  );
+
+  const [timesArray, setTimesArray] = useState([]);
 
   // Write a function that returns an array of all added users
   const findAdded = () => {
@@ -59,6 +66,21 @@ export const EditUpcomingEventForm = () => {
     return newParticpantObjects;
   };
 
+  const findRemoved = () => {
+    // console.log("Participants:", participants);
+    const userEventIdsToRemove = [];
+    originalTimesArray.forEach((userEvent) => {
+      if (
+        !participants.find((participant) => {
+          return participant.id === userEvent.userId;
+        })
+      ) {
+        userEventIdsToRemove.push(userEvent.id);
+      }
+    });
+    return userEventIdsToRemove;
+  };
+
   const [isLoading, setIsLoading] = useState(true);
 
   const history = useHistory();
@@ -68,10 +90,7 @@ export const EditUpcomingEventForm = () => {
   };
 
   const onRemove = (selectedValue) => {
-    const removeSelected = [...participants].splice(
-      selectedValue
-    );
-    setParticipants(removeSelected);
+    setParticipants(selectedValue);
   };
 
   //when field changes, update state. This causes a re-render and updates the view.
@@ -113,6 +132,12 @@ export const EditUpcomingEventForm = () => {
             }
           }
         })
+        .then(() => {
+          const removed = findRemoved();
+          removed.forEach((userEventId) => {
+            deleteUserEvent(userEventId);
+          });
+        })
         .then(() => history.push(`/upcoming`));
     }
   };
@@ -141,6 +166,8 @@ export const EditUpcomingEventForm = () => {
       );
       setOriginalParticipants(participantsArray);
       setParticipants(participantsArray);
+      setOriginalTimesArray(res);
+      setTimesArray(res);
     });
   }, [eventId]); // eslint-disable-line react-hooks/exhaustive-deps
   // console.log(originalParticipants);
@@ -149,9 +176,10 @@ export const EditUpcomingEventForm = () => {
     <form className="eventForm">
       <div className="subsection__header__container__form">
         <h2 className="eventForm__title subsection__header">
-          Create a New Event{" "}
+          Edit this Event{" "}
         </h2>
       </div>
+      {/* TITLE */}
       <fieldset>
         <div className="form-group">
           <label htmlFor="eventName">Title: </label>
@@ -168,7 +196,7 @@ export const EditUpcomingEventForm = () => {
           />
         </div>
       </fieldset>
-      {/* location */}
+      {/* LOCATION */}
       <fieldset>
         <div className="form-group">
           <label htmlFor="eventLocation">Location: </label>
@@ -226,12 +254,8 @@ export const EditUpcomingEventForm = () => {
           <Multiselect
             options={users} // Options to display in the dropdown
             selectedValues={participants} // Preselected value to persist in dropdown
-            onSelect={(selectedValue) => {
-              onSelect(selectedValue);
-            }} // Function will trigger on select event
-            onRemove={(selectedValue) => {
-              onRemove(selectedValue);
-            }} // Function will trigger on remove event
+            onSelect={onSelect}
+            onRemove={onRemove}
             displayValue="name" // Property name to display in the dropdown options
           />
         </div>
@@ -252,7 +276,7 @@ export const EditUpcomingEventForm = () => {
           />
         </div>
       </fieldset>
-      {/* ONE MORE */}
+      {/* BUTTONS */}
       <button
         className="delete__button"
         onClick={() => {
