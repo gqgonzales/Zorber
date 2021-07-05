@@ -36,3 +36,14 @@
   background-color: #7daa92;
   color: #214f4b;
 }
+
+.btn-circle.btn-md:hover {
+  width: 50px;
+  height: 50px;
+  padding: 7px 10px;
+  border-radius: 25px;
+  font-size: 10px;
+  text-align: center;
+  background-color: #c7ef00;
+  color: #214f4b;
+}

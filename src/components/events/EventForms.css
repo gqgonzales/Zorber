@@ -1,8 +1,9 @@
 .eventForm {
-  margin: 2rem;
+  margin: 1rem;
   padding: 2rem 4rem;
   border: #214f4b 3px solid;
   border-radius: 25px;
+  background-color: white;
   /* background-color: #7daa92; */
 }
 
@@ -19,9 +20,9 @@
   border-radius: 15px;
 }
 
-label {
+/* label {
   color: #214f4b;
-}
+} */
 
 .multiselect {
   background-color: white;

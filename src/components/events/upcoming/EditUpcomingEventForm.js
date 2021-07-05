@@ -149,7 +149,7 @@ export const EditUpcomingEventForm = () => {
     <form className="eventForm">
       <div className="subsection__header__container__form">
         <h2 className="eventForm__title subsection__header">
-          Create a new event{" "}
+          Create a New Event{" "}
         </h2>
       </div>
       <fieldset>

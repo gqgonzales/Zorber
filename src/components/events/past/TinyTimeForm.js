@@ -20,6 +20,7 @@ export const TinyTimeForm = ({ userEvent }) => {
     getUserEvents,
     updateUserEvents,
     getUserEventsByEventId,
+    deleteUserEvents,
   } = useContext(UserEventsContext);
 
   //   const [timesArray, setTimesArray] = useState([]);
@@ -38,9 +39,6 @@ export const TinyTimeForm = ({ userEvent }) => {
 
   const handleUserEventTimeChange = (event) => {
     setUserEventTime(event.target.value);
-    // const updateUserEventTime = { ...userEvent };
-    // updateUserEventTime[event.target.name] = event.target.value;
-    // setUserEventTime(userEvent);
   };
 
   const handleSaveTimeChange = () => {
@@ -51,6 +49,14 @@ export const TinyTimeForm = ({ userEvent }) => {
       eventId: userEvent.eventId,
       time: userEventTime,
     }).then(() => {
+      onClick();
+      getEvents();
+    });
+  };
+
+  const handleDeleteUserEvent = () => {
+    setIsLoading(true);
+    deleteUserEvents(userEvent.id).then(() => {
       onClick();
       getEvents();
     });
@@ -71,6 +77,14 @@ export const TinyTimeForm = ({ userEvent }) => {
             // placeholder={userEvent.time}
             onChange={handleUserEventTimeChange}
           ></input>
+          <button
+            className="delete__button"
+            onClick={() => {
+              handleDeleteUserEvent();
+            }}
+          >
+            DELETE
+          </button>
           <button
             className="button time__edit"
             onClick={() => {

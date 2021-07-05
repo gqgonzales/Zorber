@@ -3,4 +3,9 @@
 head,
 body {
   font-family: "Poppins", sans-serif;
+  background-color: #7daa92;
+}
+
+document {
+  background-color: #7daa92;
 }

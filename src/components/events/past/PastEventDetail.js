@@ -74,8 +74,7 @@ export const PastEventDetail = ({ eventObj }) => {
           {location}
         </div>
         <div className="event__date event__startTime">
-          {"🗓 "}
-          {date} at {startTime}
+          {"🗓 "} {date} at {startTime}
         </div>
         <div className="event__comments">{comments}</div>
         <div className="event__participants__label">
