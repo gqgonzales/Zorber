@@ -1,37 +1,31 @@
 import React, { useContext, useEffect, useState } from "react";
 import "../Event.css";
-import { useParams } from "react-router-dom";
+import "../EventForms.css";
+// import { useParams } from "react-router-dom";
 import { UserEventsContext } from "../../userEvents/UserEventsProvider";
 import { EventContext } from "../EventProvider";
-import userEvent from "@testing-library/user-event";
 import { UserContext } from "../../users/UserProvider";
+import userEvent from "@testing-library/user-event";
 
-export const TinyTimeForm = ({ userEvent }) => {
+export const TinyTimeForm = ({ userEvent, eventObj }) => {
+  const authorId = eventObj.userId;
   const [showTimeForm, setShowTimeForm] = useState(false);
   const onClick = () => setShowTimeForm(!showTimeForm);
 
+  console.log("Authors:", authorId);
   const [isLoading, setIsLoading] = useState(true);
 
-  const { eventId } = useParams();
+  // const { eventId } = useParams();
 
-  const { events, getEvents } = useContext(EventContext);
+  // const { users, getUsers } = useContext(UserContext);
 
-  const {
-    getUserEvents,
-    updateUserEvents,
-    getUserEventsByEventId,
-    deleteUserEvent,
-  } = useContext(UserEventsContext);
+  const { getEvents } = useContext(EventContext);
 
-  //   const [timesArray, setTimesArray] = useState([]);
+  const { updateUserEvents, deleteUserEvent } = useContext(
+    UserEventsContext
+  );
 
   const [userEventTime, setUserEventTime] = useState("");
-  // console.log("userEventTime:", userEvent);
-
-  //   TO DO LIST:
-  // – HandleInputFieldChange function
-  // – Pass input into state
-  // – Build save handler
 
   useEffect(() => {
     setUserEventTime(userEvent.time);
@@ -62,56 +56,67 @@ export const TinyTimeForm = ({ userEvent }) => {
     });
   };
 
-  return (
-    <>
-      {showTimeForm ? (
-        <>
-          <input
-            className="time__input"
-            type="text"
-            name="time"
-            // id={`time__input__${relationshipObj.userId}`
-            // defaultValue={userEvent.time}
-            value={userEventTime}
-            // value={userEvent.time}
-            // placeholder={userEvent.time}
-            onChange={handleUserEventTimeChange}
-          ></input>
-          <button
-            className="delete__button"
-            onClick={() => {
-              handleDeleteUserEvent();
-            }}
-          >
-            DELETE
-          </button>
-          <button
-            className="button time__edit"
-            onClick={() => {
-              handleSaveTimeChange();
-            }}
-          >
-            Save
-          </button>
+  if (
+    parseInt(localStorage.getItem("zorber_user")) ===
+      userEvent.userId ||
+    parseInt(localStorage.getItem("zorber_user")) === authorId
+  ) {
+    return (
+      <>
+        {showTimeForm ? (
+          <>
+            <input
+              className="time__input"
+              type="text"
+              name="time"
+              // id={`time__input__${relationshipObj.userId}`
+              // defaultValue={userEvent.time}
+              value={userEventTime}
+              // value={userEvent.time}
+              // placeholder={userEvent.time}
+              onChange={handleUserEventTimeChange}
+            ></input>
+            <button
+              className="delete__button"
+              onClick={() => {
+                handleDeleteUserEvent();
+              }}
+            >
+              {/* DELETE BUTTON */}
+              {" ❌  "}
+            </button>
+            <button
+              className="button time__edit"
+              onClick={() => {
+                handleSaveTimeChange();
+              }}
+            >
+              {/* SAVE BUTTON */}
+              {" ✅  "}
+            </button>
+            <button
+              className="button time__edit"
+              onClick={() => {
+                onClick();
+              }}
+            >
+              {showTimeForm ? <>{" 🔙  "}</> : <>Change</>}
+            </button>
+          </>
+        ) : (
           <button
             className="button time__edit"
             onClick={() => {
               onClick();
             }}
           >
-            {showTimeForm ? <>Cancel</> : <>Change</>}
+            {/* EDIT TIME BUTTON */}
+            {" ⏱ "}
           </button>
-        </>
-      ) : (
-        <button
-          className="button time__edit"
-          onClick={() => {
-            onClick();
-          }}
-        >
-          Edit Time
-        </button>
-      )}
-    </>
-  );
+        )}
+      </>
+    );
+  } else {
+    return null;
+  }
 };

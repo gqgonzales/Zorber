@@ -42,7 +42,7 @@ export const Register = (props) => {
                 "zorber_user",
                 createdUser.id
               );
-              history.push("/");
+              history.push("/upcoming");
             }
           });
       } else {
@@ -109,9 +109,7 @@ export const Register = (props) => {
           <button
             className="navbar__link"
             to="/login"
-            onClick={() =>
-              localStorage.removeItem("zorber_user")
-            }
+            onClick={() => history.push("/login")}
           >
             {" "}
             Cancel
