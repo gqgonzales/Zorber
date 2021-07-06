@@ -39,16 +39,27 @@
   /* background-color: #214f4b; */
   background-color: #7daa92;
   color: white;
-  padding: 0rem 1rem;
+  padding: 0rem 0.75rem;
+  border-radius: 5rem;
+  border: #214f4b 3px inset;
 }
 
 .cancel__button:hover,
 .save__button:hover {
   background-color: #c7ef00;
   color: #214f4b;
+  padding: 0rem 0.75rem;
+  border-radius: 5rem;
+  border: #7daa92 3px inset;
 }
 
 .delete__button:hover {
   background-color: #bb4430;
   color: white;
+}
+
+.button__container {
+  display: flex;
+  flex-direction: row;
+  /* justify-content: flex-end; */
 }

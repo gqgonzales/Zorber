@@ -76,32 +76,34 @@ export const TinyTimeForm = ({ userEvent, eventObj }) => {
               // placeholder={userEvent.time}
               onChange={handleUserEventTimeChange}
             ></input>
-            <button
-              className="delete__button"
-              onClick={() => {
-                handleDeleteUserEvent();
-              }}
-            >
-              {/* DELETE BUTTON */}
-              {" ❌  "}
-            </button>
-            <button
-              className="button time__edit"
-              onClick={() => {
-                handleSaveTimeChange();
-              }}
-            >
-              {/* SAVE BUTTON */}
-              {" ✅  "}
-            </button>
-            <button
-              className="button time__edit"
-              onClick={() => {
-                onClick();
-              }}
-            >
-              {showTimeForm ? <>{" 🔙  "}</> : <>Change</>}
-            </button>
+            <div className="button__container">
+              <button
+                className="delete__button"
+                onClick={() => {
+                  handleDeleteUserEvent();
+                }}
+              >
+                {/* DELETE BUTTON */}
+                {"❌"}
+              </button>
+              <button
+                className="button save__button"
+                onClick={() => {
+                  handleSaveTimeChange();
+                }}
+              >
+                {/* SAVE BUTTON */}
+                {"✅"}
+              </button>
+              <button
+                className="button cancel__button"
+                onClick={() => {
+                  onClick();
+                }}
+              >
+                {showTimeForm ? <>{" 🔙  "}</> : <>Change</>}
+              </button>
+            </div>
           </>
         ) : (
           <button

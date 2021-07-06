@@ -14,7 +14,7 @@
 }
 
 .event {
-  border: #214f4b 3px solid;
+  border: #214f4b 3px inset;
   border-radius: 25px;
   padding: 1rem;
   margin: 0.5rem;
@@ -25,7 +25,7 @@
 
 .winner {
   /* color: #214f4b; */
-  border: goldenrod 3px solid;
+  border: goldenrod 3px inset;
   border-radius: 15px;
   padding: 0.5rem;
   margin: 0.5rem;
@@ -33,7 +33,7 @@
 
 .event__participant__past {
   /* color: white; */
-  border: #7daa92 3px solid;
+  border: #7daa92 3px inset;
   border-radius: 15px;
   padding: 0.5rem;
   margin: 0.5rem;
@@ -56,21 +56,34 @@
   /* background-color: #214f4b; */
   background-color: #7daa92;
   color: white;
+  padding: 0rem 0.75rem;
+  border-radius: 5rem;
+  border: #214f4b 3px inset;
 }
 
 .button__edit:hover {
   background-color: #c7ef00;
   color: #214f4b;
+  padding: 0rem 0.75rem;
+  border-radius: 5rem;
+  border: #7daa92 3px inset;
 }
 
 .time__edit {
   background-color: #7daa92;
   color: white;
   display: flex;
-  justify-content: flex-end;
+  padding: 0rem 0.75rem;
+  border-radius: 5rem;
+  border: #214f4b 3px inset;
+
+  /* justify-content: flex-end; */
 }
 
 .time__edit:hover {
   background-color: #c7ef00;
   color: #214f4b;
+  padding: 0rem 0.75rem;
+  border-radius: 5rem;
+  border: #7daa92 3px inset;
 }

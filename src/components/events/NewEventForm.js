@@ -37,6 +37,7 @@ export const NewEventForm = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const { eventId } = useParams();
+
   const history = useHistory();
 
   const [participants, setParticipants] = useState([]);
@@ -57,17 +58,6 @@ export const NewEventForm = () => {
     setParticipants(removeSelected);
   };
 
-  // const getUserIds = () => {
-  //   // If an object is selected in the multiselect, add the userId to the participants array.
-  //   // Then, iterate over the userIds (participants array) and invoke addUserEvents.
-  //   const selectedIds = participants.map((userObj) => {
-  //     // DO YOU WANT TO GRAB THE USERID'S HERE?
-  //     return userObj.id;
-  //   });
-  //   return selectedIds;
-  // };
-  // Cool, now you have an array of the selected ID's.
-
   const handleControlledInputChange = (event) => {
     //When changing a state object or array,
     //always create a copy make changes, and then set state.
@@ -79,13 +69,6 @@ export const NewEventForm = () => {
     setEvent(newEvent);
     // setUserEvents(newUserEvent);
   };
-
-  // const multiselectInputChange = (event) => {
-  //   const newUserEvent = { ...userEvent };
-  //   newUserEvent[event.target.name] = event.target.value;
-
-  //   setUserEvents(newUserEvent);
-  // };
 
   const handleSaveEvent = () => {
     //disable the button - no extra clicks
