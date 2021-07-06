@@ -12,12 +12,7 @@ export const TinyTimeForm = ({ userEvent, eventObj }) => {
   const [showTimeForm, setShowTimeForm] = useState(false);
   const onClick = () => setShowTimeForm(!showTimeForm);
 
-  console.log("Authors:", authorId);
   const [isLoading, setIsLoading] = useState(true);
-
-  // const { eventId } = useParams();
-
-  // const { users, getUsers } = useContext(UserContext);
 
   const { getEvents } = useContext(EventContext);
 
@@ -69,39 +64,37 @@ export const TinyTimeForm = ({ userEvent, eventObj }) => {
               className="time__input"
               type="text"
               name="time"
-              // id={`time__input__${relationshipObj.userId}`
-              // defaultValue={userEvent.time}
               value={userEventTime}
-              // value={userEvent.time}
-              // placeholder={userEvent.time}
               onChange={handleUserEventTimeChange}
             ></input>
-            <button
-              className="delete__button"
-              onClick={() => {
-                handleDeleteUserEvent();
-              }}
-            >
-              {/* DELETE BUTTON */}
-              {" ❌  "}
-            </button>
-            <button
-              className="button time__edit"
-              onClick={() => {
-                handleSaveTimeChange();
-              }}
-            >
-              {/* SAVE BUTTON */}
-              {" ✅  "}
-            </button>
-            <button
-              className="button time__edit"
-              onClick={() => {
-                onClick();
-              }}
-            >
-              {showTimeForm ? <>{" 🔙  "}</> : <>Change</>}
-            </button>
+            <div className="button__container">
+              <button
+                className="delete__button"
+                onClick={() => {
+                  handleDeleteUserEvent();
+                }}
+              >
+                {/* DELETE BUTTON */}
+                {"❌"}
+              </button>
+              <button
+                className="button save__button"
+                onClick={() => {
+                  handleSaveTimeChange();
+                }}
+              >
+                {/* SAVE BUTTON */}
+                {"✅"}
+              </button>
+              <button
+                className="button cancel__button"
+                onClick={() => {
+                  onClick();
+                }}
+              >
+                {showTimeForm ? <>{" 🔙  "}</> : <>Change</>}
+              </button>
+            </div>
           </>
         ) : (
           <button
