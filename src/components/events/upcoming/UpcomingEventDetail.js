@@ -48,23 +48,14 @@ export const UpcomingEventDetail = ({ eventObj }) => {
             {"🗓 "} {date} at {startTime}
           </div>
           <div className="event__comments">{comments}</div>
-          <div className="event__author">
-            Posted by{" "}
-            <b>
-              {users.map((user) => {
-                if (user.id === eventObj.userId) {
-                  return user.name;
-                }
-              })}
-            </b>
-          </div>
+
           {/* EXPECTED ATTENDEES */}
           <div className="event__participants">
             <i>Expected attendees:</i>{" "}
             {userEvents.map((userEvent) => {
               return (
                 <div
-                  className="event__participant"
+                  className={`event__participant--${id}`}
                   key={`event__participant--${id}`}
                 >
                   {"– "}
@@ -84,6 +75,16 @@ export const UpcomingEventDetail = ({ eventObj }) => {
           >
             {" ✍️ "}
           </button>
+          <div className="event__author">
+            Posted by{" "}
+            <b>
+              {users.map((user) => {
+                if (user.id === eventObj.userId) {
+                  return user.name;
+                }
+              })}
+            </b>
+          </div>
         </div>
       </div>
     );
@@ -106,15 +107,6 @@ export const UpcomingEventDetail = ({ eventObj }) => {
             {"🗓 "} {date} at {startTime}
           </div>
           <div className="event__comments">{comments}</div>
-          {/* POST AUTHOR / CREATOR */}
-          <div className="event__author">
-            Posted by{" "}
-            {users.map((user) => {
-              if (user.id === eventObj.userId) {
-                return user.name;
-              }
-            })}
-          </div>
           {/* EXPECTED ATTENDEES */}
           <div className="event__participants">
             <i>Expected attendees:</i>{" "}
@@ -130,6 +122,15 @@ export const UpcomingEventDetail = ({ eventObj }) => {
               );
             })}
           </div>
+        </div>
+        {/* POST AUTHOR / CREATOR */}
+        <div className="event__author">
+          Posted by{" "}
+          {users.map((user) => {
+            if (user.id === eventObj.userId) {
+              return user.name;
+            }
+          })}
         </div>
       </div>
     );

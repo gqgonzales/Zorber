@@ -12,7 +12,6 @@ export const TinyTimeForm = ({ userEvent, eventObj }) => {
   const [showTimeForm, setShowTimeForm] = useState(false);
   const onClick = () => setShowTimeForm(!showTimeForm);
 
-  console.log("Authors:", authorId);
   const [isLoading, setIsLoading] = useState(true);
 
   // const { eventId } = useParams();

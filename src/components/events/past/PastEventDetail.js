@@ -19,16 +19,8 @@ export const PastEventDetail = ({ eventObj }) => {
   } = eventObj;
 
   const history = useHistory();
+
   const { users } = useContext(UserContext);
-  // const { userEventsObj } = useContext(UserEventsContext);
-
-  //   const { getEvents } = useContext(EventContext);
-
-  // useEffect(() => {
-  //   getEvents().then(getUsers).then(getUserEvents);
-  // }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  //   const [participants, setParticipants] = useState([]);
 
   const getUserById = (id) => {
     const participant = users.filter((user) => {
@@ -41,24 +33,12 @@ export const PastEventDetail = ({ eventObj }) => {
   const sortedUsers = [...userEvents].sort((a, b) =>
     a.time.localeCompare(b.time)
   );
-  // console.log("LABEL:", sortedUsers);
-  // return sortedUsers;
-  // };
 
   // const updatedStartTime = { startTime };
   // updatedStartTime.toLocaleTimeString([], {
   //   hour: "2-digit",
   //   minute: "2-digit",
   // });
-
-  // FILTERING BY TIME
-  /* 
-  const sortedTimes = targetArray.sort(
-      (a, b) => parseInt(a.time) - parseInt(b.time)
-    );
-    console.log("TAG", sortedTimes);
-    setFilteredEvents(sortedTimes);
-  */
 
   if (
     parseInt(localStorage.getItem("zorber_user")) ===
@@ -82,7 +62,7 @@ export const PastEventDetail = ({ eventObj }) => {
             {"🗓 "} {date} at {startTime}
           </div>
           <div className="event__comments">{comments}</div>
-          <div className="event__author">
+          {/* <div className="event__author">
             Posted by{" "}
             <b>
               {users.map((user) => {
@@ -91,7 +71,7 @@ export const PastEventDetail = ({ eventObj }) => {
                 }
               })}
             </b>
-          </div>
+          </div> */}
           <div className="event__participants__label">
             <i>Participants:</i>
           </div>
@@ -115,22 +95,11 @@ export const PastEventDetail = ({ eventObj }) => {
                     eventObj={eventObj}
                   />
                 </div>
-                {/* <div>
-                  <TinyTimeForm userEvent={userEvent} />
-                </div> */}
-                {/* <button
-                  className="button"
-                  onClick={() => {
-                    onClick();
-                  }}
-                >
-                  {showTimeForm ? <>Cancel</> : <>Change</>}{" "}
-                </button> */}
               </>
             );
           })}
         </div>
-
+        {/* BUTTONS */}
         <div className="button_group">
           <button
             className="button button__edit"
@@ -140,6 +109,16 @@ export const PastEventDetail = ({ eventObj }) => {
           >
             {" ✍️ "}
           </button>
+          <div className="event__author">
+            Posted by{" "}
+            <b>
+              {users.map((user) => {
+                if (user.id === userId) {
+                  return user.name;
+                }
+              })}
+            </b>
+          </div>
         </div>
       </div>
     );
@@ -162,14 +141,6 @@ export const PastEventDetail = ({ eventObj }) => {
             {"🗓 "} {date} at {startTime}
           </div>
           <div className="event__comments">{comments}</div>
-          <div className="event__author">
-            Posted by{" "}
-            {users.map((user) => {
-              if (user.id === userId) {
-                return user.name;
-              }
-            })}
-          </div>
           <div className="event__participants__label">
             <i>Participants:</i>
           </div>
@@ -193,19 +164,16 @@ export const PastEventDetail = ({ eventObj }) => {
                     eventObj={eventObj}
                   />
                 </div>
-                {/* <div>
-                <TinyTimeForm userEvent={userEvent} />
-              </div> */}
-                {/* <button
-                className="button"
-                onClick={() => {
-                  onClick();
-                }}
-              >
-                {showTimeForm ? <>Cancel</> : <>Change</>}{" "}
-              </button> */}
               </>
             );
+          })}
+        </div>
+        <div className="event__author">
+          Posted by{" "}
+          {users.map((user) => {
+            if (user.id === userId) {
+              return user.name;
+            }
           })}
         </div>
       </div>
