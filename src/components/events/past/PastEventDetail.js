@@ -84,14 +84,16 @@ export const PastEventDetail = ({ eventObj }) => {
           <div className="event__comments">{comments}</div>
           <div className="event__author">
             Posted by{" "}
-            {users.map((user) => {
-              if (user.id === userId) {
-                return user.name;
-              }
-            })}
+            <b>
+              {users.map((user) => {
+                if (user.id === userId) {
+                  return user.name;
+                }
+              })}
+            </b>
           </div>
           <div className="event__participants__label">
-            <b>Participants:</b>
+            <i>Participants:</i>
           </div>
           {sortedUsers.map((userEvent, index) => {
             var cls =
@@ -108,7 +110,10 @@ export const PastEventDetail = ({ eventObj }) => {
                   {getUserById(userEvent.userId).name}, who
                   completed the course in {userEvent.time}
                   <br></br>
-                  <TinyTimeForm userEvent={userEvent} />
+                  <TinyTimeForm
+                    userEvent={userEvent}
+                    eventObj={eventObj}
+                  />
                 </div>
                 {/* <div>
                   <TinyTimeForm userEvent={userEvent} />
@@ -166,7 +171,7 @@ export const PastEventDetail = ({ eventObj }) => {
             })}
           </div>
           <div className="event__participants__label">
-            <b>Participants:</b>
+            <i>Participants:</i>
           </div>
           {sortedUsers.map((userEvent, index) => {
             var cls =
@@ -183,7 +188,10 @@ export const PastEventDetail = ({ eventObj }) => {
                   {getUserById(userEvent.userId).name}, who
                   completed the course in {userEvent.time}
                   <br></br>
-                  <TinyTimeForm userEvent={userEvent} />
+                  <TinyTimeForm
+                    userEvent={userEvent}
+                    eventObj={eventObj}
+                  />
                 </div>
                 {/* <div>
                 <TinyTimeForm userEvent={userEvent} />

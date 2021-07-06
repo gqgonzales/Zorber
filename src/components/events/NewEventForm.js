@@ -101,6 +101,7 @@ export const NewEventForm = () => {
         });
       })
       .then(getEvents)
+      // .then(() => history.push("/upcoming"));
       .then(() => history.push("/upcoming"));
   };
 

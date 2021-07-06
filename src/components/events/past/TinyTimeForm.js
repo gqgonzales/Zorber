@@ -4,18 +4,22 @@ import "../EventForms.css";
 // import { useParams } from "react-router-dom";
 import { UserEventsContext } from "../../userEvents/UserEventsProvider";
 import { EventContext } from "../EventProvider";
+import { UserContext } from "../../users/UserProvider";
 import userEvent from "@testing-library/user-event";
-// import { UserContext } from "../../users/UserProvider";
 
-export const TinyTimeForm = ({ userEvent }) => {
+export const TinyTimeForm = ({ userEvent, eventObj }) => {
+  const authorId = eventObj.userId;
   const [showTimeForm, setShowTimeForm] = useState(false);
   const onClick = () => setShowTimeForm(!showTimeForm);
 
+  console.log("Authors:", authorId);
   const [isLoading, setIsLoading] = useState(true);
 
   // const { eventId } = useParams();
 
-  const { events, getEvents } = useContext(EventContext);
+  // const { users, getUsers } = useContext(UserContext);
+
+  const { getEvents } = useContext(EventContext);
 
   const { updateUserEvents, deleteUserEvent } = useContext(
     UserEventsContext
@@ -54,7 +58,8 @@ export const TinyTimeForm = ({ userEvent }) => {
 
   if (
     parseInt(localStorage.getItem("zorber_user")) ===
-    userEvent.userId
+      userEvent.userId ||
+    parseInt(localStorage.getItem("zorber_user")) === authorId
   ) {
     return (
       <>

@@ -50,15 +50,17 @@ export const UpcomingEventDetail = ({ eventObj }) => {
           <div className="event__comments">{comments}</div>
           <div className="event__author">
             Posted by{" "}
-            {users.map((user) => {
-              if (user.id === eventObj.userId) {
-                return user.name;
-              }
-            })}
+            <b>
+              {users.map((user) => {
+                if (user.id === eventObj.userId) {
+                  return user.name;
+                }
+              })}
+            </b>
           </div>
           {/* EXPECTED ATTENDEES */}
           <div className="event__participants">
-            <b>Expected attendees:</b>{" "}
+            <i>Expected attendees:</i>{" "}
             {userEvents.map((userEvent) => {
               return (
                 <div
@@ -115,7 +117,7 @@ export const UpcomingEventDetail = ({ eventObj }) => {
           </div>
           {/* EXPECTED ATTENDEES */}
           <div className="event__participants">
-            <b>Expected attendees:</b>{" "}
+            <i>Expected attendees:</i>{" "}
             {userEvents.map((userEvent) => {
               return (
                 <div
