@@ -14,10 +14,6 @@ export const TinyTimeForm = ({ userEvent, eventObj }) => {
 
   const [isLoading, setIsLoading] = useState(true);
 
-  // const { eventId } = useParams();
-
-  // const { users, getUsers } = useContext(UserContext);
-
   const { getEvents } = useContext(EventContext);
 
   const { updateUserEvents, deleteUserEvent } = useContext(
@@ -68,11 +64,7 @@ export const TinyTimeForm = ({ userEvent, eventObj }) => {
               className="time__input"
               type="text"
               name="time"
-              // id={`time__input__${relationshipObj.userId}`
-              // defaultValue={userEvent.time}
               value={userEventTime}
-              // value={userEvent.time}
-              // placeholder={userEvent.time}
               onChange={handleUserEventTimeChange}
             ></input>
             <div className="button__container">
