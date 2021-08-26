@@ -6,7 +6,6 @@ import { EventContext } from "../EventProvider";
 import { Multiselect } from "multiselect-react-dropdown";
 import { UserEventsContext } from "../../userEvents/UserEventsProvider";
 import { UserContext } from "../../users/UserProvider";
-// import Table from "react-bootstrap/Table";
 
 export const EditPastEventForm = () => {
   const { getEventById, updateEvent, getEvents, deleteEvent } =
@@ -40,16 +39,13 @@ export const EditPastEventForm = () => {
   });
 
   // This is our ORIGINAL copy of the userEvents associated with this event.
-  const [originalParticipants, setOriginalParticipants] =
-    useState([]);
+  const [originalParticipants, setOriginalParticipants] = useState([]);
 
   // This is the dynamic copy of the userEvents that is updated by our changes.
   const [participants, setParticipants] = useState([]);
 
   // This is the orginal copy of the userEvents associated with a past event.
-  const [originalTimesArray, setOriginalTimesArray] = useState(
-    []
-  );
+  const [originalTimesArray, setOriginalTimesArray] = useState([]);
 
   // Our dynamic copy of the userEvents Object
   const [timesArray, setTimesArray] = useState([]);
@@ -60,8 +56,7 @@ export const EditPastEventForm = () => {
 
     participants.forEach((participant) => {
       const found = originalParticipants.find(
-        (originalParticipantObj) =>
-          originalParticipantObj.id === participant.id
+        (originalParticipantObj) => originalParticipantObj.id === participant.id
       );
       if (!found) {
         added.push(participant);
@@ -87,24 +82,16 @@ export const EditPastEventForm = () => {
     // console.log("Participants:", participants);
     // const removedParticipants = [];
     const userEventIdsToRemove = [];
-    originalTimesArray.forEach(
-      (userEvent) => {
-        if (
-          !participants.find((participant) => {
-            return participant.id === userEvent.userId;
-          })
-        ) {
-          userEventIdsToRemove.push(userEvent.id);
-        }
+    originalTimesArray.forEach((userEvent) => {
+      if (
+        !participants.find((participant) => {
+          return participant.id === userEvent.userId;
+        })
+      ) {
+        userEventIdsToRemove.push(userEvent.id);
       }
-      // originalParticipants.forEach((originalParticipant) => {
-      //   if (!participants.includes(originalParticipant)) {
-      //     removedParticipants.push(originalParticipant.id);
-      //   }
-      // }
-    );
+    });
     return userEventIdsToRemove;
-    // return removedParticipants;
   };
 
   // Send your edit command participants
@@ -118,15 +105,13 @@ export const EditPastEventForm = () => {
   const history = useHistory();
 
   const onSelect = (selectedValue) => {
-    console.log("Selected A:", selectedValue);
-
+    // console.log("Selected A:", selectedValue);
     setParticipants(selectedValue);
   };
 
   const onRemove = (selectedValue) => {
-    console.log("Selected R:", selectedValue);
+    // console.log("Selected R:", selectedValue);
     setParticipants(selectedValue);
-    // setTimeout(findRemoved, 1000);
   };
 
   //when field changes, update state. This causes a re-render and updates the view.
@@ -142,36 +127,9 @@ export const EditPastEventForm = () => {
     setEvent(updatePastEvent);
   };
 
-  const handleRelationshipObjChange = (event) => {
-    const timesArrayDeconstruction = [...originalTimesArray];
-    timesArrayDeconstruction.forEach((userEvent) => {
-      // console.log("Please track me in state:", userEvent);
-      setUserEvent(userEvent);
-    });
-    // const updateRelationshipObj = { ...userEvent };
-    // // debugger;
-    // updateRelationshipObj[event.target.id] = event.target.value;
-    // setUserEvent(updateRelationshipObj);
-  };
-
-  // const handleRelationshipObjChange = (userEvent) => {
-  //   const updateRelationshipObj = { ...timesArray };
-  //   updateRelationshipObj[userEvent.target.name] =
-  //     userEvent.target.value;
-  //   setTimesArray(updateRelationshipObj);
-  // };
-
   const handleSaveEvent = () => {
-    // console.log(
-    //   "ORIG:",
-    //   originalParticipants,
-    //   "CURRENT:",
-    //   participants
-    // );
     if (parseInt(eventObj.eventId) === 0) {
-      window.alert(
-        "Please enter all required fields to continue."
-      );
+      window.alert("Please enter all required fields to continue.");
     } else {
       //disable the button - no extra clicks
       setIsLoading(true);
@@ -196,15 +154,6 @@ export const EditPastEventForm = () => {
         })
         .then(() => {
           const removed = findRemoved();
-          //   if (removed.length > 0) {
-          //     originalTimesArray.forEach((userEvent) => {
-          //       if (removed.includes(userEvent.userId)) {
-          //         deleteUserEvent(userEvent.id);
-          //       }
-          //     });
-          //   }
-          // }
-
           removed.forEach((userEventId) => {
             deleteUserEvent(userEventId);
           });
@@ -230,8 +179,6 @@ export const EditPastEventForm = () => {
         if (eventId) {
           getEventById(parseInt(eventId)).then((eventRes) => {
             setEvent(eventRes);
-            // console.log(eventRes);
-            // setUserEvents(eventRes);
             setIsLoading(false);
           });
         } else {
@@ -242,9 +189,7 @@ export const EditPastEventForm = () => {
 
   useEffect(() => {
     getUserEventsByEventId(eventId).then((res) => {
-      const participantsArray = res.map(
-        (userEventObj) => userEventObj.user
-      );
+      const participantsArray = res.map((userEventObj) => userEventObj.user);
       setOriginalParticipants(participantsArray);
       setParticipants(participantsArray);
       setOriginalTimesArray(res);
@@ -377,16 +322,9 @@ export const EditPastEventForm = () => {
         }}
       >
         {/* SAVE BUTTON */}
-        {eventId ? (
-          <>{" ✅  "}</>
-        ) : (
-          <>Something wrong with this ternary</>
-        )}
+        {" ✅  "}
       </button>
-      <button
-        className="cancel__button"
-        onClick={() => history.push("/past")}
-      >
+      <button className="cancel__button" onClick={() => history.push("/past")}>
         {/* CANCEL / BACK BUTTON */}
         {" 🔙  "}
       </button>

@@ -16,9 +16,7 @@ export const TinyTimeForm = ({ userEvent, eventObj }) => {
 
   const { getEvents } = useContext(EventContext);
 
-  const { updateUserEvents, deleteUserEvent } = useContext(
-    UserEventsContext
-  );
+  const { updateUserEvents, deleteUserEvent } = useContext(UserEventsContext);
 
   const [userEventTime, setUserEventTime] = useState("");
 
@@ -52,8 +50,7 @@ export const TinyTimeForm = ({ userEvent, eventObj }) => {
   };
 
   if (
-    parseInt(localStorage.getItem("zorber_user")) ===
-      userEvent.userId ||
+    parseInt(localStorage.getItem("zorber_user")) === userEvent.userId ||
     parseInt(localStorage.getItem("zorber_user")) === authorId
   ) {
     return (

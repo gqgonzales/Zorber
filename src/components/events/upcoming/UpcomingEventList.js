@@ -1,56 +1,65 @@
 import React, { useContext, useEffect, useState } from "react";
-// To start, you need to import the context object you created in the provider component so that the useContext() hook can access the objects it exposes.
-import "../Event.css"; // import { useHistory } from "react-router-dom";
 import { EventContext } from "../EventProvider";
 import { UserContext } from "../../users/UserProvider";
 import { UserEventsContext } from "../../userEvents/UserEventsProvider";
 import { UpcomingEventDetail } from "./UpcomingEventDetail";
-// import userEvent from "@testing-library/user-event";
+import { EventSearch } from "../EventSearch";
+import "../Event.css";
 
 export const UpcomingEventList = () => {
-  // This state changes when `getEvents()` is invoked below
-  const { events, getEvents } = useContext(EventContext);
+  const { events, getEvents, searchTerms } = useContext(EventContext);
   const { getUsers } = useContext(UserContext);
   const { getUserEvents } = useContext(UserEventsContext);
 
-  // const [userEvents, setstate] = useState({})
-
-  //   const history = useHistory();
-
-  //   // This is our ORIGINAL copy of the userEvents associated with this event.
-  //   const [originalParticipants, setOriginalParticipants] =
-  //     useState([]);
-
-  //   // This is the dynamic copy of the userEvents that is updated by our changes.
-  //   const [participants, setParticipants] = useState([]);
-
   const [filteredEvents, setFilteredEvents] = useState([]);
-
-  useEffect(() => {
-    const dateFilter = events.filter((event) => {
-      if (Date.parse(event.date) > Date.now()) {
-        return true;
-      }
-    });
-    const sorted = dateFilter.sort(
-      (a, b) => Date.parse(a.date) - Date.parse(b.date)
-    );
-    // console.log("TAG", sorted);
-    setFilteredEvents(sorted);
-  }, [events]);
-  // console.log(filteredEvents);
 
   //useEffect - reach out to the world for something
   useEffect(() => {
     getUsers().then(getEvents).then(getUserEvents);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  useEffect(() => {
+    if (searchTerms !== "") {
+      // If the search field is not blank, run the dateFilter to find upcoming events
+      // Then .sort() to put them in the correct order
+      // And finally, .filter() again to check title against search terms
+      const dateFilter = events.filter((event) => {
+        if (Date.parse(event.date) > Date.now()) {
+          return true;
+        }
+      });
+      const searchSort = dateFilter.sort(
+        (a, b) => Date.parse(a.date) - Date.parse(b.date)
+      );
+      const subset = searchSort.filter(
+        (event) =>
+          event.title.includes(searchTerms) ||
+          event.title.toLowerCase().includes(searchTerms) ||
+          event.title.toUpperCase().includes(searchTerms)
+      );
+      setFilteredEvents(subset);
+    } else {
+      // If the search field is blank, run the dateFilter to find upcoming events
+      // Then .sort() to put them in the correct order
+      const dateFilter = events.filter((event) => {
+        if (Date.parse(event.date) > Date.now()) {
+          return true;
+        }
+      });
+      const sorted = dateFilter.sort(
+        (a, b) => Date.parse(a.date) - Date.parse(b.date)
+      );
+      setFilteredEvents(sorted);
+    }
+  }, [searchTerms, events]);
+
   return (
     <>
       <div className="subsection__header__container">
-        <h2 className="subsection__header eventForm__title">
-          Upcoming Events
-        </h2>
+        <h2 className="subsection__header eventForm__title">Upcoming Events</h2>
+      </div>
+      <div className="search__input">
+        <EventSearch />
       </div>
       <div
         className="event__container"

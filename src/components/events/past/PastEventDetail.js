@@ -7,16 +7,8 @@ import "../Event.css";
 import { TinyTimeForm } from "./TinyTimeForm";
 
 export const PastEventDetail = ({ eventObj }) => {
-  const {
-    title,
-    id,
-    location,
-    comments,
-    startTime,
-    date,
-    userId,
-    userEvents,
-  } = eventObj;
+  const { title, id, location, comments, startTime, date, userId, userEvents } =
+    eventObj;
 
   const history = useHistory();
 
@@ -40,16 +32,9 @@ export const PastEventDetail = ({ eventObj }) => {
   //   minute: "2-digit",
   // });
 
-  if (
-    parseInt(localStorage.getItem("zorber_user")) ===
-    eventObj.userId
-  ) {
+  if (parseInt(localStorage.getItem("zorber_user")) === eventObj.userId) {
     return (
-      <div
-        className="event"
-        id={`event--${id}`}
-        key={`event--${id}`}
-      >
+      <div className="event" id={`event--${id}`} key={`event--${id}`}>
         <div className="event__title__container option__name">
           <h3 className="event__title">{title}</h3>
         </div>
@@ -76,10 +61,7 @@ export const PastEventDetail = ({ eventObj }) => {
             <i>Participants:</i>
           </div>
           {sortedUsers.map((userEvent, index) => {
-            var cls =
-              index === 0
-                ? "winner"
-                : "event__participant__past";
+            var cls = index === 0 ? "winner" : "event__participant__past";
             return (
               <>
                 <div
@@ -87,13 +69,10 @@ export const PastEventDetail = ({ eventObj }) => {
                   key={`event__participant--${userEvent.id}`}
                 >
                   {"– "}
-                  {getUserById(userEvent.userId).name}, who
-                  completed the course in {userEvent.time}
+                  {getUserById(userEvent.userId).name}, who completed the course
+                  in {userEvent.time}
                   <br></br>
-                  <TinyTimeForm
-                    userEvent={userEvent}
-                    eventObj={eventObj}
-                  />
+                  <TinyTimeForm userEvent={userEvent} eventObj={eventObj} />
                 </div>
               </>
             );
@@ -124,11 +103,7 @@ export const PastEventDetail = ({ eventObj }) => {
     );
   } else {
     return (
-      <div
-        className="event"
-        id={`event--${id}`}
-        key={`event--${id}`}
-      >
+      <div className="event" id={`event--${id}`} key={`event--${id}`}>
         <div className="event__title__container option__name">
           <h3 className="event__title">{title}</h3>
         </div>
@@ -145,10 +120,7 @@ export const PastEventDetail = ({ eventObj }) => {
             <i>Participants:</i>
           </div>
           {sortedUsers.map((userEvent, index) => {
-            var cls =
-              index === 0
-                ? "winner"
-                : "event__participant__past";
+            var cls = index === 0 ? "winner" : "event__participant__past";
             return (
               <>
                 <div
@@ -156,13 +128,10 @@ export const PastEventDetail = ({ eventObj }) => {
                   key={`event__participant--${userEvent.id}`}
                 >
                   {"– "}
-                  {getUserById(userEvent.userId).name}, who
-                  completed the course in {userEvent.time}
+                  {getUserById(userEvent.userId).name}, who completed the course
+                  in {userEvent.time}
                   <br></br>
-                  <TinyTimeForm
-                    userEvent={userEvent}
-                    eventObj={eventObj}
-                  />
+                  <TinyTimeForm userEvent={userEvent} eventObj={eventObj} />
                 </div>
               </>
             );
