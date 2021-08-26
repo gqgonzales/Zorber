@@ -31,15 +31,12 @@ export const EditUpcomingEventForm = () => {
     comments: "",
   });
 
-  const [originalParticipants, setOriginalParticipants] =
-    useState([]);
+  const [originalParticipants, setOriginalParticipants] = useState([]);
 
   const [participants, setParticipants] = useState([]);
 
   // This is the orginal copy of the userEvents associated with a past event.
-  const [originalTimesArray, setOriginalTimesArray] = useState(
-    []
-  );
+  const [originalTimesArray, setOriginalTimesArray] = useState([]);
 
   const [timesArray, setTimesArray] = useState([]);
 
@@ -49,8 +46,7 @@ export const EditUpcomingEventForm = () => {
 
     participants.forEach((participant) => {
       const found = originalParticipants.find(
-        (originalParticipantObj) =>
-          originalParticipantObj.id === participant.id
+        (originalParticipantObj) => originalParticipantObj.id === participant.id
       );
       if (!found) {
         added.push(participant);
@@ -108,9 +104,7 @@ export const EditUpcomingEventForm = () => {
 
   const handleSaveEvent = () => {
     if (parseInt(eventObj.eventId) === 0) {
-      window.alert(
-        "Please enter all required fields to continue."
-      );
+      window.alert("Please enter all required fields to continue.");
     } else {
       //disable the button - no extra clicks
       setIsLoading(true);
@@ -161,9 +155,7 @@ export const EditUpcomingEventForm = () => {
 
   useEffect(() => {
     getUserEventsByEventId(eventId).then((res) => {
-      const participantsArray = res.map(
-        (userEventObj) => userEventObj.user
-      );
+      const participantsArray = res.map((userEventObj) => userEventObj.user);
       setOriginalParticipants(participantsArray);
       setParticipants(participantsArray);
       setOriginalTimesArray(res);
@@ -296,7 +288,7 @@ export const EditUpcomingEventForm = () => {
         }}
       >
         {/* SAVE BUTTON */}
-        {eventId ? <>{" ✅  "}</> : <>Create New Event</>}
+        {" ✅  "}
       </button>
       <button
         className="cancel__button"

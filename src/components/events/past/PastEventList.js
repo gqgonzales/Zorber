@@ -1,34 +1,52 @@
 import React, { useContext, useEffect, useState } from "react";
-// To start, you need to import the context object you created in the provider component so that the useContext() hook can access the objects it exposes.
-import "../Event.css";
-// import { useHistory } from "react-router-dom";
 import { EventContext } from "../EventProvider";
 import { UserContext } from "../../users/UserProvider";
 import { UserEventsContext } from "../../userEvents/UserEventsProvider";
 import { PastEventDetail } from "./PastEventDetail";
-// import userEvent from "@testing-library/user-event";
+import { EventSearch } from "../EventSearch";
+import "../Event.css";
 
 export const PastEventList = () => {
-  // This state changes when `getEvents()` is invoked below
-  const { events, getEvents } = useContext(EventContext);
+  const { events, getEvents, searchTerms } = useContext(EventContext);
   const { getUsers } = useContext(UserContext);
   const { getUserEvents } = useContext(UserEventsContext);
 
   const [filteredEvents, setFilteredEvents] = useState([]);
 
   useEffect(() => {
-    const dateFilter = events.filter((event) => {
-      if (Date.parse(event.date) < Date.now()) {
-        return true;
-      }
-    });
-    const sorted = dateFilter.sort(
-      (a, b) => Date.parse(b.date) - Date.parse(a.date)
-    );
-    // console.log("TAG", sorted);
-    setFilteredEvents(sorted);
-  }, [events]);
-  // console.log(filteredEvents);
+    if (searchTerms !== "") {
+      // If the search field is not blank, run the dateFilter to find upcoming events
+      // Then .sort() to put them in the correct order
+      // And finally, .filter() again to check title against search terms
+      const dateFilter = events.filter((event) => {
+        if (Date.parse(event.date) < Date.now()) {
+          return true;
+        }
+      });
+      const searchSort = dateFilter.sort(
+        (a, b) => Date.parse(b.date) - Date.parse(a.date)
+      );
+      const subset = searchSort.filter(
+        (event) =>
+          event.title.includes(searchTerms) ||
+          event.title.toLowerCase().includes(searchTerms) ||
+          event.title.toUpperCase().includes(searchTerms)
+      );
+      setFilteredEvents(subset);
+    } else {
+      // If the search field is blank, run the dateFilter to find upcoming events
+      // Then .sort() to put them in the correct order
+      const dateFilter = events.filter((event) => {
+        if (Date.parse(event.date) < Date.now()) {
+          return true;
+        }
+      });
+      const sorted = dateFilter.sort(
+        (a, b) => Date.parse(b.date) - Date.parse(a.date)
+      );
+      setFilteredEvents(sorted);
+    }
+  }, [searchTerms, events]);
 
   //useEffect - reach out to the world for something
   useEffect(() => {
@@ -40,6 +58,9 @@ export const PastEventList = () => {
     <>
       <div className="subsection__header__container">
         <h2 className="subsection__header eventForm__title">Past Events</h2>
+      </div>
+      <div className="search__input">
+        <EventSearch />
       </div>
       <div
         className="event__container"

@@ -108,3 +108,7 @@
   border-radius: 5rem;
   border: #7daa92 3px inset;
 }
+
+.event-search {
+  margin: 1rem;
+}
