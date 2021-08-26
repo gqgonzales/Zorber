@@ -67,7 +67,12 @@ export const UpcomingEventList = () => {
       >
         {filteredEvents.map((eventObj) => {
           // console.log(eventObj);
-          return <UpcomingEventDetail eventObj={eventObj} />;
+          return (
+            <UpcomingEventDetail
+              eventObj={eventObj}
+              key={`Event-Card-${eventObj.id}`}
+            />
+          );
         })}
       </div>
     </>

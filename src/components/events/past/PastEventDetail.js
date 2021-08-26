@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 // import { EventContext } from "../EventProvider";
 import { UserContext } from "../../users/UserProvider";
@@ -34,7 +34,7 @@ export const PastEventDetail = ({ eventObj }) => {
 
   if (parseInt(localStorage.getItem("zorber_user")) === eventObj.userId) {
     return (
-      <div className="event" id={`event--${id}`} key={`event--${id}`}>
+      <div className="event" id={`event--${id}`} key={`event--${id}-${title}`}>
         <div className="event__title__container option__name">
           <h3 className="event__title">{title}</h3>
         </div>
@@ -66,7 +66,7 @@ export const PastEventDetail = ({ eventObj }) => {
               <>
                 <div
                   className={cls}
-                  key={`event__participant--${userEvent.id}`}
+                  key={`event-${userEvent.eventId}-event__participant--${userEvent.id}`}
                 >
                   {"– "}
                   {getUserById(userEvent.userId).name}, who completed the course
@@ -103,7 +103,7 @@ export const PastEventDetail = ({ eventObj }) => {
     );
   } else {
     return (
-      <div className="event" id={`event--${id}`} key={`event--${id}`}>
+      <div className="event" id={`event--${id}`} key={`event--${id}-${title}`}>
         <div className="event__title__container option__name">
           <h3 className="event__title">{title}</h3>
         </div>
@@ -125,7 +125,7 @@ export const PastEventDetail = ({ eventObj }) => {
               <>
                 <div
                   className={cls}
-                  key={`event__participant--${userEvent.id}`}
+                  key={`event-${userEvent.eventId}event__participant--${userEvent.id}`}
                 >
                   {"– "}
                   {getUserById(userEvent.userId).name}, who completed the course

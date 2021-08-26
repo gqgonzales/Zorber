@@ -5,15 +5,8 @@ import { UserContext } from "../../users/UserProvider";
 // import { UserEventsContext } from "../userEvents/UserEventsProvider";
 import "../Event.css";
 export const UpcomingEventDetail = ({ eventObj }) => {
-  const {
-    title,
-    id,
-    location,
-    comments,
-    startTime,
-    date,
-    userEvents,
-  } = eventObj;
+  const { title, id, location, comments, startTime, date, userEvents } =
+    eventObj;
 
   const history = useHistory();
   const { users } = useContext(UserContext);
@@ -26,10 +19,7 @@ export const UpcomingEventDetail = ({ eventObj }) => {
     return participant[0];
   };
 
-  if (
-    parseInt(localStorage.getItem("zorber_user")) ===
-    eventObj.userId
-  ) {
+  if (parseInt(localStorage.getItem("zorber_user")) === eventObj.userId) {
     return (
       <div
         className="event"
@@ -56,7 +46,7 @@ export const UpcomingEventDetail = ({ eventObj }) => {
               return (
                 <div
                   className={`event__participant--${id}`}
-                  key={`event__participant--${id}`}
+                  key={`event-${userEvent.eventId}-event__participant--${userEvent.id}`}
                 >
                   {"– "}
                   {getUserById(userEvent.userId).name}
@@ -90,11 +80,7 @@ export const UpcomingEventDetail = ({ eventObj }) => {
     );
   } else {
     return (
-      <div
-        className="event"
-        id={`event--${id}`}
-        key={`event--${id}`}
-      >
+      <div className="event" id={`event--${id}`} key={`event--${id}`}>
         <div className="event__title option__name">
           <h3>{title}</h3>
         </div>
@@ -114,7 +100,7 @@ export const UpcomingEventDetail = ({ eventObj }) => {
               return (
                 <div
                   className="event__participant"
-                  key={`event__participant--${userEvent.id}`}
+                  key={`event-${userEvent.eventId}-event__participant--${userEvent.id}`}
                 >
                   {"– "}
                   {getUserById(userEvent.userId).name}

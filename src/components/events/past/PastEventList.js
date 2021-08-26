@@ -68,7 +68,12 @@ export const PastEventList = () => {
       >
         {filteredEvents.map((eventObj) => {
           // console.log(eventObj);
-          return <PastEventDetail eventObj={eventObj} />;
+          return (
+            <PastEventDetail
+              eventObj={eventObj}
+              key={`Event-Card-${eventObj.id}`}
+            />
+          );
         })}
       </div>
     </>
