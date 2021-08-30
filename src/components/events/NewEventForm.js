@@ -8,8 +8,7 @@ import { Multiselect } from "multiselect-react-dropdown";
 import { UserEventsContext } from "../userEvents/UserEventsProvider";
 
 export const NewEventForm = () => {
-  const { addEvent, getEventById, getEvents } =
-    useContext(EventContext);
+  const { addEvent, getEventById, getEvents } = useContext(EventContext);
 
   const { users, getUsers } = useContext(UserContext);
   const { addUserEvents } = useContext(UserEventsContext);
@@ -52,9 +51,7 @@ export const NewEventForm = () => {
 
   const onRemove = (selectedValue) => {
     // If an object is selected in the multiselect, add the userId to the participants array.
-    const removeSelected = [...participants].splice(
-      selectedValue
-    );
+    const removeSelected = [...participants].splice(selectedValue);
     setParticipants(removeSelected);
   };
 
@@ -105,139 +102,142 @@ export const NewEventForm = () => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <form className="eventForm">
+    <>
       <div className="subsection__header__container__form">
         <h2 className="eventForm__title subsection__header">
           Create a New Event{" "}
         </h2>
       </div>
-      <fieldset>
-        <div className="form-group">
-          <label htmlFor="eventName">Title: </label>
-          <input
-            type="text"
-            id="eventTitle"
-            name="title"
-            value={eventObj.title}
-            required
-            autoFocus
-            className="form-control"
-            placeholder="Give it a good title!"
-            onChange={handleControlledInputChange}
-          />
-        </div>
-      </fieldset>
-      {/* location */}
-      <fieldset>
-        <div className="form-group">
-          <label htmlFor="eventLocation">Location: </label>
-          <input
-            type="text"
-            id="eventLocation"
-            name="location"
-            value={eventObj.location}
-            required
-            autoFocus
-            className="form-control"
-            placeholder="Where should we zorb?"
-            onChange={handleControlledInputChange}
-          />
-        </div>
-      </fieldset>
-      {/* DATE */}
-      <fieldset>
-        <div className="form-group">
-          <label htmlFor="eventDate">Date: </label>
-          <input
-            type="date"
-            id="eventDate"
-            name="date"
-            value={eventObj.date}
-            required
-            autoFocus
-            className="form-control"
-            placeholder="When we doing this?"
-            onChange={handleControlledInputChange}
-          />
-        </div>
-      </fieldset>
-      {/* START TIME */}
-      <fieldset>
-        <div className="form-group">
-          <label htmlFor="startTime">Time: </label>
-          <input
-            type="time"
-            id="startTime"
-            name="startTime"
-            value={eventObj.startTime}
-            required
-            autoFocus
-            className="form-control"
-            placeholder="When should it start?"
-            onChange={handleControlledInputChange}
-          />
-        </div>
-      </fieldset>
-      {/* USERS */}
-      <fieldset>
-        <div className="form-group">
-          <label htmlFor="userId">Participants: </label>
-          <Multiselect
-            className="multiselect"
-            options={users} // Options to display in the dropdown
-            selectedValues={users.selectedValue} // Preselected value to persist in dropdown
-            onSelect={(selectedValue) => {
-              onSelect(selectedValue);
-            }} // Function will trigger on select event
-            onRemove={(selectedValue) => {
-              onRemove(selectedValue);
-            }} // Function will trigger on remove event
-            displayValue="name" // Property name to display in the dropdown options
-          />
-        </div>
-      </fieldset>
-      {/* COMMENTS */}
-      <fieldset>
-        <div className="form-group">
-          <label htmlFor="comments">Comments: </label>
-          <input
-            type="text"
-            id="comments"
-            name="comments"
-            value={eventObj.comments}
-            required
-            className="form-control"
-            placeholder="Add comments or a description!"
-            onChange={handleControlledInputChange}
-          />
-        </div>
-      </fieldset>
-      {/* BUTTONS */}
-      <div className="button__group">
-        <button
-          className="button save__button"
-          disabled={isLoading}
-          onClick={(event) => {
-            event.preventDefault(); // Prevent browser from submitting the form and refreshing the page
-            handleSaveEvent();
-          }}
-        >
-          {/* {eventId ? (
+      <form className="eventForm">
+        {/* OLD HEADER WENT HERE */}
+        <fieldset>
+          <div className="form-group">
+            <label htmlFor="eventName">Title: </label>
+            <input
+              type="text"
+              id="eventTitle"
+              name="title"
+              value={eventObj.title}
+              required
+              autoFocus
+              className="form-control"
+              placeholder="Give it a good title!"
+              onChange={handleControlledInputChange}
+            />
+          </div>
+        </fieldset>
+        {/* location */}
+        <fieldset>
+          <div className="form-group">
+            <label htmlFor="eventLocation">Location: </label>
+            <input
+              type="text"
+              id="eventLocation"
+              name="location"
+              value={eventObj.location}
+              required
+              autoFocus
+              className="form-control"
+              placeholder="Where should we zorb?"
+              onChange={handleControlledInputChange}
+            />
+          </div>
+        </fieldset>
+        {/* DATE */}
+        <fieldset>
+          <div className="form-group">
+            <label htmlFor="eventDate">Date: </label>
+            <input
+              type="date"
+              id="eventDate"
+              name="date"
+              value={eventObj.date}
+              required
+              autoFocus
+              className="form-control"
+              placeholder="When we doing this?"
+              onChange={handleControlledInputChange}
+            />
+          </div>
+        </fieldset>
+        {/* START TIME */}
+        <fieldset>
+          <div className="form-group">
+            <label htmlFor="startTime">Time: </label>
+            <input
+              type="time"
+              id="startTime"
+              name="startTime"
+              value={eventObj.startTime}
+              required
+              autoFocus
+              className="form-control"
+              placeholder="When should it start?"
+              onChange={handleControlledInputChange}
+            />
+          </div>
+        </fieldset>
+        {/* USERS */}
+        <fieldset>
+          <div className="form-group">
+            <label htmlFor="userId">Participants: </label>
+            <Multiselect
+              className="multiselect"
+              options={users} // Options to display in the dropdown
+              selectedValues={users.selectedValue} // Preselected value to persist in dropdown
+              onSelect={(selectedValue) => {
+                onSelect(selectedValue);
+              }} // Function will trigger on select event
+              onRemove={(selectedValue) => {
+                onRemove(selectedValue);
+              }} // Function will trigger on remove event
+              displayValue="name" // Property name to display in the dropdown options
+            />
+          </div>
+        </fieldset>
+        {/* COMMENTS */}
+        <fieldset>
+          <div className="form-group">
+            <label htmlFor="comments">Comments: </label>
+            <input
+              type="text"
+              id="comments"
+              name="comments"
+              value={eventObj.comments}
+              required
+              className="form-control"
+              placeholder="Add comments or a description!"
+              onChange={handleControlledInputChange}
+            />
+          </div>
+        </fieldset>
+        {/* BUTTONS */}
+        <div className="button__group">
+          <button
+            className="button save__button"
+            disabled={isLoading}
+            onClick={(event) => {
+              event.preventDefault(); // Prevent browser from submitting the form and refreshing the page
+              handleSaveEvent();
+            }}
+          >
+            {/* {eventId ? (
             <>Save those changes!</>
           ) : (
             <>Create New Event</>
           )} */}
-          {/* SAVE BUTTON */}
-          {" ✅  "}
-        </button>
-        <button
-          className="cancel__button"
-          onClick={() => history.push("/upcoming")}
-        >
-          {/* CANCEL / BACK BUTTON */}
-          {" 🔙  "}
-        </button>
-      </div>
-    </form>
+            {/* SAVE BUTTON */}
+            {" ✅  "}
+          </button>
+          <button
+            className="cancel__button"
+            onClick={() => history.push("/upcoming")}
+          >
+            {/* CANCEL / BACK BUTTON */}
+            {" 🔙  "}
+          </button>
+        </div>
+      </form>
+    </>
   );
 };

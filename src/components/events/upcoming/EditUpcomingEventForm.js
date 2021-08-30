@@ -165,138 +165,140 @@ export const EditUpcomingEventForm = () => {
   // console.log(originalParticipants);
 
   return (
-    <form className="eventForm">
+    <>
       <div className="subsection__header__container__form">
         <h2 className="eventForm__title subsection__header">
           Edit this Event{" "}
         </h2>
       </div>
-      {/* TITLE */}
-      <fieldset>
-        <div className="form-group">
-          <label htmlFor="eventName">Title: </label>
-          <input
-            type="text"
-            id="eventTitle"
-            name="title"
-            value={eventObj.title}
-            required
-            autoFocus
-            className="form-control"
-            placeholder="Give it a good title!"
-            onChange={handleControlledInputChange}
-          />
-        </div>
-      </fieldset>
-      {/* LOCATION */}
-      <fieldset>
-        <div className="form-group">
-          <label htmlFor="eventLocation">Location: </label>
-          <input
-            type="text"
-            id="eventLocation"
-            name="location"
-            value={eventObj.location}
-            required
-            autoFocus
-            className="form-control"
-            placeholder="Where should we zorb?"
-            onChange={handleControlledInputChange}
-          />
-        </div>
-      </fieldset>
-      {/* DATE */}
-      <fieldset>
-        <div className="form-group">
-          <label htmlFor="eventDate">Date: </label>
-          <input
-            type="date"
-            id="eventDate"
-            name="date"
-            value={eventObj.date}
-            required
-            autoFocus
-            className="form-control"
-            placeholder="When we doing this?"
-            onChange={handleControlledInputChange}
-          />
-        </div>
-      </fieldset>
-      {/* Start Time */}
-      <fieldset>
-        <div className="form-group">
-          <label htmlFor="startTime">Time: </label>
-          <input
-            type="time"
-            id="startTime"
-            name="startTime"
-            value={eventObj.startTime}
-            required
-            autoFocus
-            className="form-control"
-            placeholder="When should it start?"
-            onChange={handleControlledInputChange}
-          />
-        </div>
-      </fieldset>
-      {/* USERS? */}
-      <fieldset>
-        <div className="form-group">
-          <label htmlFor="userId">Participants: </label>
-          <Multiselect
-            options={users} // Options to display in the dropdown
-            selectedValues={participants} // Preselected value to persist in dropdown
-            onSelect={onSelect}
-            onRemove={onRemove}
-            displayValue="name" // Property name to display in the dropdown options
-          />
-        </div>
-      </fieldset>
-      {/* COMMENTS */}
-      <fieldset>
-        <div className="form-group">
-          <label htmlFor="comments">Comments: </label>
-          <input
-            type="text"
-            id="comments"
-            name="comments"
-            value={eventObj.comments}
-            required
-            className="form-control"
-            placeholder="Add comments or a description!"
-            onChange={handleControlledInputChange}
-          />
-        </div>
-      </fieldset>
-      {/* BUTTONS */}
-      <button
-        className="delete__button"
-        onClick={() => {
-          deleteEvent(eventId);
-          history.push("/upcoming");
-        }}
-      >
-        {/* DELETE BUTTON */}
-        {" ❌  "}
-      </button>
-      <button
-        className="save__button"
-        disabled={isLoading}
-        onClick={(event) => {
-          event.preventDefault(); // Prevent browser from submitting the form and refreshing the page
-          handleSaveEvent();
-        }}
-      >
-        {/* SAVE BUTTON */}
-        {" ✅  "}
-      </button>
-      <button
-        className="cancel__button"
-        onClick={() => history.push("/upcoming")}
-      >
-        {/* CANCEL / BACK BUTTON */}
-        {" 🔙  "}
-      </button>
-    </form>
+      <form className="eventForm">
+        {/* TITLE */}
+        <fieldset>
+          <div className="form-group">
+            <label htmlFor="eventName">Title: </label>
+            <input
+              type="text"
+              id="eventTitle"
+              name="title"
+              value={eventObj.title}
+              required
+              autoFocus
+              className="form-control"
+              placeholder="Give it a good title!"
+              onChange={handleControlledInputChange}
+            />
+          </div>
+        </fieldset>
+        {/* LOCATION */}
+        <fieldset>
+          <div className="form-group">
+            <label htmlFor="eventLocation">Location: </label>
+            <input
+              type="text"
+              id="eventLocation"
+              name="location"
+              value={eventObj.location}
+              required
+              autoFocus
+              className="form-control"
+              placeholder="Where should we zorb?"
+              onChange={handleControlledInputChange}
+            />
+          </div>
+        </fieldset>
+        {/* DATE */}
+        <fieldset>
+          <div className="form-group">
+            <label htmlFor="eventDate">Date: </label>
+            <input
+              type="date"
+              id="eventDate"
+              name="date"
+              value={eventObj.date}
+              required
+              autoFocus
+              className="form-control"
+              placeholder="When we doing this?"
+              onChange={handleControlledInputChange}
+            />
+          </div>
+        </fieldset>
+        {/* Start Time */}
+        <fieldset>
+          <div className="form-group">
+            <label htmlFor="startTime">Time: </label>
+            <input
+              type="time"
+              id="startTime"
+              name="startTime"
+              value={eventObj.startTime}
+              required
+              autoFocus
+              className="form-control"
+              placeholder="When should it start?"
+              onChange={handleControlledInputChange}
+            />
+          </div>
+        </fieldset>
+        {/* USERS? */}
+        <fieldset>
+          <div className="form-group">
+            <label htmlFor="userId">Participants: </label>
+            <Multiselect
+              options={users} // Options to display in the dropdown
+              selectedValues={participants} // Preselected value to persist in dropdown
+              onSelect={onSelect}
+              onRemove={onRemove}
+              displayValue="name" // Property name to display in the dropdown options
+            />
+          </div>
+        </fieldset>
+        {/* COMMENTS */}
+        <fieldset>
+          <div className="form-group">
+            <label htmlFor="comments">Comments: </label>
+            <input
+              type="text"
+              id="comments"
+              name="comments"
+              value={eventObj.comments}
+              required
+              className="form-control"
+              placeholder="Add comments or a description!"
+              onChange={handleControlledInputChange}
+            />
+          </div>
+        </fieldset>
+        {/* BUTTONS */}
+        <button
+          className="delete__button"
+          onClick={() => {
+            deleteEvent(eventId);
+            history.push("/upcoming");
+          }}
+        >
+          {/* DELETE BUTTON */}
+          {" ❌  "}
+        </button>
+        <button
+          className="save__button"
+          disabled={isLoading}
+          onClick={(event) => {
+            event.preventDefault(); // Prevent browser from submitting the form and refreshing the page
+            handleSaveEvent();
+          }}
+        >
+          {/* SAVE BUTTON */}
+          {" ✅  "}
+        </button>
+        <button
+          className="cancel__button"
+          onClick={() => history.push("/upcoming")}
+        >
+          {/* CANCEL / BACK BUTTON */}
+          {" 🔙  "}
+        </button>
+      </form>
+    </>
   );
 };
