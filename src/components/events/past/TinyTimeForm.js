@@ -64,6 +64,7 @@ export const TinyTimeForm = ({ userEvent, eventObj }) => {
               value={userEventTime}
               onChange={handleUserEventTimeChange}
             ></input>
+            {/* ------------ BUTTONS ------------ */}
             <div className="button__container">
               <button
                 className="delete__button"

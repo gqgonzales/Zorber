@@ -17,7 +17,7 @@
   border: #214f4b 3px inset;
   border-radius: 25px;
   padding: 1rem;
-  margin: 0.5rem;
+  margin: 0.5rem 0.5rem 2rem 0.5rem;
   width: 20rem;
   flex-basis: auto;
   background-color: white;
@@ -109,6 +109,8 @@
   border: #7daa92 3px inset;
 }
 
-.event-search {
+.search__input {
+  display: flex;
+  justify-content: center;
   margin: 1rem;
 }

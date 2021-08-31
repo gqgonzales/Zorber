@@ -8,9 +8,7 @@ export const UserProvider = (props) => {
   const [users, setUsers] = useState([]);
 
   const getUsers = () => {
-    return fetch(
-      "http://localhost:8088/users?_embed=userEvents&_embed=events"
-    )
+    return fetch("http://localhost:8088/users?_embed=userEvents&_embed=events")
       .then((res) => res.json())
       .then((data) => setUsers(data));
   };
@@ -28,12 +26,19 @@ export const UserProvider = (props) => {
     ).then(getUsers);
   };
 
+  const deleteUser = (userId) => {
+    return fetch(`http://localhost:8088/users/${userId}`, {
+      method: "DELETE",
+    }).then(getUsers);
+  };
+
   return (
     <UserContext.Provider
       value={{
         users,
         getUsers,
         addUser,
+        deleteUser,
       }}
     >
       {props.children}
