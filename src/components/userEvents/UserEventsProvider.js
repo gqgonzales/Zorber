@@ -9,7 +9,7 @@ export const UserEventsProvider = (props) => {
 
   const getUserEvents = () => {
     return fetch(
-      "http://localhost:8088/userEvents?_expand=event&_expand=user"
+      "https://zorber-api.herokuapp.com/userEvents?_expand=event&_expand=user"
       // {
       //   headers: {
       //     Accept: "application/json",
@@ -22,7 +22,7 @@ export const UserEventsProvider = (props) => {
 
   const getUserEventsByEventId = (eventId) => {
     return fetch(
-      `http://localhost:8088/userEvents?eventId=${eventId}&_expand=user`,
+      `https://zorber-api.herokuapp.com/userEvents?eventId=${eventId}&_expand=user`,
       {
         method: "GET",
         headers: {
@@ -34,7 +34,7 @@ export const UserEventsProvider = (props) => {
 
   const addUserEvents = (userEventObject) => {
     return fetch(
-      "http://localhost:8088/userEvents?_expand=event&_expand=user",
+      "https://zorber-api.herokuapp.com/userEvents?_expand=event&_expand=user",
       {
         method: "POST",
         headers: {
@@ -47,17 +47,14 @@ export const UserEventsProvider = (props) => {
   };
 
   const deleteUserEvent = (userEventId) => {
-    return fetch(
-      `http://localhost:8088/userEvents/${userEventId}`,
-      {
-        method: "DELETE",
-      }
-    ).then(getUserEvents);
+    return fetch(`https://zorber-api.herokuapp.com/userEvents/${userEventId}`, {
+      method: "DELETE",
+    }).then(getUserEvents);
   };
 
   const updateUserEvents = (userEvent) => {
     return fetch(
-      `http://localhost:8088/userEvents/${userEvent.id}`,
+      `https://zorber-api.herokuapp.com/userEvents/${userEvent.id}`,
       {
         method: "PUT",
         headers: {
@@ -70,7 +67,7 @@ export const UserEventsProvider = (props) => {
 
   const getUserEventsById = (userEventId) => {
     return fetch(
-      `http://localhost:8088/userEvents/${userEventId}&_expand=user`,
+      `https://zorber-api.herokuapp.com/userEvents/${userEventId}&_expand=user`,
       {
         method: "GET",
         headers: {

@@ -13,7 +13,7 @@ export const Register = (props) => {
 
   const existingUserCheck = () => {
     return fetch(
-      `http://localhost:8088/users?email=${email.current.value}`
+      `https://zorber-api.herokuapp.com/users?email=${email.current.value}`
     )
       .then((res) => res.json())
       .then((user) => !!user.length);
@@ -24,7 +24,7 @@ export const Register = (props) => {
 
     existingUserCheck().then((userExists) => {
       if (!userExists) {
-        fetch("http://localhost:8088/users", {
+        fetch("https://zorber-api.herokuapp.com/users", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -38,10 +38,7 @@ export const Register = (props) => {
           .then((res) => res.json())
           .then((createdUser) => {
             if (createdUser.hasOwnProperty("id")) {
-              localStorage.setItem(
-                "zorber_user",
-                createdUser.id
-              );
+              localStorage.setItem("zorber_user", createdUser.id);
               history.push("/upcoming");
             }
           });
@@ -53,10 +50,7 @@ export const Register = (props) => {
 
   return (
     <main style={{ textAlign: "center" }}>
-      <dialog
-        className="dialog dialog--password"
-        ref={conflictDialog}
-      >
+      <dialog className="dialog dialog--password" ref={conflictDialog}>
         <div>Account with that email address already exists</div>
         <button
           className="button--close"
