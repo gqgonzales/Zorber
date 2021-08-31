@@ -1,5 +1,5 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Redirect, Route } from "react-router-dom";
 //
 import { EventProvider } from "./events/EventProvider";
 import { UserProvider } from "./users/UserProvider";
@@ -22,6 +22,10 @@ export const ApplicationViews = () => {
         <UserProvider>
           <UserEventsProvider>
             {/* HOME / UPCOMING */}
+            <Route exact path="">
+              <Redirect to="/upcoming" />
+            </Route>
+
             <Route exact path="/upcoming">
               <UpcomingEventList />
             </Route>
