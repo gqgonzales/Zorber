@@ -8,14 +8,16 @@ export const UserProvider = (props) => {
   const [users, setUsers] = useState([]);
 
   const getUsers = () => {
-    return fetch("http://localhost:8088/users?_embed=userEvents&_embed=events")
+    return fetch(
+      "https://zorber-api.herokuapp.com/users?_embed=userEvents&_embed=events"
+    )
       .then((res) => res.json())
       .then((data) => setUsers(data));
   };
 
   const addUser = (userObject) => {
     return fetch(
-      "http://localhost:8088/users?_embed=userEvents&_embed=events",
+      "https://zorber-api.herokuapp.com/users?_embed=userEvents&_embed=events",
       {
         method: "POST",
         headers: {
@@ -27,7 +29,7 @@ export const UserProvider = (props) => {
   };
 
   const deleteUser = (userId) => {
-    return fetch(`http://localhost:8088/users/${userId}`, {
+    return fetch(`https://zorber-api.herokuapp.com/users/${userId}`, {
       method: "DELETE",
     }).then(getUsers);
   };
