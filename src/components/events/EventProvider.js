@@ -10,49 +10,63 @@ export const EventProvider = (props) => {
 
   const getEvents = () => {
     return fetch(
-      "https://zorber-api.herokuapp.com/events?_embed=userEvents&_expand=user"
+      "https://zorber-api-393lv.ondigitalocean.app/events?_embed=userEvents&_expand=user"
     )
       .then((res) => res.json())
       .then((data) => setEvents(data));
   };
 
   const addEvent = (eventObj) => {
-    return fetch("https://zorber-api.herokuapp.com/events?_embed=userEvents", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(eventObj),
-    }).then((res) => res.json());
+    return fetch(
+      "https://zorber-api-393lv.ondigitalocean.app/events?_embed=userEvents",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(eventObj),
+      }
+    ).then((res) => res.json());
   };
 
   const deleteEvent = (eventId) => {
-    return fetch(`https://zorber-api.herokuapp.com/events/${eventId}`, {
-      method: "DELETE",
-    }).then(getEvents);
+    return fetch(
+      `https://zorber-api-393lv.ondigitalocean.app/events/${eventId}`,
+      {
+        method: "DELETE",
+      }
+    ).then(getEvents);
   };
 
   const updateEvent = (eventObj) => {
-    return fetch(`https://zorber-api.herokuapp.com/events/${eventObj.id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(eventObj),
-    }).then(getEvents);
+    return fetch(
+      `https://zorber-api-393lv.ondigitalocean.app/events/${eventObj.id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(eventObj),
+      }
+    ).then(getEvents);
   };
 
   const getEventById = (eventId) => {
-    return fetch(`https://zorber-api.herokuapp.com/events/${eventId}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((res) => res.json());
+    return fetch(
+      `https://zorber-api-393lv.ondigitalocean.app/events/${eventId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    ).then((res) => res.json());
   };
 
   const searchEvents = (searchTerms) => {
-    return fetch(`https://zorber-api.herokuapp.com/events?q=${searchTerms}`)
+    return fetch(
+      `https://zorber-api-393lv.ondigitalocean.app/events?q=${searchTerms}`
+    )
       .then((res) => res.json())
       .then(setEvents);
   };

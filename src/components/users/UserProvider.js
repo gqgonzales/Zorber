@@ -9,7 +9,7 @@ export const UserProvider = (props) => {
 
   const getUsers = () => {
     return fetch(
-      "https://zorber-api.herokuapp.com/users?_embed=userEvents&_embed=events"
+      "https://zorber-api-393lv.ondigitalocean.app/users?_embed=userEvents&_embed=events"
     )
       .then((res) => res.json())
       .then((data) => setUsers(data));
@@ -17,7 +17,7 @@ export const UserProvider = (props) => {
 
   const addUser = (userObject) => {
     return fetch(
-      "https://zorber-api.herokuapp.com/users?_embed=userEvents&_embed=events",
+      "https://zorber-api-393lv.ondigitalocean.app/users?_embed=userEvents&_embed=events",
       {
         method: "POST",
         headers: {
@@ -29,9 +29,12 @@ export const UserProvider = (props) => {
   };
 
   const deleteUser = (userId) => {
-    return fetch(`https://zorber-api.herokuapp.com/users/${userId}`, {
-      method: "DELETE",
-    }).then(getUsers);
+    return fetch(
+      `https://zorber-api-393lv.ondigitalocean.app/users/${userId}`,
+      {
+        method: "DELETE",
+      }
+    ).then(getUsers);
   };
 
   return (

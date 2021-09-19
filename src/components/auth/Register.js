@@ -13,7 +13,7 @@ export const Register = (props) => {
 
   const existingUserCheck = () => {
     return fetch(
-      `https://zorber-api.herokuapp.com/users?email=${email.current.value}`
+      `https://zorber-api-393lv.ondigitalocean.app/users?email=${email.current.value}`
     )
       .then((res) => res.json())
       .then((user) => !!user.length);
@@ -24,7 +24,7 @@ export const Register = (props) => {
 
     existingUserCheck().then((userExists) => {
       if (!userExists) {
-        fetch("https://zorber-api.herokuapp.com/users", {
+        fetch("https://zorber-api-393lv.ondigitalocean.app/users", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

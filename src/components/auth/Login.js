@@ -11,7 +11,7 @@ export const Login = (props) => {
 
   const existingUserCheck = () => {
     return fetch(
-      `https://zorber-api.herokuapp.com/users?email=${email.current.value}`
+      `https://zorber-api-393lv.ondigitalocean.app/users?email=${email.current.value}`
     )
       .then((res) => res.json())
       .then((user) => (user.length ? user[0] : false));
